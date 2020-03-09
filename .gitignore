@@ -1,2 +1,4 @@
 /offer-algorithm/.idea/*
 /offer-algorithm/target/*
+*.DS_Store
+offer-algorithm/offer-algorithm.iml
