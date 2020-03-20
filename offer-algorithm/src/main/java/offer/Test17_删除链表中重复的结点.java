@@ -6,13 +6,14 @@ public class Test17_删除链表中重复的结点 {
 
     public static void main(String[] args) {
         ListNode[] nodes = new ListNode[]{
-                new  ListNode(1),
                 new ListNode(1),
                 new ListNode(1),
-                new ListNode(1),
-                new ListNode(1),
-                new ListNode(1),
-                new ListNode(1)
+                new ListNode(2),
+                new ListNode(3),
+                new ListNode(3),
+                new ListNode(4),
+                new ListNode(5),
+                new ListNode(5)
         };
         for (int i = 0; i < nodes.length - 1; i++) {
             nodes[i].next = nodes[i + 1];
@@ -34,6 +35,41 @@ public class Test17_删除链表中重复的结点 {
     }
 
     static class Solution {
+        public ListNode deleteDuplication(ListNode pHead) {
+            if (pHead == null) {
+                return null;
+            }
+            ListNode prev = new ListNode(-1);
+            ListNode current = prev;
+            ListNode next = pHead;
+            while (next != null) {
+                if (!checkValueExist(pHead, next.val)) {
+                    current.next = next;
+                    current = next;
+                }
+                next = next.next;
+            }
+            current.next = next;
+            return prev.next;
+        }
+        public boolean checkValueExist( ListNode pHead, int val) {
+            int count = 0;
+            ListNode current = pHead;
+            while (current != null) {
+                if (current.val == val) {
+                    if (count == 1) {
+                        return true;
+                    } else {
+                        count++;
+                    }
+                }
+                current = current.next;
+            }
+            return false;
+        }
+    }
+
+    static class Solution_On {
         public ListNode deleteDuplication(ListNode pHead) {
             if (pHead == null) {
                 return null;
