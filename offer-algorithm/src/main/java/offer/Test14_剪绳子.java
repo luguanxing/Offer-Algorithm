@@ -1,6 +1,6 @@
 package offer;
 
-public class Test15_剪绳子 {
+public class Test14_剪绳子 {
 
     public static void main(String[] args) {
         int len = 8;

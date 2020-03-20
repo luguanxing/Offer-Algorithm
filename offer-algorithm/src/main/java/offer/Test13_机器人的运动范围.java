@@ -1,6 +1,6 @@
 package offer;
 
-public class Test14_机器人的运动范围 {
+public class Test13_机器人的运动范围 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().movingCount(18, 50, 50));

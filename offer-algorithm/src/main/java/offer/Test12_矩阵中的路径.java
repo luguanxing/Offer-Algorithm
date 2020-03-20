@@ -1,6 +1,6 @@
 package offer;
 
-public class Test13_矩阵中的路径 {
+public class Test12_矩阵中的路径 {
 
     public static void main(String[] args) {
         char[] fMatrix = new char[]{'a', 'b', 'c', 'e', 's', 'f', 'c', 's', 'a', 'd', 'e', 'e'};
