@@ -3,10 +3,10 @@ package offer;
 public class Test33_二叉搜索树的后序遍历序列 {
 
     public static void main(String[] args) {
-//        System.out.println(new Solution().VerifySquenceOfBST(new int[]{5, 7, 6, 9, 11, 10, 8}));
-//        System.out.println(new Solution().VerifySquenceOfBST(new int[]{7, 4, 6, 5}));
-//        System.out.println(new Solution().VerifySquenceOfBST(new int[]{1, 2, 3, 4, 5}));
-//        System.out.println(new Solution().VerifySquenceOfBST(new int[]{5, 4, 3, 2, 1}));
+        System.out.println(new Solution().VerifySquenceOfBST(new int[]{5, 7, 6, 9, 11, 10, 8}));
+        System.out.println(new Solution().VerifySquenceOfBST(new int[]{7, 4, 6, 5}));
+        System.out.println(new Solution().VerifySquenceOfBST(new int[]{1, 2, 3, 4, 5}));
+        System.out.println(new Solution().VerifySquenceOfBST(new int[]{5, 4, 3, 2, 1}));
         System.out.println(new Solution().VerifySquenceOfBST(new int[]{1}));
         System.out.println(new Solution().VerifySquenceOfBST(new int[]{}));
     }
