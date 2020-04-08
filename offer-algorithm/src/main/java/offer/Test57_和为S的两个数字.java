@@ -2,7 +2,7 @@ package offer;
 
 import java.util.ArrayList;
 
-public class Test_和为S的两个数字 {
+public class Test57_和为S的两个数字 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().FindNumbersWithSum(new int[]{1, 2, 3, 4, 5, 6, 7, 8}, 10));
