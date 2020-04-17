@@ -1,10 +1,10 @@
-package leetcode.Test001;
+package leetcode;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class 两数之和 {
+public class Test001_两数之和 {
 
     public static void main(String[] args) {
         System.out.println(Arrays.toString(new Solution().twoSum(new int[]{2, 5, 7, 11, 15}, 9)));
