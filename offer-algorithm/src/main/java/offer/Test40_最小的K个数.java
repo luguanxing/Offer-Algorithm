@@ -66,7 +66,8 @@ public class Test40_最小的K个数 {
             for (int i = 0; i < biggerPart.size(); i++) {
                 nums[index + i] = biggerPart.get(i);
             }
-            return start + 1;
+            // 返回基准元素的序号
+            return start + smallerPart.size();
         }
     }
 
