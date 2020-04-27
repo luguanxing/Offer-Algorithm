@@ -27,8 +27,10 @@ public class Test1422_分割字符串的最大得分 {
             int max = sum;
             for (int i = 1; i < s.length() - 1; i++) {
                 if (s.charAt(i) == '1') {
+                    // 左边计分不加，右边计分减一，总分减一
                     sum--;
                 } else {
+                    // 左边计分加一，右边计分不减，总分加一
                     sum++;
                 }
                 max = Math.max(max, sum);
