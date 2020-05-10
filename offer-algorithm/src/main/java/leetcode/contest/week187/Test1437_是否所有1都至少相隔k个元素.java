@@ -1,4 +1,4 @@
-package leetcode.contest;
+package leetcode.contest.week187;
 
 public class Test1437_是否所有1都至少相隔k个元素 {
 

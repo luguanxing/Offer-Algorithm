@@ -1,4 +1,4 @@
-package leetcode.contest;
+package leetcode.contest.week187;
 
 import java.util.*;
 import java.util.stream.Collectors;
