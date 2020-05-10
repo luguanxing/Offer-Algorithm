@@ -1,8 +1,8 @@
-package leetcode;
+package leetcode.problems;
 
 import java.util.stream.Stream;
 
-public class Test300_最长上升子序列 {
+public class Test0300_最长上升子序列 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().lengthOfLIS(null));

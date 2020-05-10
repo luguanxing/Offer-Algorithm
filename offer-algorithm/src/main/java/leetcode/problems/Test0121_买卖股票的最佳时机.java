@@ -1,6 +1,6 @@
-package leetcode;
+package leetcode.problems;
 
-public class Test121_买卖股票的最佳时机 {
+public class Test0121_买卖股票的最佳时机 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().maxProfit(new int[]{7, 1, 5, 3, 6, 4}));

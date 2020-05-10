@@ -1,4 +1,4 @@
-package leetcode.leetcode.contest;
+package leetcode.contest;
 
 public class Test1422_分割字符串的最大得分 {
 

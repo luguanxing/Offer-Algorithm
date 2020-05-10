@@ -1,6 +1,6 @@
-package leetcode;
+package leetcode.problems;
 
-public class Test011_盛最多水的容器 {
+public class Test0011_盛最多水的容器 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().maxArea(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7}));

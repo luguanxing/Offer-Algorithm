@@ -1,6 +1,6 @@
-package leetcode;
+package leetcode.problems;
 
-public class Test28_对称的二叉树 {
+public class Test0028_对称的二叉树 {
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);

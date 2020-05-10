@@ -1,8 +1,8 @@
-package leetcode;
+package leetcode.problems;
 
 import java.util.*;
 
-public class Test049_字母异位词分组 {
+public class Test0049_字母异位词分组 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"}));

@@ -1,4 +1,4 @@
-package leetcode.leetcode.contest;
+package leetcode.contest;
 
 import java.util.Arrays;
 import java.util.Comparator;

@@ -1,9 +1,9 @@
-package leetcode;
+package leetcode.problems;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Test046_全排列 {
+public class Test0046_全排列 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().permute(new int[]{1, 2, 3}));

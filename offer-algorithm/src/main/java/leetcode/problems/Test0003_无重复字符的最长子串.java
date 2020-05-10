@@ -1,9 +1,9 @@
-package leetcode;
+package leetcode.problems;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Test003_无重复字符的最长子串 {
+public class Test0003_无重复字符的最长子串 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().lengthOfLongestSubstring("abcabcbb"));

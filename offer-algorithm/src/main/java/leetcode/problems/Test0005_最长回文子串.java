@@ -1,6 +1,6 @@
-package leetcode;
+package leetcode.problems;
 
-public class Test005_最长回文子串 {
+public class Test0005_最长回文子串 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().longestPalindrome("babad"));

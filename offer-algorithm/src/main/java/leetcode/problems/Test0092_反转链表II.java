@@ -1,9 +1,9 @@
-package leetcode;
+package leetcode.problems;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Test092_反转链表II {
+public class Test0092_反转链表II {
 
     public static void main(String[] args) {
         ListNode[] nodes = new ListNode[]{new ListNode(1), new ListNode(2), new ListNode(3), new ListNode(4), new ListNode(5)};

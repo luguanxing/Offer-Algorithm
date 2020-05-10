@@ -1,6 +1,6 @@
-package leetcode;
+package leetcode.problems;
 
-public class Test27_二叉树的镜像 {
+public class Test0027_二叉树的镜像 {
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);

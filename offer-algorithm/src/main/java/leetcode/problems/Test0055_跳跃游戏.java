@@ -1,6 +1,6 @@
-package leetcode;
+package leetcode.problems;
 
-public class Test055_跳跃游戏 {
+public class Test0055_跳跃游戏 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().canJump(new int[]{2, 3, 1, 1, 4}));

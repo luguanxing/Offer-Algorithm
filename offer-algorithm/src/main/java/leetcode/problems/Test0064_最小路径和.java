@@ -1,6 +1,6 @@
-package leetcode;
+package leetcode.problems;
 
-public class Test064_最小路径和 {
+public class Test0064_最小路径和 {
 
     public static void main(String[] args) {
         int[][] grip = new int[][]

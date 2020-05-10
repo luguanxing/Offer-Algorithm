@@ -1,10 +1,10 @@
-package leetcode;
+package leetcode.problems;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Test023_合并K个排序链表 {
+public class Test0023_合并K个排序链表 {
 
     public static void main(String[] args) {
         ListNode node11 = new ListNode(1);

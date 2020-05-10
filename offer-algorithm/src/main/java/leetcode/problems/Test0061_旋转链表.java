@@ -1,6 +1,6 @@
-package leetcode;
+package leetcode.problems;
 
-public class Test061_旋转链表 {
+public class Test0061_旋转链表 {
 
     public static void main(String[] args) {
         ListNode[] nodes = new ListNode[]{new ListNode(1), new ListNode(2), new ListNode(3), new ListNode(4), new ListNode(5)};
