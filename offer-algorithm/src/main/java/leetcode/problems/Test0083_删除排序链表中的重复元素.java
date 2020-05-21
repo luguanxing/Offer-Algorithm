@@ -1,8 +1,5 @@
 package leetcode.problems;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Test0083_删除排序链表中的重复元素 {
 
     public static void main(String[] args) {
