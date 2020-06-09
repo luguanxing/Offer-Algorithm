@@ -1,4 +1,4 @@
-package leetcode.offer;
+package leetcode.interview;
 
 public class Test46_把数字翻译成字符串 {
 
