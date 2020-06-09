@@ -5,9 +5,9 @@ import java.util.Arrays;
 public class Test0416_分割等和子集 {
 
     public static void main(String[] args) {
-//        System.out.println(new Solution().canPartition(new int[]{1, 5, 11, 5}));
+        System.out.println(new Solution().canPartition(new int[]{1, 5, 11, 5}));
         System.out.println(new Solution().canPartition(new int[]{1, 1, 1, 1}));
-//        System.out.println(new Solution().canPartition(new int[]{3, 3, 3, 4, 5}));
+        System.out.println(new Solution().canPartition(new int[]{3, 3, 3, 4, 5}));
     }
 
     static class Solution {
