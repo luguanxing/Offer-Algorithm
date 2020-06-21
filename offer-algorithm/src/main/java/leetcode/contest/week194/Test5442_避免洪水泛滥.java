@@ -17,48 +17,49 @@ public class Test5442_避免洪水泛滥 {
     static class Solution {
         public int[] avoidFlood(int[] rains) {
             int[] res = new int[rains.length];
-            Map<Integer, Integer> map = new HashMap<>();
-            List<TargetPair> pairs = new ArrayList<>();
+            // 保存所有将出现洪水的湖位置以及将前后两次下雨位置保存下来
+            Map<Integer, Integer> lakeMap = new HashMap<>();
+            List<Target> targets = new ArrayList<>();
             for (int i = 0; i < rains.length; i++) {
                 int lake = rains[i];
                 if (lake == 0) {
                     continue;
                 }
-                if (!map.containsKey(lake)) {
-                    map.put(lake, i);
+                if (!lakeMap.containsKey(lake)) {
+                    lakeMap.put(lake, i);
                 } else {
-                    Integer left = map.get(lake);
-                    Integer right = i;
-                    pairs.add(new TargetPair(left, right, lake));
-                    map.remove(lake);
+                    Integer first = lakeMap.get(lake);
+                    Integer second = i;
+                    targets.add(new Target(first, second, lake));
+                    lakeMap.remove(lake);
                 }
             }
-            pairs.sort(Comparator.comparingInt(o -> o.right));
+            // 按第二次下雨位置优先排序
+            targets.sort(Comparator.comparingInt(o -> o.second));
             Set<Integer> lakes = new HashSet<>();
             for (int i = 0; i < rains.length; i++) {
                 int lake = rains[i];
                 if (lake > 0) {
+                    // 检测是否已经发生洪水
                     if (lakes.contains(lake)) {
-                        // 已经发生洪水
                         return new int[]{};
                     }
                     lakes.add(lake);
                     res[i] = -1;
                 } else {
-                    // 根据后续判断之前哪个需要优先抽取
-                    if (!pairs.isEmpty()) {
-                        boolean ok = false;
-                        for (int j = 0; j < pairs.size(); j++) {
-                            TargetPair pair = pairs.get(j);
-                            if (pair.left < i) {
-                                pairs.remove(pair);
-                                res[i] = pair.lake;
-                                lakes.remove(pair.lake);
-                                ok = true;
+                    // 遍历到不下雨时根据优先级抢修
+                    if (!targets.isEmpty()) {
+                        boolean targetCleared = false;
+                        for (Target tartget : targets) {
+                            if (tartget.first < i) {
+                                targets.remove(tartget);
+                                res[i] = tartget.lake;
+                                lakes.remove(tartget.lake);
+                                targetCleared = true;
                                 break;
                             }
                         }
-                        if (!ok) {
+                        if (!targetCleared) {
                             res[i] = 1;
                         }
                     } else {
@@ -69,20 +70,20 @@ public class Test5442_避免洪水泛滥 {
             return res;
         }
 
-        static class TargetPair {
-            int left;
-            int right;
+        static class Target {
+            int first;
+            int second;
             int lake;
 
-            public TargetPair(int left, int right, int lake) {
-                this.left = left;
-                this.right = right;
+            public Target(int left, int right, int lake) {
+                this.first = left;
+                this.second = right;
                 this.lake = lake;
             }
 
             @Override
             public String toString() {
-                return "(" + left + "," + right + ")" + "=" + lake;
+                return "(" + first + "," + second + ")" + "=" + lake;
             }
         }
     }
