@@ -12,6 +12,8 @@ public class Test5442_避免洪水泛滥 {
         System.out.println(Arrays.toString(new Solution().avoidFlood(new int[]{10, 20, 20})));
         System.out.println(Arrays.toString(new Solution().avoidFlood(new int[]{1, 0, 2, 0, 2, 1})));
         System.out.println(Arrays.toString(new Solution().avoidFlood(new int[]{1, 0, 1, 0, 2, 0, 2})));
+        System.out.println(Arrays.toString(new Solution().avoidFlood(new int[]{1, 0, 1, 0, 1, 0, 1})));
+        System.out.println(Arrays.toString(new Solution().avoidFlood(new int[]{1, 0, 1, 0, 1, 1})));
     }
 
     static class Solution {
@@ -31,7 +33,7 @@ public class Test5442_避免洪水泛滥 {
                     Integer first = lakeMap.get(lake);
                     Integer second = i;
                     targets.add(new Target(first, second, lake));
-                    lakeMap.remove(lake);
+                    lakeMap.put(lake, second);
                 }
             }
             // 按第二次下雨位置优先排序
