@@ -37,31 +37,34 @@ public class Test5454_统计全1子矩形 {
         public int numSubmat(int[][] mat) {
             int height = mat.length;
             int width = mat[0].length;
-            int[][] dp1 = new int[height][width];
-            int[][] dp2 = new int[height][width];
-            dp1[0][0] = mat[0][0];
-            dp2[0][0] = mat[0][0];
-            for (int x = 1; x < width; x++) {
-                dp1[0][x] = mat[0][x] == 1 ? dp1[0][x - 1] + 1 : 0;
-                dp2[0][x] = mat[0][x] == 1 ? dp2[0][x - 1] + 1 : 0;
-            }
-            for (int y = 1; y < height; y++) {
-                dp1[y][0] = mat[y][0] == 1 ? dp1[y - 1][0] + 1 : 0;
-                dp2[y][0] = mat[y][0] == 1 ? dp2[y - 1][0] + 1 : 0;
-            }
-            for (int y = 1; y < height; y++) {
-                for (int x = 1; x < width; x++) {
-                    dp[y][x] = mat[y][x] == 1 ? dp[y][x - 1] + 1 : 0;
+            int res = 0;
+            for (int y = 0; y < height; y++) {
+                // 复制出该行，因为后续需要修改数据
+                int[] line = Arrays.copyOf(mat[y], width);
+                // 先计算1*1的矩形
+                res += getRowCount(line);
+                // 计算第y行到height行之间的矩形，列之间使用与进行压缩成一行
+                for (int bottom = y + 1; bottom < height; bottom++) {
+                    for (int x = 0; x < width; x++) {
+                        line[x] &= mat[bottom][x];
+                    }
+                    res += getRowCount(line);
                 }
             }
-            for (int x = 1; x < width; x++) {
-                for (int y = 1; y < height; y++) {
-                    dp[y][x] = mat[y][x] == 1 ? dp[y - 1][x] + 1 : 0;
+            return res;
+        }
+
+        private int getRowCount(int[] nums) {
+            // 获取该行连续1的个数
+            int sum = nums[0];
+            int cur = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                if (nums[i] == 1) {
+                    cur++;
+                    sum += cur;
+                } else {
+                    cur = 0;
                 }
-            }
-            int sum = 0;
-            for (int[] nums : dp) {
-                sum += Arrays.stream(nums).sum();
             }
             return sum;
         }
