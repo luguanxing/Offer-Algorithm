@@ -16,32 +16,23 @@ public class Test5476_找出数组游戏的赢家 {
 
     static class Solution {
         public int getWinner(int[] arr, int k) {
-            // 拼接自身便于比较
-            List<Integer> list = Arrays.stream(arr)
-                    .boxed()
-                    .collect(Collectors.toList());
-            list.addAll(list);
-            // 暴力统计右边数目
-            if (k > arr.length) {
-                k = arr.length;
-            }
-            for (int i = 0; i < arr.length; i++) {
-                int cnt = k;
-                if (i > 0 && arr[i - 1] < arr[i]) {
-                    cnt = k - 1;
+            // 重头开始向后统计并保存最大值
+            int currentMax = arr[0];
+            int cnt = 0;
+            for (int i = 1; i < arr.length; i++) {
+                if (currentMax < arr[i]) {
+                    currentMax = arr[i];
+                    cnt = 1;
+                } else {
+                    cnt++;
                 }
-                boolean isOk = true;
-                for (int j = 1; j <= cnt; j++) {
-                    if (list.get(i) < list.get(i + j)) {
-                        isOk = false;
-                        break;
-                    }
-                }
-                if (isOk) {
-                    return list.get(i);
+                if (cnt == k) {
+                    // 当前该数已满足
+                    return currentMax;
                 }
             }
-            return 0;
+            // 计数没有达到k，那么最大的数就是结果
+            return currentMax;
         }
     }
 
