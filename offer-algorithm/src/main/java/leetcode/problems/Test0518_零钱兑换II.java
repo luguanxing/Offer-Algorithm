@@ -15,6 +15,7 @@ public class Test0518_零钱兑换II {
             for (int i = 0; i <= coins.length; i++) {
                 dp[i][0] = 1;
             }
+            // 不能直接用dp[i]+=dp[i-coin]因为中间会包含重复(1+2、2+1)，应该直接把前几枚硬币作为一个状态变量，所以使用二维数组
             for (int i = 1; i <= coins.length; i++) {
                 for (int j = 1; j <= amount; j++) {
                     int coin = coins[i - 1];
