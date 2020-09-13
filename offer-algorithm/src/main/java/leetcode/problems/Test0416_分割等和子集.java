@@ -12,45 +12,28 @@ public class Test0416_分割等和子集 {
 
     static class Solution {
         public boolean canPartition(int[] nums) {
-            if (nums == null) {
-                return false;
-            }
-            // 先求和
             int sum = Arrays.stream(nums).sum();
-            if (sum % 2 == 1) {
-                return false;
-            }
-            int half = sum / 2;
-            // 转换为0-1背包问题，能否拿满容量为half的背包
-            int[] v = new int[nums.length];
-            int[] w = new int[nums.length];
-            for (int i = 0; i < nums.length; i++) {
-                v[i] = nums[i];
-                w[i] = nums[i];
-            }
-            return packeting(w, v, half) == half;
+            return sum - packeting(nums, nums, sum / 2) == sum / 2;
         }
 
         private int packeting(int[] w, int[] v, int c) {
-            int len = w.length;
-            // dp[i][j]表示从前i间物品选出总容量不超过j的最大价值
-            int[][] dp = new int[len][c + 1];
-            for (int i = 0; i <= c; i++) {
-                dp[0][i] = (w[0] <= i) ? w[0] : 0;
-            }
-            for (int i = 1; i < len; i++) {
-                for (int j = 0; j <= c; j++) {
-                    // 不拿第i件物品
-                    int noTakeI = dp[i - 1][j];
-                    // 拿第i件物品
-                    int takeI = 0;
-                    if (w[i] <= j) {
-                        takeI = dp[i - 1][j - w[i]] + v[i];
+            // dp[i][j]表示用前i个物品装j空间能得到的最大价值
+            int[][] dp = new int[w.length + 1][c + 1];
+            for (int i = 1; i <= w.length; i++) {
+                for (int j = 1; j <= c; j++) {
+                    int weight = w[i - 1];
+                    if (j < weight) {
+                        // 当前空间装不下i物品的情况
+                        dp[i][j] = dp[i - 1][j];
+                    } else {
+                        // 当前空间能装下，考虑放或不放物品i
+                        int withI = dp[i - 1][j - weight] + v[i - 1];
+                        int withoutI = dp[i - 1][j];
+                        dp[i][j] = Math.max(withI, withoutI);
                     }
-                    dp[i][j] = Math.max(noTakeI, takeI);
                 }
             }
-            return dp[len - 1][c];
+            return dp[w.length][c];
         }
     }
 
