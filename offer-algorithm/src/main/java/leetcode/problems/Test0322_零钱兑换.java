@@ -21,7 +21,7 @@ public class Test0322_零钱兑换 {
                     .stream(coins)
                     .boxed()
                     .collect(Collectors.toSet());
-            // 凑出i元时肯定是(i - coin)元加上coin元凑出来的
+            // 凑出i元时肯定是(i - coin)元加上coin元凑出来的，所以从之前最小状态找最小即可
             for (int i = 1; i <= amount; i++) {
                 if (coinSet.contains(i)) {
                     dp[i] = 1;
