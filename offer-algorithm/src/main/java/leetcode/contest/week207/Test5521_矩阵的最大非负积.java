@@ -55,58 +55,39 @@ public class Test5521_矩阵的最大非负积 {
     }
 
     static class Solution {
-        BigInteger max = new BigInteger(Integer.MIN_VALUE + "");
-        BigInteger[][] dpMax = null;
-        BigInteger[][] dpMin = null;
-
         public int maxProductPath(int[][] grid) {
-            dpMax = new BigInteger[grid.length][grid[0].length];
-            dpMin = new BigInteger[grid.length][grid[0].length];
-            dpMax[0][0] = new BigInteger(grid[0][0] + "");
-            dpMin[0][0] = new BigInteger(grid[0][0] + "");
+            long max = Long.MIN_VALUE;
+            long min = Long.MAX_VALUE;
+            long[][] dpMax = new long[grid.length][grid[0].length];
+            long[][] dpMin = new long[grid.length][grid[0].length];
+            dpMax[0][0] = grid[0][0];
+            dpMin[0][0] = grid[0][0];
             for (int y = 1; y < grid.length; y++) {
-                dpMax[y][0] = dpMax[y - 1][0].multiply(new BigInteger(grid[y][0] + ""));
-                dpMin[y][0] = dpMin[y - 1][0].multiply(new BigInteger(grid[y][0] + ""));
+                dpMax[y][0] = dpMax[y - 1][0] * grid[y][0];
+                dpMin[y][0] = dpMin[y - 1][0] * grid[y][0];
             }
             for (int x = 1; x < grid[0].length; x++) {
-                dpMax[0][x] = dpMax[0][x - 1].multiply(new BigInteger(grid[0][x] + ""));
-                dpMin[0][x] = dpMin[0][x - 1].multiply(new BigInteger(grid[0][x] + ""));
+                dpMax[0][x] = dpMax[0][x - 1] * grid[0][x];
+                dpMin[0][x] = dpMin[0][x - 1] * grid[0][x];
             }
             for (int y = 1; y < grid.length; y++) {
                 for (int x = 1; x < grid[0].length; x++) {
-                    BigInteger res1 = dpMax[y - 1][x].multiply(new BigInteger(grid[y][x] + ""));
-                    BigInteger res2 = dpMax[y][x - 1].multiply(new BigInteger(grid[y][x] + ""));
-                    BigInteger res3 = dpMin[y - 1][x].multiply(new BigInteger(grid[y][x] + ""));
-                    BigInteger res4 = dpMin[y][x - 1].multiply(new BigInteger(grid[y][x] + ""));
-                    BigInteger max = res1;
-                    if (max.compareTo(res2) < 0) {
-                        max = res2;
-                    }
-                    if (max.compareTo(res3) < 0) {
-                        max = res3;
-                    }
-                    if (max.compareTo(res4) < 0) {
-                        max = res4;
-                    }
-                    BigInteger min = res1;
-                    if (min.compareTo(res2) > 0) {
-                        min = res2;
-                    }
-                    if (min.compareTo(res3) > 0) {
-                        min = res3;
-                    }
-                    if (min.compareTo(res4) > 0) {
-                        min = res4;
-                    }
+                    long res1 = dpMax[y - 1][x] * grid[y][x];
+                    long res2 = dpMax[y][x - 1] * grid[y][x];
+                    long res3 = dpMin[y - 1][x] * grid[y][x];
+                    long res4 = dpMin[y][x - 1] * grid[y][x];
+                    max = Math.max(Math.max(res1, res2), Math.max(res3, res4));
+                    min = Math.min(Math.min(res1, res2), Math.min(res3, res4));
                     dpMax[y][x] = max;
                     dpMin[y][x] = min;
                 }
             }
 
-            if (dpMax[grid.length - 1][grid[0].length - 1].compareTo(new BigInteger("0")) < 0) {
+            long res = dpMax[grid.length - 1][grid[0].length - 1];
+            if (res < 0) {
                 return -1;
             }
-            return dpMax[grid.length - 1][grid[0].length - 1].mod(new BigInteger("1000000007")).intValue();
+            return (int)(res % 1000000007);
         }
     }
 
