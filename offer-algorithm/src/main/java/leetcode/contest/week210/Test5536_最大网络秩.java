@@ -35,7 +35,7 @@ public class Test5536_最大网络秩 {
                 reachableMap.put(c2, list2);
             }
             int max = 0;
-            // 没两个点遍历
+            // 每两个点遍历
             for (int i = 0; i < n; i++) {
                 for (int j = i + 1; j < n; j++) {
                     Set<String> set = new HashSet<>();
