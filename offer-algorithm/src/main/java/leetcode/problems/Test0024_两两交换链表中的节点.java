@@ -3,7 +3,7 @@ package leetcode.problems;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Test0024_ {
+public class Test0024_两两交换链表中的节点 {
 
     public static void main(String[] args) {
         ListNode head = new ListNode(1);
