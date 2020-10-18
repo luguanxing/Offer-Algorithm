@@ -7,6 +7,7 @@ public class Test0019_删除链表的倒数第N个节点 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().removeNthFromEnd(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2));
+        System.out.println(new Solution().removeNthFromEnd(new ListNode(1, new ListNode(2, null)), 2));
         System.out.println(new Solution().removeNthFromEnd(new ListNode(1), 1));
     }
 
@@ -29,7 +30,36 @@ public class Test0019_删除链表的倒数第N个节点 {
         }
     }
 
-    static class Solution {
+    public static class Solution {
+        public ListNode removeNthFromEnd(ListNode head, int n) {
+            // 定位倒数第k个节点
+            ListNode fast = head;
+            for (int i = 1; i <= n; i++) {
+                if (fast == null) {
+                    return null;
+                }
+                fast = fast.next;
+            }
+            ListNode slow = head;
+            while (fast != null) {
+                fast = fast.next;
+                slow = slow.next;
+            }
+            // 删除slow节点
+            ListNode check = head;
+            if (check == slow) {
+                return head.next;
+            } else {
+                while (check.next != slow) {
+                    check = check.next;
+                }
+                check.next = slow.next;
+            }
+            return head;
+        }
+    }
+
+    static class Solution_list {
         public ListNode removeNthFromEnd(ListNode head, int n) {
             if (head == null) {
                 return null;
