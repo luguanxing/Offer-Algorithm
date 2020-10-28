@@ -35,6 +35,7 @@ public class Test0144_二叉树的前序遍历 {
 
     static class Solution {
         public List<Integer> preorderTraversal(TreeNode root) {
+            // 不断替换栈底元素
             Deque<TreeNode> deque = new ArrayDeque<>();
             List<Integer> res = new ArrayList<>();
             if (root != null) {
