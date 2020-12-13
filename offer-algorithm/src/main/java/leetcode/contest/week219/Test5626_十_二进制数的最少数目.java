@@ -13,6 +13,7 @@ public class Test5626_十_二进制数的最少数目 {
             if (n == null) {
                 return 0;
             }
+            // 最少数目其实是由最大的那位决定，其它按对应从小到大用1..1先凑出
             int max = 0;
             for (char c : n.toCharArray()) {
                 max = Math.max(max, c - '0');
