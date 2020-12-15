@@ -14,10 +14,9 @@ public class Test0049_字母异位词分组 {
             Map<String, List<String>> keyMap = new HashMap<>();
             for (String str : strs) {
                 String key = getKey(str);
-                if (!keyMap.containsKey(key)) {
-                    keyMap.put(key, new ArrayList<>());
-                }
-                keyMap.get(key).add(str);
+                List<String> list = keyMap.getOrDefault(key, new ArrayList<>());
+                list.add(str);
+                keyMap.put(key, list);
             }
             return new ArrayList<>(keyMap.values());
         }
