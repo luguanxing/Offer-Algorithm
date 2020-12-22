@@ -1,8 +1,5 @@
 package leetcode.contest.week220;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
-
 public class Test5631_跳跃游戏VI {
 
     public static void main(String[] args) {
@@ -19,18 +16,23 @@ public class Test5631_跳跃游戏VI {
 
     static class Solution {
         public int maxResult(int[] nums, int k) {
-            k = Math.min(k, 1000);
             int[] dp = new int[nums.length];
-            PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.reverseOrder());
+            int maxDpIndex = 0;
             dp[0] = nums[0];
-            queue.add(nums[0]);
             for (int i = 1; i < nums.length; i++) {
-                int max = queue.peek();
-                dp[i] = max + nums[i];
-                if (queue.size() == k) {
-                    queue.remove(dp[i - k]);
+                int max = Integer.MIN_VALUE;
+                if (i - k < maxDpIndex) {
+                    max = dp[maxDpIndex];
+                } else {
+                    for (int j = Math.max(0, i - k); j <= i - 1; j++) {
+                        max = Math.max(max, dp[j]);
+                    }
                 }
-                queue.add(dp[i]);
+                dp[i] = max + nums[i];
+                // 保留最新的最大maxDpIndex，如果下次在范围中可以直接使用
+                if (dp[i] > dp[maxDpIndex]) {
+                    maxDpIndex = i;
+                }
             }
             return dp[nums.length - 1];
         }
