@@ -20,6 +20,51 @@ public class Test0056_合并区间 {
 
     static class Solution {
         public int[][] merge(int[][] intervals) {
+            // 排序:先start小的在前，再按end小的在前排序
+            Arrays.sort(intervals, (o1, o2) -> {
+                if (o1[0] == o2[0]) {
+                    return o1[1] - o2[1];
+                } else {
+                    return o1[0] - o2[0];
+                }
+            });
+            // 逐段合并
+            List<int[]> resList = new ArrayList<>();
+            int currentStart = intervals[0][0];
+            int currentEnd = intervals[0][1];
+            for (int i = 1; i < intervals.length; i++) {
+                int[] interval = intervals[i];
+                int start = interval[0];
+                int end = interval[1];
+                if (currentEnd < start) {
+                    // 另起一段
+                    int[] part = new int[2];
+                    part[0] = currentStart;
+                    part[1] = currentEnd;
+                    resList.add(part);
+                    currentStart = start;
+                    currentEnd = end;
+                } else {
+                    // 可以合并
+                    currentEnd = Math.max(currentEnd, end);
+                }
+            }
+            // 保存最后一段
+            int[] endPart = new int[2];
+            endPart[0] = currentStart;
+            endPart[1] = currentEnd;
+            resList.add(endPart);
+            // 返回结果
+            int[][] res = new int[resList.size()][2];
+            for (int i = 0 ; i < resList.size(); i++) {
+                res[i] = resList.get(i);
+            }
+            return res;
+        }
+    }
+
+    static class Solution_暴力 {
+        public int[][] merge(int[][] intervals) {
             List<List<Integer>> intervalList = Arrays.stream(intervals)
                     .map(Arrays::stream)
                     .map(IntStream::boxed)
