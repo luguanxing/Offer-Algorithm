@@ -13,9 +13,31 @@ public class Test5638_吃苹果的最大数目 {
                 new int[]{3, 0, 0, 0, 0, 2},
                 new int[]{3, 0, 0, 0, 0, 2}
         ));
+        System.out.println(new Solution().eatenApples(
+                new int[]{9, 10, 1, 7, 0, 2, 1, 4, 1, 7, 0, 11, 0, 11, 0, 0, 9, 11, 11, 2, 0, 5, 5},
+                new int[]{3, 19, 1, 14, 0, 4, 1, 8, 2, 7, 0, 13, 0, 13, 0, 0, 2, 2, 13, 1, 0, 3, 7}
+        ));
     }
 
     static class Solution {
+        public int eatenApples(int[] apples, int[] days) {
+            int MAX = 20005;
+            int[] canEat = new int[MAX];
+            for (int i = 0; i < apples.length; i++) {
+                int apple = apples[i];
+                int day = days[i];
+                for (int j = 0; j < day && apple > 0; j++) {
+                    if (canEat[i + j] == 0) {
+                        canEat[i + j] = 1;
+                        apple--;
+                    }
+                }
+            }
+            return Arrays.stream(canEat).sum();
+        }
+    }
+
+    static class Solution_模拟 {
         public int eatenApples(int[] apples, int[] days) {
             int res = 0;
             Set<Stat> stats = new TreeSet<>(Comparator.comparingInt(o -> o.days));

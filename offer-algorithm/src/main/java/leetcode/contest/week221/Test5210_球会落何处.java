@@ -34,7 +34,7 @@ public class Test5210_球会落何处 {
             int height = grid.length;
             int width = grid[0].length;
             if (y >= height) {
-                return 1;
+                return x;
             }
             if (grid[y][x] == 1) {
                 // 当前向右滚
