@@ -1,6 +1,7 @@
 package leetcode.problems;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Test0435_无重叠区间 {
 
@@ -22,13 +23,7 @@ public class Test0435_无重叠区间 {
                 return 0;
             }
             // 排序:先start小的在前，再按end小的在前排序
-            Arrays.sort(intervals, (o1, o2) -> {
-                if (o1[0] == o2[0]) {
-                    return o1[1] - o2[1];
-                } else {
-                    return o1[0] - o2[0];
-                }
-            });
+            Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
             // 每次选择和上一个不重合的结尾最短的段放入，计算能合并成多少段
             int max = 1;
             int end = intervals[0][1];
