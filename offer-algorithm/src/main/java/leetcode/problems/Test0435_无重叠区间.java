@@ -22,7 +22,7 @@ public class Test0435_无重叠区间 {
             if (intervals.length == 0) {
                 return 0;
             }
-            // 排序:先start小的在前，再按end小的在前排序
+            // 排序:直接按end小的在前排序，这样能放入更多的段
             Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
             // 每次选择和上一个不重合的结尾最短的段放入，计算能合并成多少段
             int max = 1;
