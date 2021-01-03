@@ -52,9 +52,9 @@ public class Test5642_大餐计数 {
                         int leftIndex = indexMap.get(left);
                         int leftNum = map.get(left);
                         if (leftIndex == i) {
-                            res = res.add(new BigInteger((leftNum - 1) * leftNum / 2 + ""));
+                            res = res.add(new BigInteger((long)(leftNum - 1) * leftNum / 2 + ""));
                         } else if (i < leftIndex) {
-                            res = res.add(new BigInteger(map.get(declious) * map.get(left) + ""));
+                            res = res.add(new BigInteger((long)map.get(declious) * map.get(left) + ""));
                         }
                     }
                 }
