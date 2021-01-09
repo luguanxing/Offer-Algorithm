@@ -28,4 +28,28 @@ public class Test0123_买卖股票的最佳时机III {
         }
     }
 
+    static class Solution_DP {
+        public int maxProfit(int[] prices) {
+            int len = prices.length;
+            // position[i][k]表示第i天使用了k次机会持仓的现金
+            // clear[i][k]表示第i天使用了k次机会清仓的现金
+            int[][] position = new int[len][3];
+            int[][] clear = new int[len][3];
+            position[0][0] = -prices[0];
+            position[0][1] = -prices[0];
+            position[0][2] = -prices[0];
+            clear[0][0] = 0;
+            clear[0][1] = 0;
+            clear[0][2] = 0;
+            for (int i = 1; i < len; i++) {
+                // 当天不操作，或者当天操作了（买入/卖出)
+                position[i][1] = Math.max(position[i-1][1], clear[i-1][0] - prices[i]);
+                position[i][2] = Math.max(position[i-1][2], clear[i-1][1] - prices[i]);
+                clear[i][1] = Math.max(clear[i-1][1], position[i-1][1] + prices[i]);
+                clear[i][2] = Math.max(clear[i-1][2], position[i-1][2] + prices[i]);
+            }
+            return clear[len-1][2];
+        }
+    }
+
 }
