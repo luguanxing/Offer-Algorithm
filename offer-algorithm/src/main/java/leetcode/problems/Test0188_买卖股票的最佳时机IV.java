@@ -13,8 +13,8 @@ public class Test0188_买卖股票的最佳时机IV {
             if (prices.length == 0) {
                 return 0;
             }
-            // position[i][k]表示第i天持仓用了k次买入机会时的现金, clear[i][k]表示第i天清仓用了k次买入机会时的现金
-            // clear[i][k]表示第i天清仓还有k次卖出机会时的现金
+            // position[i][k]表示第i天用了k次买入机会时的持仓现金, clear[i][k]表示第i天清仓用了k次买入机会时的现金
+            // clear[i][k]表示第i天用了k次卖出机会时的清仓现金
             int[][] position = new int[prices.length][k + 1];
             int[][] clear = new int[prices.length][k + 1];
             for (int i = 0; i <= k; i++) {
