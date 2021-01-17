@@ -31,7 +31,7 @@ public class Test5243_同积元组 {
             }
             int res = 0;
             for (int cnt : map.values()) {
-                res += cnt * (cnt - 1) * 4;
+                res += (cnt * (cnt - 1) / 2) * 8;
             }
             return res;
         }
