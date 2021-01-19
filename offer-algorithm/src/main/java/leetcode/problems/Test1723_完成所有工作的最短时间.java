@@ -35,6 +35,7 @@ public class Test1723_完成所有工作的最短时间 {
             }
             int job = jobs[jobIndex];
             for (int i = 0; i < time.length; i++) {
+                // 尝试将第jobIndex项工作分配给某个工人，需要剪枝
                 if (time[i] + job >= res) {
                     continue;
                 } else {
@@ -43,6 +44,7 @@ public class Test1723_完成所有工作的最短时间 {
                     time[i] -= job;
                 }
                 if (time[i] == 0) {
+                    // 工作已分配完，可退出
                     break;
                 }
             }
