@@ -35,31 +35,29 @@ public class Test5665_从相邻元素对还原数组 {
 
             List<Integer> list = new ArrayList<>();
             Set<Integer> vistited = new HashSet<>();
-            while (!map.isEmpty()) {
-                int start = -1;
-                for (int num : map.keySet()) {
-                    if (map.get(num).size() == 1) {
-                        start = num;
-                        break;
-                    }
+            int start = -1;
+            for (int num : map.keySet()) {
+                if (map.get(num).size() == 1) {
+                    start = num;
+                    break;
                 }
-                while (map.containsKey(start)) {
-                    Set<Integer> nexts = map.get(start);
-                    int next = nexts.stream().findFirst().orElse(0);
-                    if (!vistited.contains(start)) {
-                        list.add(start);
-                        vistited.add(start);
-                    }
-                    if (!vistited.contains(next)) {
-                        list.add(next);
-                        vistited.add(next);
-                    }
-                    map.remove(start);
-                    if (map.containsKey(next)) {
-                        map.get(next).remove(start);
-                    }
-                    start = next;
+            }
+            while (map.containsKey(start)) {
+                Set<Integer> nexts = map.get(start);
+                int next = nexts.stream().findFirst().orElse(0);
+                if (!vistited.contains(start)) {
+                    list.add(start);
+                    vistited.add(start);
                 }
+                if (!vistited.contains(next)) {
+                    list.add(next);
+                    vistited.add(next);
+                }
+                map.remove(start);
+                if (map.containsKey(next)) {
+                    map.get(next).remove(start);
+                }
+                start = next;
             }
 
             int[] res = new int[list.size() - 1];
