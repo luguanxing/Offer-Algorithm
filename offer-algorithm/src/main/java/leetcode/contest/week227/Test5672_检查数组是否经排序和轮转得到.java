@@ -1,6 +1,10 @@
 package leetcode.contest.week227;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Test5672_检查数组是否经排序和轮转得到 {
 
@@ -13,6 +17,17 @@ public class Test5672_检查数组是否经排序和轮转得到 {
     }
 
     static class Solution {
+        public boolean check(int[] nums) {
+            List<Integer> list = Arrays.stream(nums).boxed().collect(Collectors.toList());
+            List<Integer> dlist = new ArrayList<>();
+            dlist.addAll(list);
+            dlist.addAll(list);
+            Collections.sort(list);
+            return dlist.toString().contains(list.toString().substring(1, list.toString().length() - 1));
+        }
+    }
+
+    static class Solution_拼接 {
         public boolean check(int[] nums) {
             int[] sortedNums = Arrays.copyOf(nums, nums.length);
             Arrays.sort(sortedNums);
