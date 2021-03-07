@@ -13,19 +13,13 @@ public class Test5697_检查二进制字符串字段 {
 
     static class Solution {
         public boolean checkOnesSegment(String s) {
-            boolean finish = false;
+            int last = 0;
             for (int i = 1; i < s.length(); i++) {
                 if (s.charAt(i) == '1') {
-                   if (!finish) {
-                       continue;
-                   } else {
-                       return false;
-                   }
-                } else {
-                    if (finish) {
-                        continue;
+                    if (last != i-1) {
+                        return false;
                     } else {
-                        finish = true;
+                        last = i;
                     }
                 }
             }
