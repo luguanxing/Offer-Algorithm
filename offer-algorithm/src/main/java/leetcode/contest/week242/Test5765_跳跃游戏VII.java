@@ -23,6 +23,9 @@ public class Test5765_跳跃游戏VII {
         System.out.println(new Solution().canReach(
                 "0000000000", 8, 8
         ));
+        System.out.println(new Solution().canReach(
+                "0111111111111111111111111111111111011111111111111111111111111111111110", 19, 38
+        ));
     }
 
     static class Solution {
@@ -38,7 +41,7 @@ public class Test5765_跳跃游戏VII {
                 if (s.charAt(i) == '0') {
                     int left = Math.max(0, i - maxJump);
                     int right = i - minJump;
-                    if ( 0 <= right && left <= right && sum[right + 1] - sum[left] > 0) {
+                    if (0 <= right && left <= right && sum[right + 1] - sum[left] > 0) {
                         canJump[i] = 1;
                     } else {
                         canJump[i] = 0;
