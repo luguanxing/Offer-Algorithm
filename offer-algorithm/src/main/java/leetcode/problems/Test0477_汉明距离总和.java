@@ -1,4 +1,4 @@
-package offer;
+package leetcode.problems;
 
 public class Test0477_汉明距离总和 {
 
