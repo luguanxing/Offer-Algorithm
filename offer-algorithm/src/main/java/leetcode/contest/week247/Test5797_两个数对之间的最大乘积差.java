@@ -1,4 +1,4 @@
-package leetcode.contest.year2021.spring;
+package leetcode.contest.week247;
 
 import java.util.Arrays;
 
