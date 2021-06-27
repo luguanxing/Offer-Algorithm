@@ -7,16 +7,16 @@ import java.util.List;
 public class Test5798_循环轮转矩阵 {
 
     public static void main(String[] args) {
-//        System.out.println(Arrays.toString(new Solution().rotateGrid(new int[][]{
-//                {40, 10},
-//                {30, 20}
-//        }, 1)));
-//        System.out.println(Arrays.toString(new Solution().rotateGrid(new int[][]{
-//                {1, 2, 3, 4},
-//                {5, 6, 7, 8},
-//                {9, 10, 11, 12},
-//                {13, 14, 15, 16}
-//        }, 2)));
+        System.out.println(Arrays.toString(new Solution().rotateGrid(new int[][]{
+                {40, 10},
+                {30, 20}
+        }, 1)));
+        System.out.println(Arrays.toString(new Solution().rotateGrid(new int[][]{
+                {1, 2, 3, 4},
+                {5, 6, 7, 8},
+                {9, 10, 11, 12},
+                {13, 14, 15, 16}
+        }, 2)));
         System.out.println(Arrays.toString(new Solution().rotateGrid(new int[][]{
                 {10, 1, 4, 8},
                 {6, 6, 3, 10},
@@ -54,7 +54,6 @@ public class Test5798_循环轮转矩阵 {
                 }
                 gridList.add(compact);
             }
-            System.out.println(gridList);
 
             // 每层移动k
             for (int i = 0; i < gridList.size(); i++) {
@@ -65,7 +64,6 @@ public class Test5798_循环轮转矩阵 {
                 newList.addAll(list.subList(0, move));
                 gridList.set(i, newList);
             }
-            System.out.println(gridList);
 
             // 重新设置
             for (int level = 1; level <= Math.min(h / 2, w / 2); level++) {
