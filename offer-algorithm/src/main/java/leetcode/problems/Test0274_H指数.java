@@ -1,6 +1,6 @@
 package leetcode.problems;
 
-public class Test0275_H指数II {
+public class Test0274_H指数 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().hIndex(new int[]{0, 1, 3, 5, 6}));
