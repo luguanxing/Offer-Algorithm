@@ -1,7 +1,9 @@
 package leetcode.contest.week252;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.function.IntUnaryOperator;
 
 public class Test5831_你可以工作的最大周数 {
 
@@ -26,10 +28,29 @@ public class Test5831_你可以工作的最大周数 {
         ));
         System.out.println(new Solution().numberOfWeeks(
                 new int[]{8, 8, 2, 6}
-        )); // 24
+        ));
     }
 
     static class Solution {
+        public long numberOfWeeks(int[] milestones) {
+            long[] nums = new long[milestones.length];
+            for (int i = 0; i< milestones.length; i++) {
+                nums[i] = milestones[i];
+            }
+            long sum = Arrays.stream(nums).sum();
+            long max = Arrays.stream(nums).max().orElse(0);
+            long left = sum - max;
+            if (max <= left + 1) {
+                // 可以做完全部
+                return sum;
+            } else {
+                // 不能做完全部
+                return 2 * left + 1;
+            }
+        }
+    }
+
+    static class Solution_暴力 {
         public long numberOfWeeks(int[] milestones) {
             PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.reverseOrder());
             for (int num : milestones) {
