@@ -4,16 +4,16 @@ public class Test5833_统计特殊子序列的数目 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().countSpecialSubsequences(
-                new long[]{0, 1, 2, 2}
+                new int[]{0, 1, 2, 2}
         ));
         System.out.println(new Solution().countSpecialSubsequences(
-                new long[]{2, 2, 0, 0}
+                new int[]{2, 2, 0, 0}
         ));
         System.out.println(new Solution().countSpecialSubsequences(
-                new long[]{0, 1, 2, 0, 1, 2}
+                new int[]{0, 1, 2, 0, 1, 2}
         ));
         System.out.println(new Solution().countSpecialSubsequences(
-                new long[]{1, 0, 1, 0, 2}
+                new int[]{1, 0, 1, 0, 2}
         ));
     }
 
