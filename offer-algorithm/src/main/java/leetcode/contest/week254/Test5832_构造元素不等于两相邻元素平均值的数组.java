@@ -1,9 +1,6 @@
 package leetcode.contest.week254;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Test5832_构造元素不等于两相邻元素平均值的数组 {
 
