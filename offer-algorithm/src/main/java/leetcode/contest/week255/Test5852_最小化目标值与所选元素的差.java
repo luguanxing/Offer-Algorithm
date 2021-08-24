@@ -51,11 +51,7 @@ public class Test5852_最小化目标值与所选元素的差 {
                 }
                 set = newSet;
             }
-            int res = Integer.MAX_VALUE;
-            for (int num : set) {
-                res = Math.min(res, Math.abs(num));
-            }
-            return res;
+            return set.stream().mapToInt(Math::abs).min().orElse(0);
         }
     }
 
