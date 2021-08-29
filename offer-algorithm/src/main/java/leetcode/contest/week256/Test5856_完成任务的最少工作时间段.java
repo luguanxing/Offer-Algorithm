@@ -61,7 +61,7 @@ public class Test5856_完成任务的最少工作时间段 {
             }
             // 把第index个任务放到不同sessions中进行枚举
             int task = tasks[index];
-            for (int i = 0; i < sessions.length; i++) {
+            for (int i = 0; i < Math.min(index + 1, sessions.length); i++) { // 任务数比session少的时候不去枚举后面的session
                 if (sessions[i] + task <= sessionTime) {
                     sessions[i] += task;
                     check(tasks, sessionTime, index + 1, sessions);
