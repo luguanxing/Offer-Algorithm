@@ -31,7 +31,6 @@ public class Test5863_统计特殊四元组 {
                             if (nums[a] + nums[b] + nums[c] == nums[d]) {
                                 int[] res = {a,b,c,d};
                                 Arrays.sort(res);
-                                System.out.println(Arrays.toString(res));
                                 set.add(Arrays.toString(res));
                             }
                         }
