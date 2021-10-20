@@ -10,6 +10,25 @@ public class Test0223_矩形面积 {
 
     static class Solution {
         public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+            // 判断是否重叠
+            int duplicateArea;
+            if (ax2 <= bx1 || bx2 <= ax1 || ay2 <= by1 || by2 <= ay1) {
+                duplicateArea = 0;
+            } else {
+                // 计算重叠面积
+                int leftX = Math.max(ax1, bx1);
+                int rightX = Math.min(ax2, bx2);
+                int downY = Math.max(ay1, by1);
+                int upY = Math.min(ay2, by2);
+                duplicateArea = (rightX - leftX) * (upY - downY);
+            }
+            // 结果=叠加面积-重叠面积
+            return (ax2 - ax1) * (ay2 - ay1) + (bx2 - bx1) * (by2 - by1) - duplicateArea;
+        }
+    }
+
+    static class Solution_优化 {
+        public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
             // 计算重叠面积
             int leftX = Math.max(ax1, bx1);
             int rightX = Math.min(ax2, bx2);
