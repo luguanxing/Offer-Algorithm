@@ -31,18 +31,14 @@ public class Test0239_滑动窗口最大值 {
             // 使用单调栈计算窗口
             MyStack stack = new MyStack();
             for (int i = 0; i < nums.length; i++) {
-                if (i < k) {
+                if (i < k - 1) {
                     // 窗口初始化
                     stack.push(nums[i]);
-                    if (i == k - 1) {
-                        // 长度首次达到k时计算第一个窗口结果
-                        resList.add(stack.max());
-                    }
                 } else {
                     // 窗口移动
                     stack.push(nums[i]);
-                    stack.pop();
                     resList.add(stack.max());
+                    stack.pop();
                 }
             }
             // 返回结果
