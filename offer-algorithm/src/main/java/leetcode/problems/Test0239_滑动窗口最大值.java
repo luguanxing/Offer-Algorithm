@@ -5,24 +5,79 @@ import java.util.*;
 public class Test0239_滑动窗口最大值 {
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(new Solution().maxSlidingWindow(
+        System.out.println(Arrays.toString(new Solution_单调栈().maxSlidingWindow(
                 new int[]{1, 3, -1, -3, 5, 3, 6, 7}, 3
         )));
-        System.out.println(Arrays.toString(new Solution().maxSlidingWindow(
+        System.out.println(Arrays.toString(new Solution_单调栈().maxSlidingWindow(
                 new int[]{1}, 1
         )));
-        System.out.println(Arrays.toString(new Solution().maxSlidingWindow(
+        System.out.println(Arrays.toString(new Solution_单调栈().maxSlidingWindow(
                 new int[]{1, -1}, 1
         )));
-        System.out.println(Arrays.toString(new Solution().maxSlidingWindow(
+        System.out.println(Arrays.toString(new Solution_单调栈().maxSlidingWindow(
                 new int[]{9, 11}, 2
         )));
-        System.out.println(Arrays.toString(new Solution().maxSlidingWindow(
+        System.out.println(Arrays.toString(new Solution_单调栈().maxSlidingWindow(
                 new int[]{4, -2}, 2
         )));
-        System.out.println(Arrays.toString(new Solution().maxSlidingWindow(
+        System.out.println(Arrays.toString(new Solution_单调栈().maxSlidingWindow(
                 new int[]{1, 3, 1, 2, 0, 5}, 3
         )));
+    }
+
+    static class Solution_单调栈 {
+        public int[] maxSlidingWindow(int[] nums, int k) {
+            List<Integer> resList = new ArrayList<>();
+            // 使用单调栈计算窗口
+            MyStack stack = new MyStack();
+            for (int i = 0; i < nums.length; i++) {
+                if (i < k) {
+                    // 窗口初始化
+                    stack.push(nums[i]);
+                    if (i == k - 1) {
+                        // 长度首次达到k时计算第一个窗口结果
+                        resList.add(stack.max());
+                    }
+                } else {
+                    // 窗口移动
+                    stack.push(nums[i]);
+                    stack.pop();
+                    resList.add(stack.max());
+                }
+            }
+            // 返回结果
+            int[] res = new int[resList.size()];
+            for (int i = 0; i < resList.size(); i++) {
+                res[i] = resList.get(i);
+            }
+            return res;
+        }
+
+        // 单调栈，保证栈内元素递减
+        class MyStack {
+            Deque<Integer> deque = new ArrayDeque<>();
+
+            public void push(int num) {
+                // 把前面比num小的换成num
+                int cnt = 0;
+                while (!deque.isEmpty() && deque.peekLast() < num) {
+                    deque.pollLast();
+                    cnt++;
+                }
+                for (int i = 1; i <= cnt; i++) {
+                    deque.addLast(num);
+                }
+                deque.addLast(num);
+            }
+
+            public int max() {
+                return deque.peekFirst();
+            }
+
+            public void pop() {
+                deque.pollFirst();
+            }
+        }
     }
 
     static class Solution {
