@@ -24,6 +24,7 @@ public class Test0046_全排列 {
 
         private void dfs(List<Integer> last, List<Integer> current) {
             if (last.isEmpty()) {
+                // 全排列要last一个不剩
                 result.add(new ArrayList<>(current));
                 return;
             }
