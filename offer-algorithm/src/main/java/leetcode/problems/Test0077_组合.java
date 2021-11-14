@@ -13,24 +13,29 @@ public class Test0077_组合 {
     }
 
     static class Solution {
-        private List<List<Integer>> result = new ArrayList<>();
-        private List<Integer> current = new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> current = new ArrayList<>();
 
         public List<List<Integer>> combine(int n, int k) {
-            comb(1, n, k);
+            dfs(1, n, k);
             return result;
         }
 
-        private void comb(int startIndex, int n, int k) {
+        private void dfs(int index, int n, int k) {
             if (current.size() == k) {
                 result.add(new ArrayList<>(current));
                 return;
             }
-            for (int i = startIndex; i <= n; i++) {
-                current.add(i);
-                comb(i + 1, n, k);
-                current.remove(current.size() - 1);
+            if (index > n) {
+                return;
             }
+            // 选择nums[index]
+            current.add(index);
+            dfs(index + 1, n, k);
+            current.remove(current.size() - 1);
+            // 不选择nums[index]
+            dfs(index + 1, n, k);
         }
     }
+
 }
