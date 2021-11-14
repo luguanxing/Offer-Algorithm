@@ -7,15 +7,15 @@ import java.util.List;
 public class Test5927_反转偶数长度组的节点 {
 
     public static void main(String[] args) {
-//        System.out.println(new Solution().reverseEvenLengthGroups(new ListNode(5, new ListNode(2, new ListNode(
-//                6, new ListNode(3, new ListNode(9, new ListNode(1, new ListNode(7,
-//                new ListNode(3, new ListNode(8, new ListNode(4)))))))
-//        )))));
-//        System.out.println(new Solution().reverseEvenLengthGroups(new ListNode(1, new ListNode(1, new ListNode(
-//                0, new ListNode(6)
-//        )))));
-//        System.out.println(new Solution().reverseEvenLengthGroups(new ListNode(2, new ListNode(1))));
-//        System.out.println(new Solution().reverseEvenLengthGroups(new ListNode(8)));
+        System.out.println(new Solution().reverseEvenLengthGroups(new ListNode(5, new ListNode(2, new ListNode(
+                6, new ListNode(3, new ListNode(9, new ListNode(1, new ListNode(7,
+                new ListNode(3, new ListNode(8, new ListNode(4)))))))
+        )))));
+        System.out.println(new Solution().reverseEvenLengthGroups(new ListNode(1, new ListNode(1, new ListNode(
+                0, new ListNode(6)
+        )))));
+        System.out.println(new Solution().reverseEvenLengthGroups(new ListNode(2, new ListNode(1))));
+        System.out.println(new Solution().reverseEvenLengthGroups(new ListNode(8)));
         System.out.println(new Solution().reverseEvenLengthGroups(new ListNode()));
     }
 
