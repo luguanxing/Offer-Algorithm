@@ -10,6 +10,7 @@ public class Test5939_半径为k的子数组平均值 {
         System.out.println(Arrays.toString(new Solution().getAverages(new int[]{8}, 100000)));
         System.out.println(Arrays.toString(new Solution().getAverages(new int[]{1, 1, 1}, 1)));
         System.out.println(Arrays.toString(new Solution().getAverages(new int[]{1, 5, 1}, 1)));
+        System.out.println(Arrays.toString(new Solution().getAverages(new int[]{1, 11, 17, 21, 29}, 4)));
     }
 
     static class Solution {
