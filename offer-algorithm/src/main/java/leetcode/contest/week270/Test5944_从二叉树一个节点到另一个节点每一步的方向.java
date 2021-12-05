@@ -24,6 +24,7 @@ public class Test5944_从二叉树一个节点到另一个节点每一步的方�
     static class Solution {
         private Map<TreeNode, TreeNode> parentMap = new HashMap<>();
         private String res = "";
+        private Set<TreeNode> visited = new HashSet<>();
 
         public String getDirections(TreeNode root, int startValue, int destValue) {
             preOrder(root, null);
@@ -45,14 +46,14 @@ public class Test5944_从二叉树一个节点到另一个节点每一步的方�
         }
 
         private void bfs(TreeNode node, int destValue, StringBuilder sb) {
-            if (node == null || node.val == 0 || !res.isEmpty()) {
+            if (node == null || visited.contains(node) || !res.isEmpty()) {
                 return;
             }
             if (node.val == destValue) {
                 res = sb.toString();
                 return;
             }
-            node.val = 0;
+            visited.add(node);
             bfs(node.left, destValue, sb.append("L"));
             sb.deleteCharAt(sb.length() - 1);
             bfs(node.right, destValue, sb.append("R"));
