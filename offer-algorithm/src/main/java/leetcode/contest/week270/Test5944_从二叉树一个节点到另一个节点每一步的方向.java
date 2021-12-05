@@ -24,28 +24,29 @@ public class Test5944_从二叉树一个节点到另一个节点每一步的方�
     static class Solution {
         private Map<TreeNode, TreeNode> parentMap = new HashMap<>();
         private String res = "";
+        private TreeNode startNode = null;
         private Set<TreeNode> visited = new HashSet<>();
 
         public String getDirections(TreeNode root, int startValue, int destValue) {
-            preOrder(root, null);
-            for (TreeNode node : parentMap.keySet()) {
-                if (node.val == startValue) {
-                    bfs(node, destValue, new StringBuilder());
-                }
-            }
+            preOrder(root, startValue, null);
+            // 参数传入StringBuilder对象引用不要传入String值否则OOM
+            dfs(startNode, destValue, new StringBuilder());
             return res;
         }
 
-        private void preOrder(TreeNode node, TreeNode parent) {
+        private void preOrder(TreeNode node, int startValue, TreeNode parent) {
             if (node == null) {
                 return;
             }
+            if (node.val == startValue) {
+                startNode = node;
+            }
             parentMap.put(node, parent);
-            preOrder(node.left, node);
-            preOrder(node.right, node);
+            preOrder(node.left, startValue, node);
+            preOrder(node.right, startValue, node);
         }
 
-        private void bfs(TreeNode node, int destValue, StringBuilder sb) {
+        private void dfs(TreeNode node, int destValue, StringBuilder sb) {
             if (node == null || visited.contains(node) || !res.isEmpty()) {
                 return;
             }
@@ -54,11 +55,11 @@ public class Test5944_从二叉树一个节点到另一个节点每一步的方�
                 return;
             }
             visited.add(node);
-            bfs(node.left, destValue, sb.append("L"));
+            dfs(node.left, destValue, sb.append("L"));
             sb.deleteCharAt(sb.length() - 1);
-            bfs(node.right, destValue, sb.append("R"));
+            dfs(node.right, destValue, sb.append("R"));
             sb.deleteCharAt(sb.length() - 1);
-            bfs(parentMap.get(node), destValue, sb.append("U"));
+            dfs(parentMap.get(node), destValue, sb.append("U"));
             sb.deleteCharAt(sb.length() - 1);
         }
     }
