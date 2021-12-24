@@ -28,39 +28,6 @@ public class Test1705_吃苹果的最大数目 {
         public int eatenApples(int[] apples, int[] days) {
             int res = 0;
 
-            PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-            for (int i = 0; i < apples.length || !queue.isEmpty(); i++) {
-                if (i < apples.length) {
-                    int count = apples[i];
-                    int day = days[i];
-                    if (count > 0) {
-                        queue.add(new int[]{count, day});
-                    }
-                }
-                if (!queue.isEmpty()) {
-                    res++;
-                    queue.peek()[0]--;
-                    for (int[] apple : queue) {
-                        apple[1]--;
-                    }
-                    while (!queue.isEmpty()) {
-                        if (queue.peek()[0] == 0 || queue.peek()[1] == 0) {
-                            queue.poll();
-                        } else {
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return res;
-        }
-    }
-
-    static class Solution_Apple {
-        public int eatenApples(int[] apples, int[] days) {
-            int res = 0;
-
             PriorityQueue<Apple> queue = new PriorityQueue<>(Comparator.comparingInt(o -> o.day));
             for (int i = 0; i < apples.length || !queue.isEmpty(); i++) {
                 if (i < apples.length) {
