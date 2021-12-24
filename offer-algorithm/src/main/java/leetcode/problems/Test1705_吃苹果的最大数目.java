@@ -37,12 +37,14 @@ public class Test1705_吃苹果的最大数目 {
                         queue.add(new Apple(count, day));
                     }
                 }
+                // 每次优先吃快过期的苹果
                 if (!queue.isEmpty()) {
                     res++;
                     queue.peek().count--;
                     for (Apple apple : queue) {
                         apple.day--;
                     }
+                    // 移除吃完或过期的苹果
                     while (!queue.isEmpty()) {
                         if (queue.peek().day == 0 || queue.peek().count == 0) {
                             queue.poll();
