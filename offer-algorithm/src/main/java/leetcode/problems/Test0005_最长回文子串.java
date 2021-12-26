@@ -13,6 +13,41 @@ public class Test0005_最长回文子串 {
 
     static class Solution {
         public String longestPalindrome(String s) {
+            String maxStr = "";
+            for (int i = 0; i < s.length(); i++) {
+                String str1 = findMax(s, i, i);
+                String str2 = findMax(s, i, i + 1);
+                if (str1.length() > maxStr.length()) {
+                    maxStr = str1;
+                }
+                if (str2.length() > maxStr.length()) {
+                    maxStr = str2;
+                }
+            }
+            return maxStr;
+        }
+
+        private String findMax(String s, int left, int right) {
+            if (left < 0 || right >= s.length() || s.charAt(left) != s.charAt(right)) {
+                return "";
+            }
+            String current = (left == right ? "" + s.charAt(left) : s.charAt(left) + "" + s.charAt(right));
+            while (s.charAt(left) == s.charAt(right)) {
+                left--;
+                right++;
+                if (left < 0 || right >= s.length()) {
+                    break;
+                }
+                if (s.charAt(left) == s.charAt(right)) {
+                    current = s.charAt(left) + current + s.charAt(right);
+                }
+            }
+            return current;
+        }
+    }
+
+    static class Solution_Old {
+        public String longestPalindrome(String s) {
             if (s == null) {
                 return null;
             }
