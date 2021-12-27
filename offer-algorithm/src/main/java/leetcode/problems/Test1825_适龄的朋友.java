@@ -31,9 +31,12 @@ public class Test1825_适龄的朋友 {
                 return 0;
             }
             if (age1 == age2) {
+                // 同一帮人，除了自己外发请求
                 return cnt1 * (cnt1 - 1);
+            } else {
+                // 另一帮人，全部发请求
+                return cnt1 * cnt2;
             }
-            return cnt1 * cnt2;
         }
     }
 
