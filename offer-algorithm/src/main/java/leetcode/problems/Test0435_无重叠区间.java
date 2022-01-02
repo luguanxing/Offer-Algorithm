@@ -19,6 +19,24 @@ public class Test0435_无重叠区间 {
 
     static class Solution {
         public int eraseOverlapIntervals(int[][] intervals) {
+            // 前面越早结束后面机会越大
+            Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
+            // 计算最多不重叠的个数
+            int cnt = 1;
+            int end = intervals[0][1];
+            for (int[] interval : intervals) {
+                if (end <= interval[0]) {
+                    cnt++;
+                    end = interval[1];
+                }
+            }
+            // 剩下的是需要去掉的个数
+            return intervals.length - cnt;
+        }
+    }
+
+    static class Solution2 {
+        public int eraseOverlapIntervals(int[][] intervals) {
             if (intervals.length == 0) {
                 return 0;
             }
