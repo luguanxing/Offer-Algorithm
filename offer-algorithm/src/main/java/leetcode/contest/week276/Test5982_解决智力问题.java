@@ -19,7 +19,7 @@ public class Test5982_解决智力问题 {
             // dp[i]表示从i个问题开始能获取的最大分数
             long[] dp = new long[questions.length];
             for (int i = questions.length - 1; i >= 0; i--) {
-                // dp[i] = max{dp[i+1], dp[i+cd+1]}
+                // 倒序DP：dp[i] = max{dp[i+1], dp[i+cd+1]}
                 int score = questions[i][0];
                 int cd = questions[i][1];
                 long no = i + 1 >= questions.length ? 0 : dp[i + 1];
