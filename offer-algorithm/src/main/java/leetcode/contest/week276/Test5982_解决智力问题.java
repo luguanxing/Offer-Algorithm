@@ -15,6 +15,22 @@ public class Test5982_解决智力问题 {
     }
 
     static class Solution {
+        public long mostPoints(int[][] questions) {
+            // dp[i]表示从i个问题开始能获取的最大分数
+            long[] dp = new long[questions.length];
+            for (int i = questions.length - 1; i >= 0; i--) {
+                // dp[i] = max{dp[i+1], dp[i+cd+1]}
+                int score = questions[i][0];
+                int cd = questions[i][1];
+                long no = i + 1 >= questions.length ? 0 : dp[i + 1];
+                long yes = (i + cd + 1 >= questions.length ? 0 : dp[i + cd + 1]) + score;
+                dp[i] = Math.max(no, yes);
+            }
+            return dp[0];
+        }
+    }
+
+    static class Solution_DFS {
         int max = 0;
         int[] indexScore;
 
@@ -29,39 +45,10 @@ public class Test5982_解决智力问题 {
                 max = Math.max(max, currentScore);
                 return;
             }
-            if (indexScore[index] > currentScore) {
-                return;
-            } else {
-                indexScore[index] = currentScore;
-            }
             int score = questions[index][0];
             int cd = questions[index][1];
             dfs(questions, index + 1, currentScore);
             dfs(questions, index + cd + 1, currentScore + score);
-        }
-    }
-
-    static class Solution_TLE {
-        int max = 0;
-
-        public long mostPoints(int[][] questions) {
-            dfs(questions, 0, 0, 0);
-            return max;
-        }
-
-        private void dfs(int[][] questions, int index, int currentScore, int currentCd) {
-            if (index == questions.length) {
-                max = Math.max(max, currentScore);
-                return;
-            }
-            if (currentCd > 0) {
-                dfs(questions, index + 1, currentScore, currentCd - 1);
-            } else {
-                int score = questions[index][0];
-                int cd = questions[index][1];
-                dfs(questions, index + 1, currentScore, 0);
-                dfs(questions, index + 1, currentScore + score, cd);
-            }
         }
     }
 
