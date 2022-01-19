@@ -19,6 +19,20 @@ public class Test0219_存在重复元素II {
 
     static class Solution {
         public boolean containsNearbyDuplicate(int[] nums, int k) {
+            Map<Integer, Integer> lastIndexMap = new HashMap<>();
+            for (int i = 0; i < nums.length; i++) {
+                int num = nums[i];
+                if (lastIndexMap.containsKey(num) && i - lastIndexMap.get(num) <= k) {
+                    return true;
+                }
+                lastIndexMap.put(num, i);
+            }
+            return false;
+        }
+    }
+
+    static class Solution_窗口 {
+        public boolean containsNearbyDuplicate(int[] nums, int k) {
             Map<Integer, Integer> cntMap = new HashMap<>();
             for (int i = 0; i < nums.length; i++) {
                 if (i < k) {
