@@ -1,4 +1,4 @@
-package offer;
+package leetcode.problems;
 
 public class Test2104_子数组范围和 {
 
