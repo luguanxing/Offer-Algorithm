@@ -1,10 +1,8 @@
 package leetcode.contest.week283;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Stack;
 
 public class Test6019_替换数组中的非互质数 {
 
@@ -16,40 +14,33 @@ public class Test6019_替换数组中的非互质数 {
     }
 
     static class Solution {
-        Map<String, Integer> gcdMap = new HashMap<>();
-
         public List<Integer> replaceNonCoprimes(int[] nums) {
-            List<Integer> list = Arrays.stream(nums).boxed().collect(Collectors.toList());
-            int index = 0;
-            while (index + 1 < list.size()) {
-                int current = list.get(index);
-                int next = list.get(index + 1);
-                int gcd = gcd(current, next);
-                if (gcd > 1) {
-                    long lcm = ((long) current * next) / gcd;
-                    list.remove(index);
-                    list.remove(index);
-                    list.add(index, (int) lcm);
-                    if (index - 1 >= 0 && gcd(list.get(index), list.get(index - 1)) > 1) {
-                        index--;
+            Stack<Integer> stack = new Stack<>();
+            stack.push(nums[0]);
+            for (int i = 1; i < nums.length; i++) {
+                int current = nums[i];
+                // 每个数放入前需要先和栈内的元素尝试化简
+                while (!stack.isEmpty()) {
+                    int last = stack.peek();
+                    int gcd = gcd(last, current);
+                    if (gcd > 1) {
+                        stack.pop();
+                        current = (int)((long) current * last / gcd);
+                    } else {
+                        break;
                     }
-                } else {
-                    index++;
                 }
+                // 化简完成后再放入栈中
+                stack.push(current);
             }
-            return list;
+            return new ArrayList<>(stack);
         }
 
         private int gcd(int a, int b) {
-            if (gcdMap.containsKey(a + "," + b)) {
-                return gcdMap.get(a + "," + b);
-            }
             if (b == 0) {
                 return a;
             } else {
-                int gcd = gcd(b, a % b);
-                gcdMap.put(a + "," + b, gcd);
-                return gcd;
+                return gcd(b, a % b);
             }
         }
     }
