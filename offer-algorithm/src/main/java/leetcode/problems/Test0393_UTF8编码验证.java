@@ -3,9 +3,9 @@ package leetcode.problems;
 public class Test0393_UTF8编码验证 {
 
     public static void main(String[] args) {
-//        System.out.println(new Solution().validUtf8(new int[]{197, 130, 1}));
-//        System.out.println(new Solution().validUtf8(new int[]{235, 140, 4}));
-//        System.out.println(new Solution().validUtf8(new int[]{255}));
+        System.out.println(new Solution().validUtf8(new int[]{197, 130, 1}));
+        System.out.println(new Solution().validUtf8(new int[]{235, 140, 4}));
+        System.out.println(new Solution().validUtf8(new int[]{255}));
         System.out.println(new Solution().validUtf8(new int[]{39, 89, 227, 83, 132, 95, 10, 0}));
     }
 
