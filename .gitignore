@@ -2,3 +2,6 @@
 /offer-algorithm/target/*
 *.DS_Store
 offer-algorithm/offer-algorithm.iml
+.idea
+*.iml
+offer-algorithm/offer-algorithm.iml
