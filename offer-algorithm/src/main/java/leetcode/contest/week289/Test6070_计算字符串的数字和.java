@@ -1,4 +1,4 @@
-package leetcode.contest.week298;
+package leetcode.contest.week289;
 
 public class Test6070_计算字符串的数字和 {
 
