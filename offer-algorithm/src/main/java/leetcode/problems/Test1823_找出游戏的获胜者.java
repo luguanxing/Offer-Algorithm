@@ -11,7 +11,7 @@ public class Test1823_找出游戏的获胜者 {
         System.out.println(new Solution().findTheWinner(6, 5));
     }
 
-    static     class Solution {
+    static class Solution {
         public int findTheWinner(int n, int k) {
             List<Integer> list = Stream
                     .iterate(1, i -> i + 1)
