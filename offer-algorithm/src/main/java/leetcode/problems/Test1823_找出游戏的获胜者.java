@@ -24,9 +24,7 @@ public class Test1823_找出游戏的获胜者 {
             while (leftCnt > 1) {
                 currentIndex++;
                 currentIndex %= n;
-                if (list.get(currentIndex) == -1) {
-                    continue;
-                } else {
+                if (list.get(currentIndex) != -1) {
                     currentCnt++;
                     if (currentCnt == k) {
                         currentCnt = 0;
@@ -35,6 +33,7 @@ public class Test1823_找出游戏的获胜者 {
                     }
                 }
             }
+            // 找到最后剩下的那个
             for (int index : list) {
                 if (index != -1) {
                     return index;
