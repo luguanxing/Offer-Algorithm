@@ -31,7 +31,7 @@ public class Test0713_乘积小于K的子数组 {
     static class Solution_DP {
         public int numSubarrayProductLessThanK(int[] nums, int k) {
             // dp[i]表示以nums[i]结尾时的子数组数,
-            // dp[i] = dp[i-1] + left*(left+1)/2，其中left表示以nums[i]结尾的向左延伸的乘积不超过k最长长度
+            // dp[i] = dp[i-1] + leftRange，其中leftRange表示以nums[i]结尾的向左延伸的乘积不超过k最长长度
             int len = nums.length;
             int[] dp = new int[len];
             dp[0] = nums[0] < k ? 1 : 0;
