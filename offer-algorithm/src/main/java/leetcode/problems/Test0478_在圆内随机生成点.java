@@ -3,7 +3,7 @@ package leetcode.problems;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Tedt0478_在圆内随机生成点 {
+public class Test0478_在圆内随机生成点 {
 
     public static void main(String[] args) {
         Solution solution = new Solution(1.0, 0.0, 0.0);
