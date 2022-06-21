@@ -13,33 +13,37 @@ public class Test5218_个位数字为K的整数之和 {
     }
 
     static class Solution {
-        Set<Integer> parts = new HashSet<>();
-        Map<Integer, Integer> numMap = new HashMap<>();
+        // 存储尾数为k的所有数
+        List<Integer> parts = new ArrayList<>();
+        // 存储能拼出的数和拼出它们对应的最少次数
+        Map<Integer, Integer> numCntMap = new HashMap<>();
 
         public int minimumNumbers(int num, int k) {
             if (num == 0) {
                 return 0;
             }
+            // 初始化
             Queue<Integer> queue = new ArrayDeque<>();
             for (int i = 1; i <= num; i++) {
                 if (i % 10 == k) {
-                    numMap.put(i, 1);
-                    parts.add(i);
                     queue.add(i);
+                    parts.add(i);
+                    numCntMap.put(i, 1);
                 }
             }
+            // 使用BFS生成范围内所有可能的结果
             while (!queue.isEmpty()) {
                 int currentNum = queue.poll();
                 for (int part : parts) {
                     int nextNum = part + currentNum;
-                    int nextNumLevl = numMap.get(currentNum) + 1;
-                    if (nextNum <= num && !numMap.containsKey(nextNum)) {
+                    int nextNumCnt = numCntMap.get(currentNum) + 1;
+                    if (nextNum <= num && !numCntMap.containsKey(nextNum)) {
                         queue.add(nextNum);
-                        numMap.put(nextNum, nextNumLevl);
+                        numCntMap.put(nextNum, nextNumCnt);
                     }
                 }
             }
-            return numMap.getOrDefault(num, -1);
+            return numCntMap.getOrDefault(num, -1);
         }
     }
 
