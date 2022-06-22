@@ -1,10 +1,5 @@
 package leetcode.problems;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class Test0513_找树左下角的值 {
 
     public static void main(String[] args) {
@@ -32,21 +27,22 @@ public class Test0513_找树左下角的值 {
     }
 
     static class Solution {
-        Map<Integer, List<Integer>> map = new HashMap<>();
+        int maxLevel = -1;
+        int res = -1;
 
         public int findBottomLeftValue(TreeNode root) {
             dfs(root, 0);
-            int maxLevel = map.keySet().stream().reduce(Math::max).get();
-            return map.get(maxLevel).get(0);
+            return res;
         }
 
         private void dfs(TreeNode root, int currentLevel) {
             if (root == null) {
                 return;
             }
-            List<Integer> list = map.getOrDefault(currentLevel, new ArrayList<>());
-            list.add(root.val);
-            map.put(currentLevel, list);
+            if (currentLevel > maxLevel) {
+                maxLevel = currentLevel;
+                res = root.val;
+            }
             dfs(root.left, currentLevel + 1);
             dfs(root.right, currentLevel + 1);
         }
