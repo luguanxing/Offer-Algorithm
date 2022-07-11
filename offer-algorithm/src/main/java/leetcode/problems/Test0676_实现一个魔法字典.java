@@ -1,6 +1,5 @@
 package leetcode.problems;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,24 +39,15 @@ public class Test0676_实现一个魔法字典 {
                 return false;
             }
             int diffCnt = 0;
-            int diffIndex = -1;
             for (int i = 0; i < word.length(); i++) {
                 if (word.charAt(i) != searchWord.charAt(i)) {
                     diffCnt++;
-                    diffIndex = i;
                 }
             }
             if (diffCnt != 1) {
                 return false;
             }
-            char[] wordChars = word.toCharArray();
-            for (char c = 'a'; c <= 'z'; c++) {
-                wordChars[diffIndex] = c;
-                if (searchWord.equals(new String(wordChars))) {
-                    return true;
-                }
-            }
-            return false;
+            return true;
         }
     }
 
