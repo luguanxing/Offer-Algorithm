@@ -11,12 +11,16 @@ public class Test6134_找到离给定两个节点最近的节点 {
         System.out.println(new Solution().closestMeetingNode(
                 new int[]{1, 2, -1}, 0, 2
         ));
+        System.out.println(new Solution().closestMeetingNode(
+                new int[]{14, 6, 6, 6, 11, 8, 15, 15, 1, 13, 17, 17, 2, 16, 15, 11, 7, 0}, 3, 10
+        ));
     }
 
     static class Solution {
         public int closestMeetingNode(int[] edges, int node1, int node2) {
             Map<Integer, Integer> distanceMap1 = getDistanceMap(node1, edges);
             Map<Integer, Integer> distanceMap2 = getDistanceMap(node2, edges);
+
             int minStep = Integer.MAX_VALUE;
             int minNode = -1;
             for (int target : distanceMap1.keySet()) {
@@ -34,7 +38,7 @@ public class Test6134_找到离给定两个节点最近的节点 {
         }
 
         private Map<Integer, Integer> getDistanceMap(int node, int[] edges) {
-            Map<Integer, Integer> distanceMap = new HashMap<>();
+            Map<Integer, Integer> distanceMap = new TreeMap<>();
             Queue<Integer> queue = new ArrayDeque<>();
             Set<Integer> visited = new HashSet<>();
             int distance = 0;
