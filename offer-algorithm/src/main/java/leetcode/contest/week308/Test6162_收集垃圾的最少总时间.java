@@ -25,16 +25,12 @@ public class Test6162_收集垃圾的最少总时间 {
         private int get(String[] garbage, int[] travel, char target) {
             int cnt = 0;
             int cost = 0;
-            int firstIdx = -1;
             int lastIdx = -1;
             for (int i = 0; i < garbage.length; i++) {
                 String g = garbage[i];
                 for (char c : g.toCharArray()) {
                     if (c == target) {
                         cnt++;
-                        if (firstIdx == -1) {
-                            firstIdx = i;
-                        }
                         lastIdx = i;
                     }
                 }
