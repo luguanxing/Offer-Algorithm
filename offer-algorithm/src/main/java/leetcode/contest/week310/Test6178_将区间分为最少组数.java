@@ -19,7 +19,7 @@ public class Test6178_将区间分为最少组数 {
 
     static class Solution {
         public int minGroups(int[][] intervals) {
-            // 找重叠最厉害的区间
+            // 找重叠最最多的区间
             int MAX = 1000005;
             int[] diff = new int[MAX];
             for (int interval[] : intervals) {
