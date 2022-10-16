@@ -13,6 +13,29 @@ public class Test6207_统计定界子数组的数目 {
 
     static class Solution {
         public long countSubarrays(int[] nums, int minK, int maxK) {
+            // 记住最后的minK和maxK和不在范围内的数下标
+            long res = 0;
+            int minKIndex = -1, maxKIndex = -1, outIndex = -1;
+            // 枚举右端点，从[outIndex, Math.min(minKIndex, maxKIndex)]之间的数都是符合范围的数
+            for (int i = 0; i < nums.length; i++) {
+                int num = nums[i];
+                if (num == minK) {
+                    minKIndex = i;
+                }
+                if (num == maxK) {
+                    maxKIndex = i;
+                }
+                if (num < minK || num > maxK) {
+                    outIndex = i;
+                }
+                res += Math.max(0, Math.min(minKIndex, maxKIndex) - outIndex);
+            }
+            return res;
+        }
+    }
+
+    static class Solution_暴力 {
+        public long countSubarrays(int[] nums, int minK, int maxK) {
             int len = nums.length;
             int res = 0;
             for (int window = 1; window <= len; window++) {
