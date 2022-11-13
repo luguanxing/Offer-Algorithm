@@ -20,8 +20,42 @@ public class Test6234_最小公倍数为K的子数组数目 {
         ));
     }
 
-
     static class Solution {
+        public int subarrayLCM(int[] nums, int k) {
+            int len = nums.length;
+            int res = 0;
+            for (int i = 0; i < len; i++) {
+                int lcm = nums[i];
+                for (int j = i; j < len; j++) {
+                    lcm = getLcm(lcm, nums[j]);
+                    if (lcm > k) {
+                        break;
+                    }
+                    if (lcm == k) {
+                        res++;
+                    }
+                }
+            }
+            return res;
+        }
+
+        public int getGcd(int m, int n) {
+            while (n > 0) {
+                int temp = m % n;
+                m = n;
+                n = temp;
+            }
+            return m;
+        }
+
+        public int getLcm(int m, int n) {
+            int gcd = getGcd(m, n);
+            return m * n / gcd;
+        }
+    }
+
+
+    static class Solution_DP {
         public int subarrayLCM(int[] nums, int k) {
             int len = nums.length;
             //  dp[i][j]是子数组nums[i..j]的最大公因数
