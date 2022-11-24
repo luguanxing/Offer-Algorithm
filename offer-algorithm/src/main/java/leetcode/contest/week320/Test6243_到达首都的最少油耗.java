@@ -33,21 +33,13 @@ public class Test6243_到达首都的最少油耗 {
                 list2.add(from);
                 map.put(to, list2);
             }
-            // DFS，计算以每个节点为根节点的子树节点数目。
-            // 对于某个节点cur，如果它的某个子树next有size个节点，
-            // 那么这size个节点的城市代表汇聚到节点cur一起前往cur父节点时，耗油量为(size+seats-1)/seats。
-            // 按照这个思路计算城市代表到达各个节点的油耗，最后返回0城市的油耗即可
-            visited.add(0);
-            if (!map.containsKey(0)) {
-                return 0;
-            }
-            for (int node : map.get(0)) {
-                int nodesCnt = getNodesCnt(node, seats);
-                res += (nodesCnt + seats - 1) / seats;
-            }
+            // 对于某个节点cur，如果它有size个子节点，
+            // 那么这size个节点到达cur父节点时，因为只有一条路来往，所有耗油量为(size+seats-1)/seats。
+            getNodesCnt(0, seats);
             return res;
         }
 
+        // DFS，计算以每个节点为根节点的子树节点数目，同时将其子节点到该节点的耗油量算入总量中
         private int getNodesCnt(int current, int seats) {
             visited.add(current);
             int totalCnt = 1;
