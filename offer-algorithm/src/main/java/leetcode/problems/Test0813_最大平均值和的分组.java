@@ -15,7 +15,7 @@ public class Test0813_最大平均值和的分组 {
         public double largestSumOfAverages(int[] nums, int K) {
             int len = nums.length;
             // 假设dp[i][K]表示前i个数分k组的最大值
-            // 假设sum[i]表示前i个数的和
+            // 假设sum[i]表示前i个数的和, sum[i]-sum[j]表示从j+1到i的和
             // dp[i][K] = max(dp[i][K], dp[j][K-1] + sum(j-i)/(i-j));
             double[][] dp = new double[len + 1][K + 1];
             double[] sum = new double[len + 1];
