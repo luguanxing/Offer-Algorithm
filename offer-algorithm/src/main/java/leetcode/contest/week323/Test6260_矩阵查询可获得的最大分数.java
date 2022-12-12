@@ -15,7 +15,7 @@ public class Test6260_矩阵查询可获得的最大分数 {
         )));
     }
 
-    static class Solution_存储 {
+    static class Solution {
         int[][] grid;
         int h;
         int w;
@@ -24,11 +24,20 @@ public class Test6260_矩阵查询可获得的最大分数 {
             this.grid = grid;
             this.h = grid.length;
             this.w = grid[0].length;
-            // 把queries排序，这样结果也只会递增
-            Arrays.sort(queries);
-            int[] res = new int[queries.length];
-            for (int i = 0; i < queries.length; i++) {
-                res[i] = query(queries[i]);
+            // 把queries排序，这样结果也只会递增，同时存储对应结果
+            int k = queries.length;
+            int[] sQueries = queries.clone();
+            Arrays.sort(sQueries);
+            Map<Integer, Integer> kvMap = new HashMap<>();
+            for (int i = 0; i < k; i++) {
+                int key = sQueries[i];
+                int value = query(sQueries[i]);
+                kvMap.put(key, value);
+            }
+            // 按原顺序还原对应结果
+            int[] res = new int[k];
+            for (int i = 0; i < k; i++) {
+                res[i] = kvMap.get(queries[i]);
             }
             return res;
         }
