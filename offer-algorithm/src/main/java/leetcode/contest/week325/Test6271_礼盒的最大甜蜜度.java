@@ -42,11 +42,7 @@ public class Test6271_礼盒的最大甜蜜度 {
                     min = mid + 1;
                 }
             }
-            int ans = max;
-            while (getGroupCnt(diff, ans) < k) {
-                ans--;
-            }
-            return ans;
+            return max - 1;
         }
 
         private int getGroupCnt(int[] diff, int mid) {
