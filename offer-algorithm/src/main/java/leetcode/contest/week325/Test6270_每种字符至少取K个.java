@@ -12,13 +12,7 @@ public class Test6270_每种字符至少取K个 {
             char[] chars = s.toCharArray();
             int[] cnt = new int[3];
             for (char c : chars) {
-                if (c == 'a') {
-                    cnt[0]++;
-                } else if (c == 'b') {
-                    cnt[1]++;
-                } else {
-                    cnt[2]++;
-                }
+                cnt[c - 'a']++;
             }
             if (cnt[0] < k || cnt[1] < k || cnt[2] < k) {
                 return -1;
@@ -29,7 +23,6 @@ public class Test6270_每种字符至少取K个 {
             int left = 0;
             int right = 0;
             while (left < chars.length) {
-                // 如果右边未到尽头，不断先向右探测片段，如果大于目标sum-x则左边移动直到结束
                 if (right < chars.length) {
                     currentCnt[chars[right++] - 'a']++;
                 }
