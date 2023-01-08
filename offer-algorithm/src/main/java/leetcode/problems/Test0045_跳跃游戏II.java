@@ -1,14 +1,58 @@
 package leetcode.problems;
 
+import java.util.Arrays;
+
 public class Test0045_跳跃游戏II {
 
     public static void main(String[] args) {
         System.out.println(new Solution().jump(new int[]{2, 3, 1, 1, 4}));
         System.out.println(new Solution().jump(new int[]{3, 2, 1, 0, 5}));
+        System.out.println(new Solution().jump(new int[]{2, 3, 0, 1, 4}));
         System.out.println(new Solution().jump(new int[]{0}));
     }
 
     static class Solution {
+        public int jump(int[] nums) {
+            // 每次找最远能跳的距离，记录次数
+            int len = nums.length;
+            int maxPosition = 0;
+            int currenEnd = 0;
+            int cnt = 0;
+            for (int i = 0; i < len - 1; i++) {
+                int distance = nums[i];
+                maxPosition = Math.max(maxPosition, i + distance);
+                if (i >= maxPosition) {
+                    return -1;
+                }
+                if (i == currenEnd) {
+                    cnt++;
+                    currenEnd = maxPosition;
+                }
+            }
+            return cnt;
+        }
+    }
+
+    static class Solution_DP {
+        public int jump(int[] nums) {
+            // dp[i]表示跳到i处的最小步骤
+            // dp[i] = min(dp[j] + 1)，其中j可跳到i
+            int len = nums.length;
+            int[] dp = new int[len];
+            Arrays.fill(dp, Integer.MAX_VALUE);
+            dp[0] = 0;
+            for (int i = 0; i < len; i++) {
+                for (int j = 0; j < i; j++) {
+                    if (j + nums[j] >= i) {
+                        dp[i] = Math.min(dp[i], dp[j] + 1);
+                    }
+                }
+            }
+            return dp[len - 1] == Integer.MAX_VALUE ? -1 : dp[len - 1];
+        }
+    }
+
+    static class Solution_旧 {
         public int jump(int[] nums) {
             if (nums == null || nums.length == 0 || nums.length == 1) {
                 return 0;
