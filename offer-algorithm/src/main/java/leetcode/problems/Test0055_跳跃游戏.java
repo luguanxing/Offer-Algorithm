@@ -16,6 +16,24 @@ public class Test0055_跳跃游戏 {
             if (nums == null || nums.length == 0) {
                 return false;
             }
+            int len = nums.length;
+            int max = 0;
+            for (int i = 0; i < len; i++) {
+                if (i > max) {
+                    return false;
+                }
+                int distance = nums[i];
+                max = Math.max(max, i + distance);
+            }
+            return max >= len - 1;
+        }
+    }
+
+    static class Solution_旧 {
+        public boolean canJump(int[] nums) {
+            if (nums == null || nums.length == 0) {
+                return false;
+            }
             if (nums.length == 1) {
                 return true;
             }
