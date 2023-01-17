@@ -1,6 +1,7 @@
 package leetcode.problems;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,9 +21,45 @@ public class Test1813_句子相似性III {
         System.out.println(new Solution().areSentencesSimilar("B", "ByI BMyQIqce b bARkkMaABi vlR RLHhqjNzCN oXvyK zRXR q ff B yHS OD KkvJA P JdWksnH"));
         System.out.println(new Solution().areSentencesSimilar("Db C", "C Db"));
         System.out.println(new Solution().areSentencesSimilar("AaA AA", "a AaA AA A"));
+        System.out.println(new Solution().areSentencesSimilar("c h p Ny", "c BDQ r h p Ny"));
     }
 
     static class Solution {
+        public boolean areSentencesSimilar(String sentence1, String sentence2) {
+            List<String> words1 = Arrays.stream(sentence1.split(" ")).collect(Collectors.toList());
+            List<String> words2 = Arrays.stream(sentence2.split(" ")).collect(Collectors.toList());
+            List<String> frontWords = new ArrayList<>();
+            List<String> backWords = new ArrayList<>();
+            while (!words1.isEmpty() && !words2.isEmpty()) {
+                String word1 = words1.get(0);
+                String word2 = words2.get(0);
+                if (word1.equals(word2)) {
+                    words1.remove(0);
+                    words2.remove(0);
+                    frontWords.add(word1);
+                } else {
+                    break;
+                }
+            }
+            while (!words1.isEmpty() && !words2.isEmpty()) {
+                String word1 = words1.get(words1.size() - 1);
+                String word2 = words2.get(words2.size() - 1);
+                if (word1.equals(word2)) {
+                    backWords.add(0, word1);
+                    words1.remove(words1.size() - 1);
+                    words2.remove(words2.size() - 1);
+                } else {
+                    break;
+                }
+            }
+            List<String> commonWords = new ArrayList<>(frontWords);
+            commonWords.addAll(backWords);
+            String commonWord = String.join(" ", commonWords);
+            return commonWord.equals(sentence1) || commonWord.equals(sentence2);
+        }
+    }
+
+    static class Solution_枚举 {
         public boolean areSentencesSimilar(String sentence1, String sentence2) {
             if (sentence1.length() > sentence2.length()) {
                 String tmp = sentence1;
