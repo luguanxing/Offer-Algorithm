@@ -18,15 +18,15 @@ public class Test1798_你能构造出连续值的最大数目 {
         public int getMaximumConsecutive(int[] coins) {
             // 从小到大排序
             Arrays.sort(coins);
-            // 若x以及之前的都能完成，那么遇上新的硬币v时v+x以及之前都能完成
-            int max = 1;
+            // 若current以及之前的都能完成，那么遇上新的硬币coin时若current>=coin则current+coin以及之前都能完成
+            int current = 1;
             for (int coin : coins) {
-                if (max < coin) {
+                if (current < coin) {
                     break;
                 }
-                max = max + coin;
+                current = current + coin;
             }
-            return max;
+            return current;
         }
     }
 
