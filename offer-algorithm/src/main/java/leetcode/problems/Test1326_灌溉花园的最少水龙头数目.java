@@ -24,11 +24,14 @@ public class Test1326_灌溉花园的最少水龙头数目 {
             int currentRight = 0;
             int nextRight = 0;
             for (int i = 0; i < n; i++) {
+                // 路程中不断更新最远下一条
                 nextRight = Math.max(nextRight, maxReach[i]);
                 if (i >= currentRight) {
+                    // 没有下一跳了，返回失败
                     if (nextRight == currentRight) {
                         return -1;
                     }
+                    // 更新下一跳，次数加一
                     currentRight = nextRight;
                     res++;
                 }
