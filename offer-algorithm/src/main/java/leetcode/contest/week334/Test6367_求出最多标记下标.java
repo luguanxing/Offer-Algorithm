@@ -14,7 +14,7 @@ public class Test6367_求出最多标记下标 {
         public int maxNumOfMarkedIndices(int[] nums) {
             // 不断使用二分尝试出最大的k对
             Arrays.sort(nums);
-            int left = 0, right = nums.length / 2 + 1;
+            int left = 0, right = (nums.length / 2) + 1;
             while (left < right) {
                 int mid = left + (right - left) / 2;
                 if (isOk(nums, mid)) {
@@ -27,6 +27,7 @@ public class Test6367_求出最多标记下标 {
 
         }
 
+        // 判断k对是否合适的标准是：排序后前K对和后k对是否满足两倍关系
         private boolean isOk(int[] nums, int k) {
             for (int i = 0; i < k; i++) {
                 if (nums[i] * 2 > nums[nums.length - k + i]) {
