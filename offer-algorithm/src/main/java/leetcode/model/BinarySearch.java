@@ -6,7 +6,7 @@ public class BinarySearch {
 
     public static void main(String[] args) {
         // 二分查找模板
-        // 自带库吗，找到时返回index，找不到时(-index)-1表示应在的位置
+        // 自带库，找到时返回index，找不到时(-index)-1表示应在的位置
         System.out.println(Arrays.binarySearch(new int[]{1, 2, 5, 6, 8}, 4));
         System.out.println(Arrays.binarySearch(new int[]{1, 2, 5, 6, 8}, 6));
         System.out.println(Arrays.binarySearch(new int[]{1, 2, 5, 6, 8}, 7));
