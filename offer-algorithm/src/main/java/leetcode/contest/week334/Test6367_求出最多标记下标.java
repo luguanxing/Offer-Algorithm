@@ -27,7 +27,7 @@ public class Test6367_求出最多标记下标 {
 
         }
 
-        // 判断k对是否合适的标准是：排序后前K对和后k对是否满足两倍关系
+        // 快速判断k对能否满足的标准是：排序后前K对和后k对是否满足两倍关系
         private boolean isOk(int[] nums, int k) {
             for (int i = 0; i < k; i++) {
                 if (nums[i] * 2 > nums[nums.length - k + i]) {
