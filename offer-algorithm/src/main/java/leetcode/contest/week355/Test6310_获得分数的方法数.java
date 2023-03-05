@@ -21,6 +21,8 @@ public class Test6310_获得分数的方法数 {
         public int waysToReachTarget(int target, int[][] types) {
             int MOD = 1000000007;
             Arrays.sort(types, Comparator.comparingInt(o -> o[1]));
+            // dp(i, m)前i件物品拿m分的方法数
+            // dp(i, m) = dp(i-1, m-数量范围*分数);
             int[][] dp = new int[55][55 * 55];
             for (int i = 0; i <= types[0][0]; i++) {
                 dp[0][i * types[0][1]] = 1;
@@ -28,9 +30,6 @@ public class Test6310_获得分数的方法数 {
             for (int i = 1; i < types.length; i++) {
                 int count = types[i][0];
                 int score = types[i][1];
-//                for (int j = 0; j <= count; j++) {
-//                    dp[i][j * score] = 1;
-//                }
                 for (int s = 0; s < 55 * 55; s++) {
                     for (int j = 0; j <= count; j++) {
                         if (s - j * score >= 0) {
