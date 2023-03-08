@@ -18,7 +18,7 @@ public class Test47_礼物的最大价值 {
                 for (int x = 0; x < width; x++) {
                     int up = y == 0 ? 0 : grid[y - 1][x];
                     int left = x == 0 ? 0 : grid[y][x - 1];
-                    grid[y][x] = Math.max(up, left) + grid[y][x];
+                    grid[y][x] += Math.max(up, left);
                 }
             }
             return grid[height - 1][width - 1];
