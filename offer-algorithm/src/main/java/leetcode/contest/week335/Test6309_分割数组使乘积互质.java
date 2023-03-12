@@ -1,4 +1,4 @@
-package leetcode.contest.week355;
+package leetcode.contest.week335;
 
 public class Test6309_分割数组使乘积互质 {
 

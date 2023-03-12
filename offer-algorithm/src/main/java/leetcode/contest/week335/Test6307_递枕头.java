@@ -1,4 +1,4 @@
-package leetcode.contest.week355;
+package leetcode.contest.week335;
 
 public class Test6307_递枕头 {
 
