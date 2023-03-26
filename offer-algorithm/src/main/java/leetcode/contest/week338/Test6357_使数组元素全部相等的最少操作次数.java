@@ -60,7 +60,6 @@ public class Test6357_使数组元素全部相等的最少操作次数 {
 
         private int rightBound(int[] nums, int target) {
             int left = 0, right = nums.length;
-
             while (left < right) {
                 int mid = left + (right - left) / 2;
                 if (nums[mid] <= target) {
