@@ -15,14 +15,15 @@ public class Test6355_质数减法运算 {
         TreeSet<Integer> primes = new TreeSet<>();
 
         public boolean primeSubOperation(int[] nums) {
+            // 生成1-1000的质数
             generatePrimes();
-            nums[0] -= getLatestPrime(nums[0]);
+            // 使用贪心，每个都尝试减去最大的质数，但同时要比前面的大
+            Integer firstPrime = primes.lower(nums[0]);
+            nums[0] -= firstPrime == null ? 0 : firstPrime;
             for (int i = 1; i < nums.length; i++) {
                 int maxP = 0;
-                for (int p : primes) {
-                    if (nums[i] - p > nums[i - 1]) {
-                        maxP = p;
-                    }
+                if (primes.lower(nums[i] - nums[i - 1]) != null) {
+                    maxP = primes.lower(nums[i] - nums[i - 1]);
                 }
                 if (nums[i] - maxP <= nums[i - 1]) {
                     return false;
@@ -30,10 +31,6 @@ public class Test6355_质数减法运算 {
                 nums[i] -= maxP;
             }
             return true;
-        }
-
-        private int getLatestPrime(int num) {
-            return primes.lower(num) == null ? 0 : primes.lower(num);
         }
 
         private void generatePrimes() {
