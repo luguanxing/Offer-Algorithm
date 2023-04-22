@@ -15,7 +15,7 @@ public class Test3_最强祝福力场 {
     static class Solution {
         public int fieldOfGreatestBlessing(int[][] forceField) {
             int max = 0;
-            List<double[]> intersections = new ArrayList<>();
+            List<double[]> intersectionCorners = new ArrayList<>();
             for (int[] field1 : forceField) {
                 double x1 = field1[0];
                 double y1 = field1[1];
@@ -26,24 +26,23 @@ public class Test3_最强祝福力场 {
                     double hf2 = field2[2] / 2.0;
                     double left = Math.max(x1 - hf1, x2 - hf2);
                     double right = Math.min(x1 + hf1, x2 + hf2);
-                    double top = Math.max(y1 - hf1, y2 - hf2);
-                    double bottom = Math.min(y1 + hf1, y2 + hf2);
-                    if (left <= right && top <= bottom) {
-                        intersections.add(new double[]{left, top});
-                        intersections.add(new double[]{left, bottom});
-                        intersections.add(new double[]{right, top});
-                        intersections.add(new double[]{right, bottom});
+                    double top = Math.min(y1 + hf1, y2 + hf2);
+                    double bottom = Math.max(y1 - hf1, y2 - hf2);
+                    if (left <= right && bottom <= top) {
+                        intersectionCorners.add(new double[]{left, bottom});
+                        intersectionCorners.add(new double[]{left, top});
+                        intersectionCorners.add(new double[]{right, bottom});
+                        intersectionCorners.add(new double[]{right, top});
                     }
                 }
             }
-            for (double[] intersection : intersections) {
+            for (double[] ic : intersectionCorners) {
                 int current = 0;
                 for (int[] field : forceField) {
                     double x = field[0];
                     double y = field[1];
                     double half = field[2] / 2.0;
-                    if (x - half <= intersection[0] && intersection[0] <= x + half &&
-                            y - half <= intersection[1] && intersection[1] <= y + half) {
+                    if (x - half <= ic[0] && ic[0] <= x + half && y - half <= ic[1] && ic[1] <= y + half) {
                         current++;
                     }
                 }
