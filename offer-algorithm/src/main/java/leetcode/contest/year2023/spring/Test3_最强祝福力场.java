@@ -15,7 +15,7 @@ public class Test3_最强祝福力场 {
     static class Solution {
         public int fieldOfGreatestBlessing(int[][] forceField) {
             int max = 0;
-            List<double[]> intersectionCorners = new ArrayList<>();
+            List<double[]> intersectionPoints = new ArrayList<>();
             for (int[] field1 : forceField) {
                 double x1 = field1[0];
                 double y1 = field1[1];
@@ -29,20 +29,20 @@ public class Test3_最强祝福力场 {
                     double top = Math.min(y1 + hf1, y2 + hf2);
                     double bottom = Math.max(y1 - hf1, y2 - hf2);
                     if (left <= right && bottom <= top) {
-                        intersectionCorners.add(new double[]{left, bottom});
-                        intersectionCorners.add(new double[]{left, top});
-                        intersectionCorners.add(new double[]{right, bottom});
-                        intersectionCorners.add(new double[]{right, top});
+                        intersectionPoints.add(new double[]{left, bottom});
+                        intersectionPoints.add(new double[]{left, top});
+                        intersectionPoints.add(new double[]{right, bottom});
+                        intersectionPoints.add(new double[]{right, top});
                     }
                 }
             }
-            for (double[] ic : intersectionCorners) {
+            for (double[] point : intersectionPoints) {
                 int current = 0;
                 for (int[] field : forceField) {
                     double x = field[0];
                     double y = field[1];
                     double half = field[2] / 2.0;
-                    if (x - half <= ic[0] && ic[0] <= x + half && y - half <= ic[1] && ic[1] <= y + half) {
+                    if (x - half <= point[0] && point[0] <= x + half && y - half <= point[1] && point[1] <= y + half) {
                         current++;
                     }
                 }
