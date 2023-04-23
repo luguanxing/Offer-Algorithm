@@ -21,7 +21,6 @@ public class Test2_探险营地 {
             }
             int res = -1;
             int maxCnt = 0;
-            Set<String> currentVisited = new HashSet<>();
             for (int i = 1; i < expeditions.length; i++) {
                 String expedition = expeditions[i];
                 if (expedition.isEmpty()) {
@@ -29,8 +28,8 @@ public class Test2_探险营地 {
                 }
                 int cnt = 0;
                 for (String v : expedition.split("->")) {
-                    if (!visited.contains(v) && !currentVisited.contains(v)) {
-                        currentVisited.add(v);
+                    if (!visited.contains(v)) {
+                        visited.add(v);
                         cnt++;
                     }
                 }
