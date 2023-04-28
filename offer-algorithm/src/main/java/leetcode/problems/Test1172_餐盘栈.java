@@ -3,6 +3,7 @@ package leetcode.problems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.TreeSet;
 
 public class Test1172_餐盘栈 {
 
@@ -28,9 +29,109 @@ public class Test1172_餐盘栈 {
     static class DinnerPlates {
         List<Stack<Integer>> stacks;
         int capactiy;
-        int total;
+        TreeSet<Integer> fullIndexs;
+        TreeSet<Integer> filledIndexs;
+        TreeSet<Integer> emptyIndexs;
 
         public DinnerPlates(int capacity) {
+            stacks = new ArrayList<>();
+            capactiy = capacity;
+            fullIndexs = new TreeSet<>();
+            filledIndexs = new TreeSet<>();
+            emptyIndexs = new TreeSet<>();
+        }
+
+        public void push(int val) {
+            // 先从左到右找能放入的，找到则更新状态
+            int idx = Integer.MAX_VALUE;
+            if (!filledIndexs.isEmpty()) {
+                idx = Math.min(idx, filledIndexs.first());
+            }
+            if (!emptyIndexs.isEmpty()) {
+                idx = Math.min(idx, emptyIndexs.first());
+            }
+            if (idx != Integer.MAX_VALUE) {
+                Stack<Integer> stack = stacks.get(idx);
+                stack.add(val);
+                if (stack.size() == capactiy) {
+                    filledIndexs.remove(idx);
+                    emptyIndexs.remove(idx);
+                    fullIndexs.add(idx);
+                } else {
+                    filledIndexs.remove(idx);
+                    emptyIndexs.remove(idx);
+                    filledIndexs.add(idx);
+                }
+                return;
+            }
+            // 找不到就新建一个并更新状态
+            int newIndex = stacks.size();
+            Stack<Integer> stack = new Stack<>();
+            stack.add(val);
+            stacks.add(stack);
+            if (stack.size() == capactiy) {
+                fullIndexs.add(newIndex);
+            } else {
+                filledIndexs.add(newIndex);
+            }
+        }
+
+        public int pop() {
+            if (filledIndexs.isEmpty() && fullIndexs.isEmpty()) {
+                return -1;
+            }
+            // 从右到左找非空的，找到则更新状态
+            int idx = -1;
+            if (!filledIndexs.isEmpty()) {
+                idx = Math.max(idx, filledIndexs.last());
+            }
+            if (!fullIndexs.isEmpty()) {
+                idx = Math.max(idx, fullIndexs.last());
+            }
+            if (idx != -1) {
+                Stack<Integer> stack = stacks.get(idx);
+                int ret = stack.pop();
+                if (stack.size() != 0) {
+                    fullIndexs.remove(idx);
+                    filledIndexs.remove(idx);
+                    filledIndexs.add(idx);
+                } else {
+                    fullIndexs.remove(idx);
+                    filledIndexs.remove(idx);
+                    emptyIndexs.add(idx);
+                }
+                return ret;
+            }
+            return -1;
+        }
+
+        public int popAtStack(int index) {
+            if (index >= stacks.size() || stacks.get(index).isEmpty()) {
+                return -1;
+            }
+            // 直接从对应的栈取出数据，并更新状态
+            Stack<Integer> stack = stacks.get(index);
+            int ret = stack.pop();
+            if (stack.size() != 0) {
+                fullIndexs.remove(index);
+                filledIndexs.remove(index);
+                filledIndexs.add(index);
+            } else {
+                fullIndexs.remove(index);
+                filledIndexs.remove(index);
+                emptyIndexs.add(index);
+            }
+            return ret;
+        }
+    }
+
+
+    static class DinnerPlates_暴力 {
+        List<Stack<Integer>> stacks;
+        int capactiy;
+        int total;
+
+        public DinnerPlates_暴力(int capacity) {
             stacks = new ArrayList<>();
             this.capactiy = capacity;
             this.total = 0;
