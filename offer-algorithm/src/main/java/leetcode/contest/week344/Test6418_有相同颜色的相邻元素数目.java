@@ -1,4 +1,4 @@
-package leetcode.problems;
+package leetcode.contest.week344;
 
 import java.util.Arrays;
 
