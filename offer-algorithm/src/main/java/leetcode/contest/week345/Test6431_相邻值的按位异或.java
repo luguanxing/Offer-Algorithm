@@ -11,6 +11,7 @@ public class Test6431_相邻值的按位异或 {
     static class Solution {
         public boolean doesValidArrayExist(int[] derived) {
             int len = derived.length;
+            // 开头只有0或1两种情况，判断即可
             for (int start : new int[]{0, 1}) {
                 int[] original = new int[len];
                 original[0] = start;
