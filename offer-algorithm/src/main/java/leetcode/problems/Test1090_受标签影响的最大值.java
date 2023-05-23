@@ -24,7 +24,7 @@ public class Test1090_受标签影响的最大值 {
             Map<Integer, Integer> takenMap = new HashMap<>();
             while (!pq.isEmpty()){
                 // 注意遍历优先队列不能写成for遍历，如for(int[] valueLable : pq)这样结果是不准的
-                // 但是可以使用for遍历new ArrayList<>(priorityQueue)
+                // 只能使用不断poll取出
                 int[] valueLable = pq.poll();
                 int value = valueLable[0];
                 int lable = valueLable[1];
