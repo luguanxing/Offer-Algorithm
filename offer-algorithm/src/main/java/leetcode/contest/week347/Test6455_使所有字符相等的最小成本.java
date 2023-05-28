@@ -15,9 +15,9 @@ public class Test6455_使所有字符相等的最小成本 {
             }
             int len = s.length();
             String half1 = s.substring(0, len / 2);
-            String half2 = s.substring(len / 2);
+            String half2 = new StringBuilder(s.substring(len / 2)).reverse().toString();
             long[][] dp1 = getCost(half1);
-            long[][] dp2 = getCost(new StringBuilder(half2).reverse().toString());
+            long[][] dp2 = getCost(half2);
             return Math.min(
                     dp1[half1.length() - 1][0] + dp2[half2.length() - 1][0],
                     dp1[half1.length() - 1][1] + dp2[half2.length() - 1][1]
