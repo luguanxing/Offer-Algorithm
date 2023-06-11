@@ -14,9 +14,6 @@ public class Test6449_收集巧克力 {
             long min = Long.MAX_VALUE;
             int[] minCost = nums.clone();
             for (int moveStep = 0; moveStep < len; moveStep++) {
-                if ((long) moveStep * x > min) {
-                    break;
-                }
                 for (int i = 0; i < len; i++) {
                     minCost[i] = Math.min(minCost[i], nums[(i + moveStep) % len]);
                 }
