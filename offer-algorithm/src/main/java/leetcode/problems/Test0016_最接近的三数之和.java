@@ -1,12 +1,15 @@
 package leetcode.problems;
 
 import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class Test0016_最接近的三数之和 {
 
     public static void main(String[] args) {
-        System.out.println(new Solution().threeSumClosest(new int[]{-1, 2, 1, -4}, 1));
-        System.out.println(new Solution().threeSumClosest(new int[]{-3, -2, -5, 3, -4}, 1));
+        System.out.println(new Solution2().threeSumClosest(new int[]{-1, 2, 1, -4}, 1));
+        System.out.println(new Solution2().threeSumClosest(new int[]{-3, -2, -5, 3, -4}, 1));
     }
 
     static class Solution {
@@ -43,6 +46,37 @@ public class Test0016_最接近的三数之和 {
                 }
             }
             return res;
+        }
+    }
+
+    static class Solution2 {
+        public int threeSumClosest(int[] nums, int target) {
+            int len = nums.length;
+            Arrays.sort(nums);
+            int closet = Integer.MAX_VALUE;
+            for (int i = 0; i < len; i++) {
+                for (int j = i + 1; j < len; j++) {
+                    int sum = nums[i] + nums[j];
+                    int diff = target - sum;
+                    // 在原有集合中找最接近diff的数
+                    int idx = Arrays.binarySearch(nums, j + 1, len, diff);
+                    if (idx > 0) {
+                        return target;
+                    } else {
+                        idx = -idx - 1;
+                        if (j < idx && idx < len && Math.abs(target - nums[i] - nums[j] - nums[idx]) < Math.abs(target - closet)) {
+                            closet = nums[i] + nums[j] + nums[idx];
+                        }
+                        if (j < idx - 1 && idx - 1 < len && Math.abs(target - nums[i] - nums[j] - nums[idx - 1]) < Math.abs(target - closet)) {
+                            closet = nums[i] + nums[j] + nums[idx - 1];
+                        }
+                        if (j < idx + 1 && idx + 1 < len && Math.abs(target - nums[i] - nums[j] - nums[idx + 1]) < Math.abs(target - closet)) {
+                            closet = nums[i] + nums[j] + nums[idx + 1];
+                        }
+                    }
+                }
+            }
+            return closet;
         }
     }
 
