@@ -40,4 +40,32 @@ public class Test0015_三数之和 {
         }
     }
 
+    static class Solution2 {
+        public List<List<Integer>> threeSum(int[] nums) {
+            List<List<Integer>> list = new ArrayList<>();
+            int len = nums.length;
+            Arrays.sort(nums);
+            Set<String> set = new HashSet<>();
+            for (int i = 0; i < len; i++) {
+                for (int j = i + 1; j < len; j++) {
+                    int diff = -nums[i] - nums[j];
+                    if (Arrays.binarySearch(nums, j + 1, len, diff) > 0) {
+                        List<Integer> srt = new ArrayList<>();
+                        srt.add(nums[i]);
+                        srt.add(nums[j]);
+                        srt.add(diff);
+                        Collections.sort(srt);
+                        if (!set.contains(srt.toString())) {
+                            set.add(srt.toString());
+                        } else {
+                            continue;
+                        }
+                        list.add(srt);
+                    }
+                }
+            }
+            return list;
+        }
+    }
+
 }
