@@ -12,18 +12,35 @@ public class Test6955_长度递增组的最大数目 {
         System.out.println(new Solution().maxIncreasingGroups(Arrays.asList(2, 2, 2)));
         System.out.println(new Solution().maxIncreasingGroups(Arrays.asList(2, 1, 2)));
         System.out.println(new Solution().maxIncreasingGroups(Arrays.asList(5, 1, 1)));
+        System.out.println(new Solution().maxIncreasingGroups(Arrays.asList(8, 1, 6)));
+        System.out.println(new Solution().maxIncreasingGroups(Arrays.asList(1, 999, 999, 999, 999, 999)));
     }
 
     static class Solution {
         public int maxIncreasingGroups(List<Integer> usageLimits) {
+            /**
+             * 先对usageLimits排序
+             * 贪心，每新增一个group, 最优的策略：group[i + 1].size() = group[i].size() + 1;
+             * 从小到大遍历usageLimits, 每新增一个group, 必须要新增一个元素, 且新增元素值 和 缓存未用完的值 必须要大于当前分组的值。如果不满足，当前的值直接加入缓存，满足，说明可以新增一个group，未使用完的值加入缓存。
+             * 举例说明：[2, 2, 2]
+             *
+             * group[0]: 0
+             * group[1]: 2 1
+             * group[2]: 2 1 0
+             *
+             * 从i开始遍历（倒序看上面这个过程，填充"列"），
+             * i == 0 时，使用一个 0 放入group[2][2]即可，剩余一个0可以加入缓存，这个缓存的值在后续的i都是可以使用的。
+             * i == 1时，使用两个1, 分别放在group[1][1], group[2][1].
+             * i == 2时，使用两个2和缓存里的0, 分别放在group[0][0], grouo[1][0], group[2][0]的位置。
+             */
             Collections.sort(usageLimits);
             long available = 0;
             int group = 0;
             for (int limit : usageLimits) {
                 available += limit;
                 if (available > group) {
-                    available -= group;
                     group++;
+                    available -= group;
                 }
             }
             return group;
