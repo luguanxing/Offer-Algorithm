@@ -16,40 +16,45 @@ public class Test6955_长度递增组的最大数目 {
 
     static class Solution {
         public int maxIncreasingGroups(List<Integer> usageLimits) {
-            int left = 1, right = usageLimits.size();
-            while (left < right) {
-                int mid = left + (right - left + 1) / 2;
-                if (canFormGroups(new ArrayList<>(usageLimits), mid)) {
-                    left = mid;
-                } else {
-                    right = mid - 1;
+            Collections.sort(usageLimits);
+            long available = 0;
+            int group = 0;
+            for (int limit : usageLimits) {
+                available += limit;
+                if (available > group) {
+                    available -= group;
+                    group++;
                 }
             }
-            return left;
-
+            return group;
         }
+    }
 
-        private boolean canFormGroups(ArrayList<Integer> usageLimits, int group) {
+    static class Solution_模拟 {
+        public int maxIncreasingGroups(List<Integer> usageLimits) {
             int n = usageLimits.size();
             PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
             for (int i = 0; i < n; ++i) {
                 pq.add(usageLimits.get(i));
             }
             // 贪心，每次从频次剩余最大的取
-            for (int k = 1; k <= group && !pq.isEmpty(); k++) {
-                if (pq.size() < k + 1) {
-                    return false;
+            int groups = 0;
+            while (!pq.isEmpty()) {
+                int k = groups + 1;
+                if (pq.size() < k) {
+                    break;
                 }
                 List<Integer> lefts = new ArrayList<>();
-                for (int i = 0; i < k + 1; ++i) {
+                for (int i = 0; i < k; ++i) {
                     int left = pq.poll();
                     if (left > 1) {
                         lefts.add(left - 1);
                     }
                 }
                 pq.addAll(lefts);
+                ++groups;
             }
-            return true;
+            return groups;
         }
     }
 
