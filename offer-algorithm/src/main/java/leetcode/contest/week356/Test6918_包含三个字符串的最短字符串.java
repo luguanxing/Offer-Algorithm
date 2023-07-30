@@ -20,7 +20,7 @@ public class Test6918_包含三个字符串的最短字符串 {
                     getCommonString(getCommonString(c, a), b),
                     getCommonString(getCommonString(c, b), a)
             };
-            // 选择最短的，并且在字典顺序上最小的那个
+            // 选择出最短的且字典顺序最小的
             Arrays.sort(strs, (s1, s2) -> {
                 if (s1.length() != s2.length()) {
                     return s1.length() - s2.length();
@@ -31,10 +31,14 @@ public class Test6918_包含三个字符串的最短字符串 {
             return strs[0];
         }
 
-        // 方法来合并两个字符串，并保留最短且字典序最小的字符串
+        // 找两个字符串的公共子串
         private String getCommonString(String a, String b) {
-            if (a.contains(b)) return a;
-            if (b.contains(a)) return b;
+            if (a.contains(b)) {
+                return a;
+            }
+            if (b.contains(a)) {
+                return b;
+            }
             for (int i = b.length(); i > 0; i--) {
                 if (a.endsWith(b.substring(0, i))) {
                     return a + b.substring(i);
