@@ -1,8 +1,6 @@
 package leetcode.problems;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Test0143_重排链表 {
 
@@ -15,6 +13,31 @@ public class Test0143_重排链表 {
         new Solution().reorderList(node2);
         System.out.println(node1);
         System.out.println(node2);
+    }
+
+    static class Solution2 {
+        public void reorderList(ListNode head) {
+            Deque<ListNode> deque = new ArrayDeque<>();
+            ListNode node = head;
+            while (node != null) {
+                deque.add(node);
+                node = node.next;
+            }
+            List<ListNode> list = new ArrayList<>();
+            boolean flag = true;
+            while (!deque.isEmpty()) {
+                if (flag) {
+                    list.add(deque.pollFirst());
+                } else {
+                    list.add(deque.pollLast());
+                }
+                flag = !flag;
+            }
+            list.add(null);
+            for (int i = 0; i < list.size() - 1; i++) {
+                list.get(i).next = list.get(i + 1);
+            }
+        }
     }
 
     static class Solution {
