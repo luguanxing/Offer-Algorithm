@@ -57,92 +57,103 @@ public class Test6951_找出最安全路径 {
     }
 
     static class Solution {
-        private final int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
         public int maximumSafenessFactor(List<List<Integer>> grid) {
             int n = grid.size();
-            int globalMaxSafety = 0;
-
-            List<int[]> thieves = getThieves(grid);
-
-            Queue<State> queue = new LinkedList<>();
-            queue.add(new State(0, 0, Integer.MAX_VALUE, 0));
-
-            int[][] maxSafetyAt = new int[n][n];
-            for (int i = 0; i < n; i++) {
-                Arrays.fill(maxSafetyAt[i], Integer.MIN_VALUE);
-            }
-
-            int[][] thievesDistance = new int[n][n];
-            for (int y = 0; y < n; y++) {
-                for (int x = 0; x < n; x++) {
-                    int minSafety = Integer.MAX_VALUE;
-                    for (int[] thief : thieves) {
-                        minSafety = Math.min(minSafety, Math.abs(y - thief[0]) + Math.abs(x - thief[1]));
-                    }
-                    thievesDistance[y][x] = minSafety;
+            int[][] theivesDistance = getTheivesDistance(grid);
+            // 使用二分试出能到终点的最大距离（满足条件的最大，二分右边界）
+            int left = 0, right = n * 2;
+            while (left < right) {
+                int mid = left + (right - left) / 2;
+                if (isOk(theivesDistance, mid)) {
+                    // 能走到，把条件变严苛（增加控制的最短距离）
+                    left = mid + 1;
+                } else {
+                    // 不能走到，把条件变宽松（减小控制的最短距离）
+                    right = mid;
                 }
             }
+            return left - 1;
+        }
 
-            while (!queue.isEmpty()) {
-                State curr = queue.poll();
-                int x = curr.x, y = curr.y;
-
-                if (curr.steps > 3 * n) {
-                    continue;
-                }
-
-                int currSafety = thievesDistance[y][x];
-                curr.safety = Math.min(curr.safety, currSafety);
-
-                // 剪枝
-                if (curr.safety <= maxSafetyAt[x][y] || curr.safety <= globalMaxSafety) {
-                    continue;
-                }
-                maxSafetyAt[x][y] = curr.safety;
-
-                if (x == n - 1 && y == n - 1) {
-                    globalMaxSafety = Math.max(globalMaxSafety, curr.safety);
-                    continue;
-                }
-
-                for (int[] dir : dirs) {
-                    int newX = x + dir[0];
-                    int newY = y + dir[1];
-                    if (newX >= 0 && newX < n && newY >= 0 && newY < n) {
-                        if (grid.get(newY).get(newX) == 0) {
-                            queue.add(new State(newX, newY, curr.safety, curr.steps + 1));
+        private int[][] getTheivesDistance(List<List<Integer>> grid) {
+            // 从小偷bfs算出每个点最近的小偷距离
+            int n = grid.size();
+            int[][] ans = new int[n][n];
+            for (int[] row : ans) {
+                Arrays.fill(row, Integer.MAX_VALUE);
+            }
+            for (int y = 0; y < grid.size(); y++) {
+                for (int x = 0; x < grid.get(y).size(); x++) {
+                    if (grid.get(y).get(x) == 1) {
+                        Queue<int[]> queue = new ArrayDeque<>();
+                        queue.add(new int[]{y, x, 0});
+                        while (!queue.isEmpty()) {
+                            int[] stat = queue.poll();
+                            int py = stat[0];
+                            int px = stat[1];
+                            int distance = stat[2];
+                            if (distance >= ans[py][px]) {
+                                continue;
+                            }
+                            ans[py][px] = distance;
+                            if (py - 1 >= 0) {
+                                queue.add(new int[]{py - 1, px, distance + 1});
+                            }
+                            if (px - 1 >= 0) {
+                                queue.add(new int[]{py, px - 1, distance + 1});
+                            }
+                            if (py + 1 < n) {
+                                queue.add(new int[]{py + 1, px, distance + 1});
+                            }
+                            if (px + 1 < n) {
+                                queue.add(new int[]{py, px + 1, distance + 1});
+                            }
                         }
                     }
                 }
             }
-
-            return globalMaxSafety;
+            return ans;
         }
 
-        private List<int[]> getThieves(List<List<Integer>> grid) {
-            List<int[]> thieves = new ArrayList<>();
-            for (int i = 0; i < grid.size(); i++) {
-                for (int j = 0; j < grid.get(0).size(); j++) {
-                    if (grid.get(i).get(j) == 1) {
-                        thieves.add(new int[]{i, j});
+
+        private boolean isOk(int[][] theivesDistance, int leastKeptDistance) {
+            int n = theivesDistance.length;
+            // 判断能否在每步不超过eachLeastKeptDistance的情况下走到终点
+            boolean[][] visited = new boolean[n][n];
+            visited[0][0] = true;
+            Queue<int[]> queue = new ArrayDeque<>();
+            queue.add(new int[]{0, 0, theivesDistance[0][0]});
+            while (!queue.isEmpty()) {
+                int[] stat = queue.poll();
+                int py = stat[0];
+                int px = stat[1];
+                int distance = stat[2];
+                if (theivesDistance[py][px] < leastKeptDistance) {
+                    continue;
+                }
+                if (py == n - 1 && px == n - 1) {
+                    if (distance >= leastKeptDistance) {
+                        return true;
                     }
                 }
+                if (py - 1 >= 0 && !visited[py - 1][px]) {
+                    visited[py - 1][px] = true;
+                    queue.add(new int[]{py - 1, px, Math.min(distance, theivesDistance[py - 1][px])});
+                }
+                if (px - 1 >= 0 && !visited[py][px - 1]) {
+                    visited[py][px - 1] = true;
+                    queue.add(new int[]{py, px - 1, Math.min(distance, theivesDistance[py][px - 1])});
+                }
+                if (py + 1 < n && !visited[py + 1][px]) {
+                    visited[py + 1][px] = true;
+                    queue.add(new int[]{py + 1, px, Math.min(distance, theivesDistance[py + 1][px])});
+                }
+                if (px + 1 < n && !visited[py][px + 1]) {
+                    visited[py][px + 1] = true;
+                    queue.add(new int[]{py, px + 1, Math.min(distance, theivesDistance[py][px + 1])});
+                }
             }
-            return thieves;
-        }
-
-        class State {
-            int x, y;
-            int safety;
-            int steps;
-
-            State(int x, int y, int safety, int steps) {
-                this.x = x;
-                this.y = y;
-                this.safety = safety;
-                this.steps = steps;
-            }
+            return false;
         }
     }
 
