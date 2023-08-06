@@ -51,10 +51,10 @@ public class Test0024_两两交换链表中的节点 {
                     list.set(i, tmp);
                 }
             }
+            list.add(null);
             for (int i = 0; i < list.size() - 1; i++) {
                 list.get(i).next = list.get(i + 1);
             }
-            list.get(list.size() - 1).next = null;
             return list.get(0);
         }
     }
