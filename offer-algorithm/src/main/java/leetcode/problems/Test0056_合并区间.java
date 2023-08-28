@@ -16,9 +16,51 @@ public class Test0056_合并区间 {
         for (int[] nums : new Solution().merge(new int[][]{{1, 4}, {4, 5}})) {
             System.out.println(Arrays.toString(nums));
         }
+        System.out.println();
+        for (int[] nums : new Solution().merge(new int[][]{{1, 4}, {2, 3}})) {
+            System.out.println(Arrays.toString(nums));
+        }
     }
 
     static class Solution {
+        public int[][] merge(int[][] intervals) {
+            // 排序:先按start小的在前，再end小的在前排序（否则后面包含前面可能没合并）
+            Arrays.sort(intervals, (o1, o2) -> {
+                if (o1[0] == o2[0]) {
+                    return o1[1] - o2[1];
+                } else {
+                    return o1[0] - o2[0];
+                }
+            });
+            // 逐段合并
+            List<int[]> resList = new ArrayList<>();
+            int currentStart = intervals[0][0];
+            int currentEnd = intervals[0][1];
+            for (int i = 1; i < intervals.length; i++) {
+                int[] interval = intervals[i];
+                int start = interval[0];
+                int end = interval[1];
+                if (start <= currentEnd) {
+                    // 合成一块
+                    currentEnd = Math.max(currentEnd, end);
+                } else {
+                    // 不能合成一块
+                    resList.add(new int[]{currentStart, currentEnd});
+                    currentStart = start;
+                    currentEnd = end;
+                }
+            }
+            resList.add(new int[]{currentStart, currentEnd});
+            // 返回结果
+            int[][] res = new int[resList.size()][2];
+            for (int i = 0; i < resList.size(); i++) {
+                res[i] = resList.get(i);
+            }
+            return res;
+        }
+    }
+
+    static class Solution2 {
         public int[][] merge(int[][] intervals) {
             // 排序:先start小的在前，再按end小的在前排序
             Arrays.sort(intervals, (o1, o2) -> {
@@ -56,7 +98,7 @@ public class Test0056_合并区间 {
             resList.add(endPart);
             // 返回结果
             int[][] res = new int[resList.size()][2];
-            for (int i = 0 ; i < resList.size(); i++) {
+            for (int i = 0; i < resList.size(); i++) {
                 res[i] = resList.get(i);
             }
             return res;
