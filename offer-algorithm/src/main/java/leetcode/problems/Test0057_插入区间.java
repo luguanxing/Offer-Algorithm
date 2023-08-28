@@ -10,18 +10,62 @@ import java.util.stream.IntStream;
 public class Test0057_插入区间 {
 
     public static void main(String[] args) {
-        for (int[] nums : new Test0057_插入区间.Solution().insert(
+        for (int[] nums : new Solution2().insert(
                 new int[][]{{1, 3}, {6, 9}},
                 new int[]{2, 5}
         )) {
             System.out.println(Arrays.toString(nums));
         }
         System.out.println();
-        for (int[] nums : new Test0057_插入区间.Solution().insert(
+        for (int[] nums : new Solution2().insert(
                 new int[][]{{1, 2}, {3, 5}, {6, 7}, {8, 10}, {12, 16}},
                 new int[]{4, 8}
         )) {
             System.out.println(Arrays.toString(nums));
+        }
+    }
+
+    static class Solution2 {
+        public int[][] insert(int[][] intervals, int[] newInterval) {
+            int len = intervals.length;
+            int[][] intervalsFull = new int[len + 1][];
+            for (int i = 0; i < len; i++) {
+                intervalsFull[i] = intervals[i];
+            }
+            intervalsFull[len] = newInterval;
+            // 排序:先按start小的在前，再end小的在前排序（否则后面包含前面可能没合并）
+            Arrays.sort(intervalsFull, (o1, o2) -> {
+                if (o1[0] == o2[0]) {
+                    return o1[1] - o2[1];
+                } else {
+                    return o1[0] - o2[0];
+                }
+            });
+            // 逐段合并
+            List<int[]> resList = new ArrayList<>();
+            int currentStart = intervalsFull[0][0];
+            int currentEnd = intervalsFull[0][1];
+            for (int i = 1; i <= len; i++) {
+                int[] interval = intervalsFull[i];
+                int start = interval[0];
+                int end = interval[1];
+                if (start <= currentEnd) {
+                    // 合成一块
+                    currentEnd = Math.max(currentEnd, end);
+                } else {
+                    // 不能合成一块
+                    resList.add(new int[]{currentStart, currentEnd});
+                    currentStart = start;
+                    currentEnd = end;
+                }
+            }
+            resList.add(new int[]{currentStart, currentEnd});
+            // 返回结果
+            int[][] res = new int[resList.size()][2];
+            for (int i = 0; i < resList.size(); i++) {
+                res[i] = resList.get(i);
+            }
+            return res;
         }
     }
 
