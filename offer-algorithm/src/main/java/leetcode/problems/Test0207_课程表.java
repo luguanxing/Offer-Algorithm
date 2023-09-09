@@ -5,12 +5,50 @@ import java.util.*;
 public class Test0207_课程表 {
 
     public static void main(String[] args) {
-        System.out.println(new Solution().canFinish(2, new int[][]{}));
-        System.out.println(new Solution().canFinish(2, new int[][]{{0, 1}}));
-        System.out.println(new Solution().canFinish(2, new int[][]{{1, 0}}));
-        System.out.println(new Solution().canFinish(2, new int[][]{{1, 0}, {0, 1}}));
-        System.out.println(new Solution().canFinish(3, new int[][]{{1, 0}, {1, 2}, {0, 1}}));
-        System.out.println(new Solution().canFinish(4, new int[][]{{0, 1}, {0, 2}, {1, 3}, {3, 0}}));
+        System.out.println(new Solution2().canFinish(2, new int[][]{}));
+        System.out.println(new Solution2().canFinish(2, new int[][]{{0, 1}}));
+        System.out.println(new Solution2().canFinish(2, new int[][]{{1, 0}}));
+        System.out.println(new Solution2().canFinish(2, new int[][]{{1, 0}, {0, 1}}));
+        System.out.println(new Solution2().canFinish(3, new int[][]{{1, 0}, {1, 2}, {0, 1}}));
+        System.out.println(new Solution2().canFinish(4, new int[][]{{0, 1}, {0, 2}, {1, 3}, {3, 0}}));
+        System.out.println(new Solution2().canFinish(3, new int[][]{{0, 2}, {1, 2}, {2, 0}}));
+        System.out.println(new Solution2().canFinish(5, new int[][]{{3, 1}, {3, 2}, {1, 4}, {2, 4}}));
+        System.out.println(new Solution2().canFinish(8, new int[][]{{1, 0}, {1, 7}, {7, 0}, {0, 5}, {2, 6}, {6, 4}}));
+    }
+
+    static class Solution2 {
+        public boolean canFinish(int numCourses, int[][] prerequisites) {
+            Map<Integer, List<Integer>> reachMap = new HashMap<>();
+            // 拓补排序，统计入度
+            int[] inDegree = new int[numCourses];
+            for (int[] prerequisite : prerequisites) {
+                int from = prerequisite[0];
+                int to = prerequisite[1];
+                List<Integer> list = reachMap.getOrDefault(from, new ArrayList<>());
+                list.add(to);
+                reachMap.put(from, list);
+                inDegree[to]++;
+            }
+            // 从入度为0的点开始BFS
+            Deque<Integer> deque = new ArrayDeque<>();
+            for (int i = 0; i < numCourses; i++) {
+                if (inDegree[i] == 0) {
+                    deque.add(i);
+                }
+            }
+            while (!deque.isEmpty()) {
+                int current = deque.poll();
+                for (int next : reachMap.getOrDefault(current, new ArrayList<>())) {
+                    if (inDegree[next] > 0) {
+                        inDegree[next]--;
+                        if (inDegree[next] == 0) {
+                            deque.add(next);
+                        }
+                    }
+                }
+            }
+            return Arrays.stream(inDegree).sum() == 0;
+        }
     }
 
     static class Solution {
