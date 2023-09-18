@@ -1,5 +1,8 @@
 package leetcode.problems;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Test0337_打家劫舍III {
 
     public static void main(String[] args) {
@@ -25,6 +28,39 @@ public class Test0337_打家劫舍III {
     }
 
     static class Solution {
+        Map<TreeNode, Integer> trueMap = new HashMap<>();
+        Map<TreeNode, Integer> falseMap = new HashMap<>();
+
+        public int rob(TreeNode root) {
+            return Math.max(dfs(root, true), dfs(root, false));
+        }
+
+        public int dfs(TreeNode root, boolean available) {
+            if (root == null) {
+                return 0;
+            }
+            if (available && trueMap.containsKey(root)) {
+                return trueMap.get(root);
+            } else if (!available && falseMap.containsKey(root)) {
+                return falseMap.get(root);
+            }
+            if (available) {
+                int takeThis = root.val + dfs(root.left, false) + dfs(root.right, false);
+                int noTakeThis = dfs(root.left, true) + dfs(root.right, true);
+                int max = Math.max(takeThis, noTakeThis);
+                if (available) {
+                    trueMap.put(root, max);
+                } else {
+                    falseMap.put(root, max);
+                }
+                return max;
+            } else {
+                return dfs(root.left, true) + dfs(root.right, true);
+            }
+        }
+    }
+
+    static class Solution2 {
         public int rob(TreeNode root) {
             return Math.max(preOrder(root, true), preOrder(root, false));
         }
