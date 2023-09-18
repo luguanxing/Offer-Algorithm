@@ -10,6 +10,36 @@ public class Test0213_打家劫舍II {
         System.out.println(new Solution().rob(new int[]{0, 0}));
     }
 
+    static class Solution2 {
+        public int rob(int[] nums) {
+            int len = nums.length;
+            if (len == 1) {
+                return nums[0];
+            }
+            if (len == 2) {
+                return Math.max(nums[0], nums[1]);
+            }
+            int res1 = loot(Arrays.copyOfRange(nums, 0, len - 1));
+            int res2 = loot(Arrays.copyOfRange(nums, 1, len));
+            return Math.max(res1, res2);
+        }
+
+        private int loot(int[] nums) {
+            int len = nums.length;
+            int[] lootI = new int[len];
+            int[] noLootI = new int[len];
+            lootI[0] = nums[0];
+            noLootI[0] = 0;
+            lootI[1] = nums[1];
+            noLootI[1] = nums[0];
+            for (int i = 2; i < len; i++) {
+                lootI[i] = Math.max(noLootI[i - 1] + nums[i], lootI[i - 1]);
+                noLootI[i] = Math.max(lootI[i - 1], noLootI[i - 1]);
+            }
+            return Math.max(lootI[len - 1], noLootI[len - 1]);
+        }
+    }
+
     static class Solution {
         public int rob(int[] nums) {
             int len = nums.length;
