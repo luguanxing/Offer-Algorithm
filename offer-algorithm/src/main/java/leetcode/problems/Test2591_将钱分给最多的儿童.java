@@ -1,7 +1,5 @@
 package leetcode.problems;
 
-import java.util.Arrays;
-
 public class Test2591_将钱分给最多的儿童 {
 
     public static void main(String[] args) {
@@ -18,38 +16,17 @@ public class Test2591_将钱分给最多的儿童 {
             if (money < children) {
                 return -1;
             }
-            int[] gets = new int[children];
-            Arrays.fill(gets, 1);
             money -= children;
-            int cnt = 0;
-            for (int i = 0; i < children; i++) {
-                if (money >= 7) {
-                    gets[i] += 7;
-                    money -= 7;
-                    cnt++;
-                } else {
-                    gets[i] += money;
-                    money = 0;
-                    if (gets[i] == 4) {
-                        if (children == 1) {
-                            return -1;
-                        } else {
-                            if (i == children-1) {
-                                cnt--;
-                                if (cnt < 0) {
-                                    cnt = 0;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                }
+            // 贪心尽可能先分配7
+            int cnt = money / 7;
+            if (cnt > children) {
+                cnt = children;
             }
-            if (money != 0) {
+            // 剩下的情况分类讨论，找出不符合条件的：剩了钱没分配完or剩了3元只有一个小孩分
+            int leftMoney = money - cnt * 7;
+            int leftChildren = children - cnt;
+            if ((leftChildren == 0 && leftMoney > 0) || (leftChildren == 1 && leftMoney == 3)) {
                 cnt--;
-                if (cnt < 0) {
-                    cnt = 0;
-                }
             }
             return cnt;
         }
