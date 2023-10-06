@@ -6,6 +6,30 @@ public class Test0714_买卖股票的最佳时机含手续费 {
         System.out.println(new Solution().maxProfit(
                 new int[]{1, 3, 2, 8, 4, 9}, 2
         ));
+        System.out.println(new Solution().maxProfit(
+                new int[]{1, 3, 7, 5, 10, 3}, 3
+        ));
+        System.out.println();
+        System.out.println(new Solution2().maxProfit(
+                new int[]{1, 3, 2, 8, 4, 9}, 2
+        ));
+        System.out.println(new Solution2().maxProfit(
+                new int[]{1, 3, 7, 5, 10, 3}, 3
+        ));
+    }
+
+    static class Solution2 {
+        public int maxProfit(int[] prices, int fee) {
+            int len = prices.length;
+            int[] empty = new int[len];
+            int[] position = new int[len];
+            position[0] = -prices[0] - fee;
+            for (int i = 1; i < len; i++) {
+                empty[i] = Math.max(empty[i - 1], position[i - 1] + prices[i]);
+                position[i] = Math.max(position[i - 1], empty[i - 1] - prices[i] - fee);
+            }
+            return empty[len - 1];
+        }
     }
 
     static class Solution {
