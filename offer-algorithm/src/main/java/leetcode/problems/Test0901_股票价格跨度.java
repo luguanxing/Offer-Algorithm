@@ -25,6 +25,42 @@ public class Test0901_股票价格跨度 {
         System.out.println(S.next(28));
     }
 
+    static class StockSpanner2 {
+        /**
+         * 100,80,60,70,60,75,85
+         * 1,1,1,2,1,4,6
+         * <p>
+         * <p>
+         * 100
+         * 100 80
+         * 100 80 60
+         * 100 80 60<70
+         * 100 80 70 70
+         * 100 80 70 70 60
+         * 100 80 70 70 60<75
+         * 100 80 75 75 75 75
+         * 100 80 75 75 75 75 85
+         */
+        Stack<int[]> stack;
+        int index;
+
+        public StockSpanner2() {
+            stack = new Stack<>();
+            index = 0;
+        }
+
+        public int next(int price) {
+            index++;
+            while (!stack.isEmpty() && stack.peek()[0] <= price) {
+                stack.pop();
+            }
+            int lastIndex = stack.isEmpty() ? 0 : stack.peek()[1];
+            int diff = index - lastIndex;
+            stack.add(new int[]{price, index});
+            return diff;
+        }
+    }
+
     static class StockSpanner {
         Deque<int[]> stack;
         int index;
