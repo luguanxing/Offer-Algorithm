@@ -8,6 +8,25 @@ public class Test0187_重复的DNA序列 {
         System.out.println(new Solution().findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"));
         System.out.println(new Solution().findRepeatedDnaSequences("AAAAAAAAAAAAA"));
         System.out.println(new Solution().findRepeatedDnaSequences("AAAAAAAAAAA"));
+        System.out.println();
+        System.out.println(new Solution2().findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"));
+        System.out.println(new Solution2().findRepeatedDnaSequences("AAAAAAAAAAAAA"));
+        System.out.println(new Solution2().findRepeatedDnaSequences("AAAAAAAAAAA"));
+    }
+
+    static class Solution2 {
+        public List<String> findRepeatedDnaSequences(String s) {
+            Set<String> set = new HashSet<>();
+            Set<String> res = new HashSet<>();
+            for (int i = 0; i <= s.length() - 10; i++) {
+                String str = s.substring(i, Math.min(i + 10, s.length()));
+                if (set.contains(str)) {
+                    res.add(str);
+                }
+                set.add(str);
+            }
+            return new ArrayList<>(res);
+        }
     }
 
     static class Solution {
