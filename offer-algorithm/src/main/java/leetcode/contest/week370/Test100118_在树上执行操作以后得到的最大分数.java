@@ -40,13 +40,13 @@ public class Test100118_在树上执行操作以后得到的最大分数 {
                 adjList.get(edge[1]).add(edge[0]);
             }
             isVisited = new boolean[n];
-            return dfs(0, 0, false);
+            return dfs( 0, false);
         }
 
         // dfs 返回以节点 currentNode 为根的子树中可以获得的最大分数，
         // pathHasLeft 表示 node节点的父节点的值是否已经拿过
-        public long dfs(int currentSum, int currentNode, boolean pathHasLeft) {
-            String key = currentSum + "," + currentNode + "," + pathHasLeft;  // 定义状态
+        public long dfs(int currentNode, boolean pathHasLeft) {
+            String key = currentNode + "," + pathHasLeft;  // 定义状态
             if (memo.containsKey(key)) {
                 return memo.get(key);  // 如果已经计算过，直接返回结果
             }
@@ -58,21 +58,21 @@ public class Test100118_在树上执行操作以后得到的最大分数 {
                 }
             }
             if (nextCnt == 0) {
-                return currentSum + (pathHasLeft ? values[currentNode] : 0);
+                return (pathHasLeft ? values[currentNode] : 0);
             }
             isVisited[currentNode] = true;
             // 保留当前节点值的情况
             long saveThis = 0;
             for (int child : adjList.get(currentNode)) {
                 if (!isVisited[child]) {
-                    saveThis += dfs(0, child, true);
+                    saveThis += dfs(child, true);
                 }
             }
             // 拿走当前节点值的情况
             long takeThis = values[currentNode];
             for (int child : adjList.get(currentNode)) {
                 if (!isVisited[child]) {
-                    takeThis += dfs(0, child, pathHasLeft);
+                    takeThis += dfs(child, pathHasLeft);
                 }
             }
             isVisited[currentNode] = false;
