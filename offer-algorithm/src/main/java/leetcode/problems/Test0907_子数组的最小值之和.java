@@ -13,6 +13,34 @@ public class Test0907_子数组的最小值之和 {
     static class Solution {
         public int sumSubarrayMins(int[] arr) {
             // 计算每个数能辐射的范围
+            int MOD = (int) (1E9 + 7);
+            int len = arr.length;
+            long res = 0;
+            for (int i = 0; i < len; i++) {
+                int l = 0;
+                for (l = i - 1; l >= 0; l--) {
+                    // 左闭右开，避免重复
+                    if (arr[l] < arr[i]) {
+                        break;
+                    }
+                }
+                int r = i + 1;
+                for (r = i + 1; r < len; r++) {
+                    // 左闭右开，避免重复
+                    if (arr[r] <= arr[i]) {
+                        break;
+                    }
+                }
+                res += (long) (i - l) * (long) (r - i) * (long) arr[i];
+                res %= MOD;
+            }
+            return (int) res;
+        }
+    }
+
+    static class Solution2 {
+        public int sumSubarrayMins(int[] arr) {
+            // 计算每个数能辐射的范围
             int MOD = 1000000007;
             int len = arr.length;
             long sum = 0;
