@@ -1,5 +1,7 @@
 package leetcode.contest.week374;
 
+import java.util.*;
+
 public class Test100145_统计完全子字符串 {
 
     public static void main(String[] args) {
@@ -19,32 +21,31 @@ public class Test100145_统计完全子字符串 {
      */
     static class Solution {
         private int[][] prefixSums;
-        private boolean[][] charDifferences;
+        private TreeSet<Integer> invalidIndices;
 
         public int countCompleteSubstrings(String word, int k) {
             int count = 0;
             int len = word.length();
-            // 初始化前缀和数组
+            // 初始化前缀和数组和无效索引树
             prefixSums = new int[26][len + 1];
-            // 填充前缀和数组
+            invalidIndices = new TreeSet<>();
+            // 填充前缀和数组和无效索引树
             for (int i = 0; i < len; i++) {
                 for (int j = 0; j < 26; j++) {
                     prefixSums[j][i + 1] = prefixSums[j][i];
                 }
                 prefixSums[word.charAt(i) - 'a'][i + 1]++;
-            }
-            // 初始化并填充字符差异数组
-            charDifferences = new boolean[26][26];
-            for (int i = 0; i < 26; i++) {
-                for (int j = 0; j < 26; j++) {
-                    charDifferences[i][j] = Math.abs(i - j) <= 2;
+                if (i < len - 1 && Math.abs(word.charAt(i) - word.charAt(i + 1)) > 2) {
+                    invalidIndices.add(i);
                 }
             }
             // 检查每个可能的子字符串
             for (int windowSize = k; windowSize <= 26 * k; windowSize += k) {
-                if (windowSize > len) break;
+                if (windowSize > len) {
+                    break;
+                }
                 for (int start = 0; start <= len - windowSize; start++) {
-                    if (isCompleteSubstring(word, start, start + windowSize, k)) {
+                    if (isCompleteSubstring(start, start + windowSize, k)) {
                         count++;
                     }
                 }
@@ -52,21 +53,19 @@ public class Test100145_统计完全子字符串 {
             return count;
         }
 
-        private boolean isCompleteSubstring(String word, int start, int end, int k) {
+        private boolean isCompleteSubstring(int start, int end, int k) {
             for (int i = 0; i < 26; i++) {
-                if (prefixSums[i][end] - prefixSums[i][start] != k && prefixSums[i][end] - prefixSums[i][start] != 0) {
+                if (prefixSums[i][end] == prefixSums[i][start]) {
+                    continue;
+                }
+                if (prefixSums[i][end] - prefixSums[i][start] != k) {
                     return false;
                 }
             }
-            for (int i = start; i < end - 1; i++) {
-                if (!charDifferences[word.charAt(i) - 'a'][word.charAt(i + 1) - 'a']) {
-                    return false;
-                }
-            }
-            return true;
+            // 使用 TreeSet 快速检查范围内是否有无效索引
+            Integer invalidIndex = invalidIndices.ceiling(start);
+            return invalidIndex == null || invalidIndex >= end - 1;
         }
     }
-
-
 
 }
