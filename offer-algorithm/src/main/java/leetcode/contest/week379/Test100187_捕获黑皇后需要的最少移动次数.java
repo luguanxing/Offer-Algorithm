@@ -1,7 +1,5 @@
 package leetcode.contest.week379;
 
-import java.util.*;
-
 public class Test100187_捕获黑皇后需要的最少移动次数 {
 
     public static void main(String[] args) {
@@ -18,48 +16,42 @@ public class Test100187_捕获黑皇后需要的最少移动次数 {
 
     static class Solution {
         public int minMovesToCaptureTheQueen(int a, int b, int c, int d, int e, int f) {
-            // 检查车是否可以直接捕获黑皇后
-            if ((a == e && !isBlocked(a, b, c, d, e, f, true)) || (b == f && !isBlocked(a, b, c, d, e, f, false))) {
-                return 1;
-            }
-
-            // 检查象是否可以直接捕获黑皇后
-            if (Math.abs(c - e) == Math.abs(d - f) && !isDiagonalBlocked(a, b, c, d, e, f)) {
-                return 1;
-            }
-
-            // 如果车和象都不能直接捕获，比较它们各自需要的最少步数
-            int rookMoves = 2; // 车需要的步数
-            int bishopMoves = 2; // 象需要的步数
-
-            return Math.min(rookMoves, bishopMoves);
-        }
-
-        private boolean isBlocked(int ax, int ay, int bx, int by, int qx, int qy, boolean isRow) {
-            // 检查车的路径是否被另一棋子阻挡
-            if (isRow) {
-                return (bx == ax) && (by > ay && by < qy || by < ay && by > qy);
-            } else {
-                return (by == ay) && (bx > ax && bx < qx || bx < ax && bx > qx);
-            }
-        }
-
-        private boolean isDiagonalBlocked(int ax, int ay, int bx, int by, int qx, int qy) {
-            // 检查象的路径是否被车或另一棋子阻挡
-            if (Math.abs(bx - qx) != Math.abs(by - qy)) {
-                return false; // 不在同一对角线上
-            }
-            for (int i = 1; i < Math.abs(bx - qx); i++) {
-                int x = bx + i * Integer.signum(qx - bx);
-                int y = by + i * Integer.signum(qy - by);
-                if ((x == ax && y == ay) || (x == qx && y == qy)) {
-                    return true; // 对角线上有阻挡
+            // 如果车在同一行或同一列可以直接捕获皇后
+            if (a == e || b == f) {
+                // 如果象不在中间，直接搞定
+                boolean isBlocked = false;
+                int dX = a == e ? 0 : (a - e) > 0 ? -1 : 1;
+                int dY = b == f ? 0 : (b - f) > 0 ? -1 : 1;
+                for (int x = a, y = b; x != e || y != f; x += dX, y += dY) {
+                    if (x == c && y == d) {
+                        isBlocked = true;
+                    }
+                }
+                if (!isBlocked) {
+                    return 1;
                 }
             }
-            return false;
+
+            // 如果象在同一对角线上可以直接捕获皇后
+            if (Math.abs(c - e) == Math.abs(d - f)) {
+                // 如果车不在中间，直接搞定
+                boolean isBlocked = false;
+                int dX = c - e > 0 ? -1 : 1;
+                int dY = d - f > 0 ? -1 : 1;
+                for (int x = c, y = d; x != e || y != f; x += dX, y += dY) {
+                    if (x == a && y == b) {
+                        isBlocked = true;
+                    }
+                }
+                if (!isBlocked) {
+                    return 1;
+                }
+            }
+
+            // 阻挡或绕行
+            return 2;
         }
     }
-
 
 
 
