@@ -16,40 +16,65 @@ public class Test100187_捕获黑皇后需要的最少移动次数 {
 
     static class Solution {
         public int minMovesToCaptureTheQueen(int a, int b, int c, int d, int e, int f) {
-            // 如果车在同一行或同一列可以直接捕获皇后
-            if (a == e || b == f) {
-                // 如果象不在中间，直接搞定
-                boolean isBlocked = false;
-                int dX = a == e ? 0 : (a - e) > 0 ? -1 : 1;
-                int dY = b == f ? 0 : (b - f) > 0 ? -1 : 1;
-                for (int x = a, y = b; x != e || y != f; x += dX, y += dY) {
-                    if (x == c && y == d) {
-                        isBlocked = true;
-                    }
-                }
-                if (!isBlocked) {
-                    return 1;
-                }
+            // 检查车是否可以直接捕获皇后
+            if (a == e) {
+                if (isClearHorizontal(a, b, f, c, d)) return 1;
+            } else if (b == f) {
+                if (isClearVertical(b, a, e, c, d)) return 1;
             }
 
-            // 如果象在同一对角线上可以直接捕获皇后
+            // 检查象是否可以直接捕获皇后
             if (Math.abs(c - e) == Math.abs(d - f)) {
-                // 如果车不在中间，直接搞定
-                boolean isBlocked = false;
-                int dX = c - e > 0 ? -1 : 1;
-                int dY = d - f > 0 ? -1 : 1;
-                for (int x = c, y = d; x != e || y != f; x += dX, y += dY) {
-                    if (x == a && y == b) {
-                        isBlocked = true;
-                    }
-                }
-                if (!isBlocked) {
-                    return 1;
-                }
+                if (isClearDiagonal(c, d, e, f, a, b)) return 1;
             }
 
-            // 阻挡或绕行
+            // 车和象都不能直接捕获皇后，需要两步
             return 2;
+        }
+
+        private boolean isClearHorizontal(int row, int startCol, int endCol, int obstructRow, int obstructCol) {
+            if (startCol > endCol) {
+                int temp = startCol;
+                startCol = endCol;
+                endCol = temp;
+            }
+            // 检查路径上是否有阻挡
+            for (int col = startCol + 1; col < endCol; col++) {
+                if (row == obstructRow && col == obstructCol) {
+                    return false; // 路径上有阻挡
+                }
+            }
+            return true; // 路径清晰
+        }
+
+        private boolean isClearVertical(int col, int startRow, int endRow, int obstructRow, int obstructCol) {
+            if (startRow > endRow) {
+                int temp = startRow;
+                startRow = endRow;
+                endRow = temp;
+            }
+            // 检查路径上是否有阻挡
+            for (int row = startRow + 1; row < endRow; row++) {
+                if (row == obstructRow && col == obstructCol) {
+                    return false; // 路径上有阻挡
+                }
+            }
+            return true; // 路径清晰
+        }
+
+        private boolean isClearDiagonal(int startRow, int startCol, int endRow, int endCol, int obstructRow, int obstructCol) {
+            int rowIncrement = startRow < endRow ? 1 : -1;
+            int colIncrement = startCol < endCol ? 1 : -1;
+            int row = startRow + rowIncrement;
+            int col = startCol + colIncrement;
+            while (row != endRow && col != endCol) {
+                if (row == obstructRow && col == obstructCol) {
+                    return false; // 路径上有阻挡
+                }
+                row += rowIncrement;
+                col += colIncrement;
+            }
+            return true; // 路径清晰
         }
     }
 
