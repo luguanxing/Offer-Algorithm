@@ -19,6 +19,25 @@ public class Test0447_回旋镖的数量 {
 
     static class Solution {
         public int numberOfBoomerangs(int[][] points) {
+            int res = 0;
+            for (int[] point : points) {
+                // 统计到该点不同距离的数量
+                Map<Integer, Integer> map = new HashMap<>();
+                for (int[] point1 : points) {
+                    int dis = (point[0] - point1[0]) * (point[0] - point1[0]) + (point[1] - point1[1]) * (point[1] - point1[1]);
+                    map.put(dis, map.getOrDefault(dis, 0) + 1);
+                }
+                // 计算回旋镖数量
+                for (int cnt : map.values()) {
+                    res += cnt * (cnt - 1);
+                }
+            }
+            return res;
+        }
+    }
+
+    static class Solution_old {
+        public int numberOfBoomerangs(int[][] points) {
             // 空间换时间，把到每个点距离的点数量存储下来
             Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
             for (int i = 0; i < points.length; i++) {
