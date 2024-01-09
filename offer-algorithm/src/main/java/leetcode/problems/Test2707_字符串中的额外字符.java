@@ -23,8 +23,7 @@ public class Test2707_字符串中的额外字符 {
             // dp[i] = 尝试找min(dp[j]), j < i && s[j, i] in set
             int[] dp = new int[len + 1];
             dp[0] = 0;
-            dp[1] = set.contains(s.substring(0, 1)) ? 0 : 1;
-            for (int i = 2; i <= len; i++) {
+            for (int i = 1; i <= len; i++) {
                 dp[i] = dp[i - 1] + 1;
                 for (int j = 0; j < i; j++) {
                     String suffix = s.substring(j, i);
