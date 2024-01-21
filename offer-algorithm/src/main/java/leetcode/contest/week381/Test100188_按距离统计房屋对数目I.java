@@ -20,8 +20,7 @@ public class Test100188_按距离统计房屋对数目I {
                 for (int j = i + 1; j <= n; j++) {
                     // 计算两种情况的距离并取较小值
                     int dist1 = Math.abs(i - j); // 直接沿街道走的距离
-                    int dist2 = Math.min(Math.abs(x - i) + Math.abs(y - j),
-                            Math.abs(y - i) + Math.abs(x - j)) + 1; // 通过x和y之间的街道走的距离
+                    int dist2 = Math.min(Math.abs(x - i) + Math.abs(y - j), Math.abs(y - i) + Math.abs(x - j)) + 1; // 通过x和y之间的街道走的距离
                     int dist = Math.min(dist1, dist2); // 最短距离
                     if (dist < n) {
                         cnt[dist]++;
