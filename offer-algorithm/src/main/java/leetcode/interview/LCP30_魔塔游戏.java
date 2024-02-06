@@ -14,17 +14,12 @@ public class LCP30_魔塔游戏 {
 
     static class Solution {
         public int magicTower(int[] nums) {
-            if (Arrays.stream(nums).sum() < 0) {
-                return -1;
-            }
             // 贪心+优先队列，每次血为负数时把前面最小移到后面
-            List<Integer> list = Arrays.stream(nums).boxed().collect(Collectors.toList());
             PriorityQueue<Integer> queue = new PriorityQueue<>();
             long endSum = 0;
             int cnt = 0;
             long hp = 0;
-            while (!list.isEmpty()) {
-                int num = list.remove(0);
+            for (int num : nums) {
                 queue.add(num);
                 hp += num;
                 if (hp < 0) {
