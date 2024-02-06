@@ -17,7 +17,7 @@ public class LCP30_魔塔游戏 {
             if (Arrays.stream(nums).sum() < 0) {
                 return -1;
             }
-            // 贪心 + 优先队列，每次血为负数时把前面最小移到后面
+            // 贪心+优先队列，每次血为负数时把前面最小移到后面
             List<Integer> list = Arrays.stream(nums).boxed().collect(Collectors.toList());
             PriorityQueue<Integer> queue = new PriorityQueue<>();
             long endSum = 0;
@@ -34,7 +34,6 @@ public class LCP30_魔塔游戏 {
                     cnt++;
                 }
             }
-            System.out.println(hp + "->" + endSum);
             return hp + endSum >= 0 ? cnt : -1;
         }
     }
