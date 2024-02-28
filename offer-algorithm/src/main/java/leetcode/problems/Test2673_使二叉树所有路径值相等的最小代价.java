@@ -20,7 +20,7 @@ public class Test2673_使二叉树所有路径值相等的最小代价 {
             if (index > cost.length) {
                 return 0;
             }
-            // 当前节点需要补充的数字，是由左右子树里最大的两个数的差决定的
+            // 当前节点需要补充的数字，是由左右子树里最大的路径决定的，而不是由左右子树的和
             int leftMax = getMax(cost, index * 2);
             int rightMax = getMax(cost, index * 2 + 1);
             res += Math.abs(leftMax - rightMax);
