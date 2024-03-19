@@ -9,6 +9,9 @@ public class Test1793_好子数组的最大分数 {
         System.out.println(new Solution().maximumScore(
                 new int[]{5, 5, 4, 5, 4, 1, 1, 1}, 0
         ));
+        System.out.println(new Solution().maximumScore(
+                new int[]{7, 5, 4}, 1
+        ));
     }
 
     static class Solution {
@@ -25,7 +28,7 @@ public class Test1793_好子数组的最大分数 {
                     right++;
                 }
                 res = Math.max(res, height * (right - left - 1));
-                if (left < 0 && right >= nums.length - 1) {
+                if (left < 0 && right >= nums.length) {
                     break;
                 }
             }
