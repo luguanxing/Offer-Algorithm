@@ -17,10 +17,9 @@ public class Test0894_所有可能的真二叉树 {
             if (n == 1) {
                 return Collections.singletonList(new TreeNode(0));
             }
-            // 该函数生成已root为根的所有可能结果
-            TreeNode root = new TreeNode(0);
             List<TreeNode> res = new ArrayList<>();
-            for (int i = 1; i < n; i += 2) {
+            TreeNode root = new TreeNode(0);
+            for (int i = 1; i < n - 1; i ++) {
                 List<TreeNode> left = allPossibleFBT(i);
                 List<TreeNode> right = allPossibleFBT(n - i - 1);
                 for (TreeNode l : left) {
