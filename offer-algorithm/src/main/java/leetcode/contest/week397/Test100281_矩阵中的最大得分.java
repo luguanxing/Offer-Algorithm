@@ -38,6 +38,34 @@ public class Test100281_矩阵中的最大得分 {
         public int maxScore(List<List<Integer>> grid) {
             int height = grid.size();
             int width = grid.get(0).size();
+            int max = Integer.MIN_VALUE;
+            // 总得分=(c2-c1)+(c3-c2)+...(cn-cn-1)=cn-c1只需起始节点
+            // 用min[y][x]表示从(y, x)左上的最小值
+            int[][] min = new int[height][width];
+            min[0][0] = grid.get(0).get(0);
+            for (int x = 1; x < width; x++) {
+                min[0][x] = Math.min(min[0][x - 1], grid.get(0).get(x));
+                max = Math.max(max, grid.get(0).get(x) - min[0][x - 1]);
+            }
+            for (int y = 1; y < height; y++) {
+                min[y][0] = Math.min(min[y - 1][0], grid.get(y).get(0));
+                max = Math.max(max, grid.get(y).get(0) - min[y - 1][0]);
+            }
+            for (int y = 1; y < height; y++) {
+                for (int x = 1; x < width; x++) {
+                    min[y][x] = Math.min(grid.get(y).get(x), Math.min(min[y - 1][x], min[y][x - 1]));
+                    max = Math.max(max, grid.get(y).get(x) - min[y - 1][x]);
+                    max = Math.max(max, grid.get(y).get(x) - min[y][x - 1]);
+                }
+            }
+            return max;
+        }
+    }
+
+    static class Solution_OLD {
+        public int maxScore(List<List<Integer>> grid) {
+            int height = grid.size();
+            int width = grid.get(0).size();
             // dp[y][x] 表示到(y, x)时的最大得分
             // 对于左侧 dp[y][x] = max(0, dp[y][i]) + grid[y][x] - grid[y][i]，其中0 <= i < x
             // 对于上方 dp[y][x] = max(0, dp[i][x]) + grid[y][x] - grid[i][x]，其中0 <= i < y
