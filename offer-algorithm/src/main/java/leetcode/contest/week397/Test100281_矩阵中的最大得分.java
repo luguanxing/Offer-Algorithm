@@ -38,6 +38,10 @@ public class Test100281_矩阵中的最大得分 {
         public int maxScore(List<List<Integer>> grid) {
             int height = grid.size();
             int width = grid.get(0).size();
+            // dp[y][x] 表示到(y, x)时的最大得分
+            // 对于左侧 dp[y][x] = max(0, dp[y][i]) + grid[y][x] - grid[y][i]，其中0 <= i < x
+            // 对于上方 dp[y][x] = max(0, dp[i][x]) + grid[y][x] - grid[i][x]，其中0 <= i < y
+            // 需要将max(0, dp[y][i]) - grid[y][i]和max(0, dp[i][x]) - grid[i][x]存储起来并排序，方便后续计算
             int[][] dp = new int[height][width];
             for (int[] row : dp) {
                 Arrays.fill(row, Integer.MIN_VALUE);
