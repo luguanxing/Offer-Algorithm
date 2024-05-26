@@ -1,7 +1,6 @@
 package leetcode.problems;
 
-import java.util.Comparator;
-import java.util.*;
+import java.util.PriorityQueue;
 
 public class Test1738_找出第K大的异或坐标值 {
 
