@@ -26,9 +26,33 @@ public class Test2028_找出缺失的观测数据 {
         System.out.println(Arrays.toString(new Solution().missingRolls(
                 new int[]{4, 2, 2, 5, 4, 5, 4, 5, 3, 3, 6, 1, 2, 4, 2, 1, 6, 5, 4, 2, 3, 4, 2, 3, 3, 5, 4, 1, 4, 4, 5, 3, 6, 1, 5, 2, 3, 3, 6, 1, 6, 4, 1, 3}, 2, 53
         )));
+        System.out.println(Arrays.toString(new Solution().missingRolls(
+                new int[]{3, 5, 3}, 5, 3
+        )));
     }
 
     static class Solution {
+        public int[] missingRolls(int[] rolls, int mean, int n) {
+            int totalSum = mean * (n + rolls.length);
+            int rollSum = Arrays.stream(rolls).sum();
+            int leftSum = totalSum - rollSum;
+            // 使用剩余的n凑出leftSum
+            int[] res = new int[n];
+            if (leftSum / n < 1 || leftSum / n > 6) {
+                return new int[]{};
+            }
+            Arrays.fill(res, leftSum / n);
+            for (int i = 0; i < leftSum % n; i++) {
+                res[i]++;
+                if (res[i] > 6) {
+                    return new int[]{};
+                }
+            }
+            return res;
+        }
+    }
+
+    static class Solution_OLD {
         public int[] missingRolls(int[] rolls, int mean, int n) {
             int rollLen = rolls.length;
             int rollSum = Arrays.stream(rolls).sum();
