@@ -15,7 +15,7 @@ public class Test1103_分糖果II {
             int[] res = new int[num_people];
             while (candies > 0) {
                 if (index < candies) {
-                    // 可放入足够的糖
+                    // 当前的人可拿走足够的糖
                     res[(index - 1) % num_people] += index;
                     candies -= index;
                     index++;
