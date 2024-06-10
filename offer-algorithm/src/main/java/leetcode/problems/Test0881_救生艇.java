@@ -1,7 +1,6 @@
 package leetcode.problems;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Test0881_救生艇 {
@@ -25,6 +24,64 @@ public class Test0881_救生艇 {
     }
 
     static class Solution {
+        public int numRescueBoats(int[] people, int limit) {
+            Arrays.sort(people);
+            int res = 0;
+            int l = 0;
+            int r = people.length - 1;
+            while (l <= r) {
+                int rNum = people[r];
+                r--;
+                res++;
+                // 左边能一起上就一起上（贪心）
+                int lNum = people[l];
+                if (lNum + rNum <= limit) {
+                    l++;
+                }
+            }
+            return res;
+        }
+    }
+
+
+    static class Solution_Map {
+        public int numRescueBoats(int[] people, int limit) {
+            TreeMap<Integer, Integer> map = new TreeMap<>();
+            for (int p : people) {
+                map.put(p, map.getOrDefault(p, 0) + 1);
+            }
+            int res = 0;
+            while (!map.isEmpty()) {
+                // 左边最小的数
+                int left = map.firstKey();
+                map.put(left, map.get(left) - 1);
+                if (map.get(left) == 0) {
+                    map.remove(left);
+                }
+                // 贪心找右边不大于limit-left的数
+                boolean isRightInMap = false;
+                Integer right = limit - left;
+                if (map.containsKey(right)) {
+                    isRightInMap = true;
+                } else {
+                    right = map.lowerKey(right);
+                    if (right != null && map.containsKey(right)) {
+                        isRightInMap = true;
+                    }
+                }
+                if (isRightInMap) {
+                    map.put(right, map.get(right) - 1);
+                    if (map.get(right) == 0) {
+                        map.remove(right);
+                    }
+                }
+                res++;
+            }
+            return res;
+        }
+    }
+
+    static class Solution_OLD {
         public int numRescueBoats(int[] people, int limit) {
             List<Integer> list = Arrays
                     .stream(people)
