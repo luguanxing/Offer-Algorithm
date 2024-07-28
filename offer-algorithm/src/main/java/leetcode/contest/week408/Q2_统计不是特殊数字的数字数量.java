@@ -2,7 +2,7 @@ package leetcode.contest.week408;
 
 import java.util.*;
 
-public class TestQ2_统计不是特殊数字的数字数量 {
+public class Q2_统计不是特殊数字的数字数量 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().nonSpecialCount(5, 7));
