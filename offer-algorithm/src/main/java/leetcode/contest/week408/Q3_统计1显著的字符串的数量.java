@@ -1,6 +1,6 @@
 package leetcode.contest.week408;
 
-public class TestQ3_统计1显著的字符串的数量 {
+public class Q3_统计1显著的字符串的数量 {
 
     public static void main(String[] args) {
         System.out.println(new Solution().numberOfSubstrings("00011"));
