@@ -1,8 +1,7 @@
 package leetcode.problems;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.stream.*;
 
 public class Test0676_实现一个魔法字典 {
 
@@ -16,9 +15,42 @@ public class Test0676_实现一个魔法字典 {
     }
 
     static class MagicDictionary {
-        private Set<String> set;
+        List<String> dictonary;
 
         public MagicDictionary() {
+
+        }
+
+        public void buildDict(String[] dictionary) {
+            dictonary = Arrays.asList(dictionary);
+        }
+
+        public boolean search(String searchWord) {
+            for (String dWord : dictonary) {
+                // 有且只有一个字符不同
+                char[] chars = searchWord.toCharArray();
+                if (dWord.length() != chars.length) {
+                    continue;
+                }
+                int cnt = 0;
+                for (int i = 0; i < chars.length; i++) {
+                    if (dWord.charAt(i) != chars[i]) {
+                        cnt++;
+                    }
+                }
+                if (cnt == 1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+
+    static class MagicDictionary_Old {
+        private Set<String> set;
+
+        public MagicDictionary_Old() {
         }
 
         public void buildDict(String[] dictionary) {
