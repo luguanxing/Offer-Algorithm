@@ -12,6 +12,42 @@ public class Test0698_划分为k个相等的子集 {
     }
 
     static class Solution {
+        private boolean isOk = false;
+
+        public boolean canPartitionKSubsets(int[] nums, int k) {
+            int sum = Arrays.stream(nums).sum();
+            if (sum % k != 0 || Arrays.stream(nums).max().getAsInt() > sum / k) {
+                return false;
+            }
+            dfs(nums, sum/k, 0, new int[k]);
+            return isOk;
+        }
+
+        private void dfs(int[] nums, int avg, int idx, int[] buckets) {
+            if (isOk || idx == nums.length) {
+                isOk = true;
+                return;
+            }
+            int num = nums[idx];
+            next:
+            for (int i = 0; i < buckets.length; i++) {
+                // 相同的桶可以跳过
+                for (int j = i - 1; j >= 0; j--) {
+                    if (buckets[j] == buckets[i]) {
+                        continue next;
+                    }
+                }
+                // 枚举
+                if (num + buckets[i] <= avg) {
+                    buckets[i] += num;
+                    dfs(nums, avg, idx + 1, buckets);
+                    buckets[i] -= num;
+                }
+            }
+        }
+    }
+
+    static class Solution_Old {
         boolean isOk = false;
         int avg = 0;
 
