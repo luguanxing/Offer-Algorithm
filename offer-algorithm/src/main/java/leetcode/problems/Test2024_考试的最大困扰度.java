@@ -14,6 +14,34 @@ public class Test2024_考试的最大困扰度 {
 
     static class Solution {
         public int maxConsecutiveAnswers(String answerKey, int k) {
+            // 滑动窗口，找到最大的T和F的连续片段
+            int maxT = maxWindow(answerKey, k, 'T');
+            int maxF = maxWindow(answerKey, k, 'F');
+            return Math.max(maxT, maxF);
+        }
+
+        private int maxWindow(String answerKey, int k, char c) {
+            int max = 0;
+            int right = 0;
+            int left = 0;
+            int currentUnmatch = 0;
+            while (right < answerKey.length()) {
+                if (answerKey.charAt(right++) != c) {
+                    currentUnmatch++;
+                }
+                while (currentUnmatch > k) {
+                    if (answerKey.charAt(left++) != c) {
+                        currentUnmatch--;
+                    }
+                }
+                max = Math.max(max, right - left);
+            }
+            return max;
+        }
+    }
+
+    static class Solution_OLD {
+        public int maxConsecutiveAnswers(String answerKey, int k) {
             // 连续改k个F成T，看连续最长的T的个数
             int maxCntT = getMaxCnt(answerKey, k, 'T');
             // 连续改k个T成F，看连续最长的F的个数
