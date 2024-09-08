@@ -12,7 +12,6 @@ public class Test100422_将日期转换为二进制表示 {
 
     static class Solution {
         public String convertDateToBinary(String date) {
-            String res;
             String[] infos = date.split("-");
             for (int i = 0; i < infos.length; i++) {
                 infos[i] = Integer.toBinaryString(Integer.parseInt(infos[i]));
