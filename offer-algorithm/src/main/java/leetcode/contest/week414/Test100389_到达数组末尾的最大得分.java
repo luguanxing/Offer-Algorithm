@@ -14,6 +14,7 @@ public class Test100389_到达数组末尾的最大得分 {
         public long findMaximumScore(List<Integer> nums) {
             long ans = 0;
             long currentMax = 0;
+            // 贪心：每次用当前最大值不断累积，直到遇到更大的数值
             for (int num : nums) {
                 ans += currentMax;
                 currentMax = Math.max(currentMax, num);
