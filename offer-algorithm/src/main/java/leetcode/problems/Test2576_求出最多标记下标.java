@@ -17,7 +17,8 @@ public class Test2576_求出最多标记下标 {
 
     static class Solution {
         public int maxNumOfMarkedIndices(int[] nums) {
-            // 不断用二分试出最大的k对
+            // 单调性，因为k对可以k-1对肯定也可以
+            // 所以可以不断用二分试出最大的k对
             int len = nums.length;
             Arrays.sort(nums);
             int left = 0;
