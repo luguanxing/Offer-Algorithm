@@ -16,6 +16,7 @@ public class Test100363_移山所需的最少秒数 {
             long left = 0, right = Long.MAX_VALUE;
             while (left < right) {
                 long mid = left + (right - left) / 2;
+                // 二分尝试最出最小的t
                 if (canFinish(mid, mountainHeight, workerTimes)) {
                     right = mid;
                 } else {
@@ -26,25 +27,25 @@ public class Test100363_移山所需的最少秒数 {
         }
 
         private boolean canFinish(long t, int mountainHeight, int[] workerTimes) {
-            long totalHeightReduced = 0;
+            long sum = 0;
             for (int workerTime : workerTimes) {
-                // 计算每个工人t内的贡献
-                long low = 0, high = mountainHeight;
-                while (low < high) {
-                    long mid = (low + high + 1) / 2;
+                // 计算每个工人t内的工作量
+                long l = 0, r = mountainHeight;
+                while (l < r) {
+                    long mid = (l + r + 1) / 2;
                     long totalTime = workerTime * mid * (mid + 1) / 2;
                     if (totalTime <= t) {
-                        low = mid;
+                        l = mid;
                     } else {
-                        high = mid - 1;
+                        r = mid - 1;
                     }
                 }
-                totalHeightReduced += low;
-                if (totalHeightReduced >= mountainHeight) {
+                sum += l;
+                if (sum >= mountainHeight) {
                     return true;
                 }
             }
-            return totalHeightReduced >= mountainHeight;
+            return sum >= mountainHeight;
         }
     }
 
