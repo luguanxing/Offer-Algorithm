@@ -31,21 +31,20 @@ public class Test100417_移除可疑的方法 {
                 int from = invocation[0];
                 int to = invocation[1];
                 if (suspicious.contains(to) && !suspicious.contains(from)) {
-                    // 存在外部方法调用可疑方法，不能移除
+                    // 存在外部方法调用可疑方法，导致一个都不能移除
                     canRemove = false;
                     break;
                 }
             }
             List<Integer> result = new ArrayList<>();
+            // 要么移除可疑方法返回剩余方法；要么无法移除返回所有方法
             if (canRemove) {
-                // 移除可疑方法，返回剩余方法
                 for (int i = 0; i < n; i++) {
                     if (!suspicious.contains(i)) {
                         result.add(i);
                     }
                 }
             } else {
-                // 无法移除，返回所有方法
                 for (int i = 0; i < n; i++) {
                     result.add(i);
                 }
@@ -53,15 +52,16 @@ public class Test100417_移除可疑的方法 {
             return result;
         }
 
-        private void dfs(int node, Map<Integer, List<Integer>> graph, Set<Integer> visited) {
+        private void dfs(int node, Map<Integer, List<Integer>> map, Set<Integer> visited) {
+            // 避免重复访问
             if (visited.contains(node)) {
-                // 避免重复访问
                 return;
             }
             visited.add(node);
-            if (graph.containsKey(node)) {
-                for (int neighbor : graph.get(node)) {
-                    dfs(neighbor, graph, visited);
+            // 递归访问所有邻接节点
+            if (map.containsKey(node)) {
+                for (int neighbor : map.get(node)) {
+                    dfs(neighbor, map, visited);
                 }
             }
         }
