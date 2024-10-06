@@ -7,14 +7,39 @@ import java.util.List;
 public class Test0134_加油站 {
 
     public static void main(String[] args) {
-        System.out.println(new Solution_优化().canCompleteCircuit(
+        System.out.println(new Solution().canCompleteCircuit(
                 new int[]{1, 2, 3, 4, 5},
                 new int[]{3, 4, 5, 1, 2}
         ));
-        System.out.println(new Solution_优化().canCompleteCircuit(
+        System.out.println(new Solution().canCompleteCircuit(
                 new int[]{2, 3, 4},
                 new int[]{3, 4, 3}
         ));
+    }
+
+    static class Solution {
+        public int canCompleteCircuit(int[] gas, int[] cost) {
+            int len = gas.length;
+            int[] gasCircuit = new int[len * 2];
+            for (int i = 0; i < len; i++) {
+                gasCircuit[i] = gas[i] - cost[i];
+                gasCircuit[i + len] = gasCircuit[i];
+            }
+            // 滑动窗口找是否存在解
+            int sum = 0;
+            int l = 0;
+            int r = 0;
+            while (l <= r && r < 2 * len) {
+                sum += gasCircuit[r++];
+                while (sum < 0) {
+                    sum -= gasCircuit[l++];
+                }
+                if (r - l == len) {
+                    return l;
+                }
+            }
+            return -1;
+        }
     }
 
     static class Solution_优化 {
@@ -43,7 +68,7 @@ public class Test0134_加油站 {
         }
     }
 
-    static class Solution {
+    static class Solution_OLD {
         public int canCompleteCircuit(int[] gas, int[] cost) {
             int len = gas.length;
             List<Integer> forwardList = new ArrayList<>();
