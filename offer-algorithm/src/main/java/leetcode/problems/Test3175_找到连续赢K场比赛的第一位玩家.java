@@ -15,11 +15,11 @@ public class Test3175_找到连续赢K场比赛的第一位玩家 {
     static class Solution {
         public int findWinningPlayer(int[] skills, int k) {
             int len = skills.length;
-            // k大于人数去最大
+            // k大于人数直接取最大
             if (k >= len) {
                 k = len;
             }
-            // 否则进行模拟
+            // 否则进行模拟，最多遍历一次
             Deque<int[]> queue = new ArrayDeque<>();
             for (int i = 0; i < len; i++) {
                 queue.offer(new int[]{skills[i], i});
