@@ -15,6 +15,26 @@ public class Test3180_执行操作可获得的最大总奖励I {
     static class Solution {
         public int maxTotalReward(int[] rewardValues) {
             Arrays.sort(rewardValues);
+            int len = rewardValues.length;
+            int max = Arrays.stream(rewardValues).max().getAsInt();
+            boolean[] dp = new boolean[2 * max + 1];
+            dp[0] = true;
+            int res = 0;
+            for (int rewardValue : rewardValues) {
+                for (int i = 0; i < rewardValue; i++) {
+                    if (dp[i]) {
+                        dp[i + rewardValue] = true;
+                        res = Math.max(res, i + rewardValue);
+                    }
+                }
+            }
+            return res;
+        }
+    }
+
+    static class Solution_穷举 {
+        public int maxTotalReward(int[] rewardValues) {
+            Arrays.sort(rewardValues);
             // 使用TreeSet来存储当前所有可能的和
             TreeSet<Integer> currentSums = new TreeSet<>();
             for (int rewardValue : rewardValues) {
