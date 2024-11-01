@@ -48,6 +48,12 @@ public class UnionFindExample {
         public void union(int element1, int element2) {
             int parent1 = find(element1);
             int parent2 = find(element2);
+            // 直接合并效率不高
+            // for (int i = 0; i < parent.length; i++) {
+            //     if (parent[i] == parent1) {
+            //         parent[i] = parent2;
+            //     }
+            // }
             // 按重量合并
             if (weight[parent1] > weight[parent2]) {
                 parent[parent2] = parent1;
