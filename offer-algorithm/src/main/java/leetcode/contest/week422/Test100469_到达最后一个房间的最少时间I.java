@@ -47,11 +47,12 @@ public class Test100469_到达最后一个房间的最少时间I {
                     // 检查边界
                     if (newY >= 0 && newY < n && newX >= 0 && newX < m) {
                         // 在 time + 1 的时候到达新房间
-                        int arrivalTime = currentTime + 1;
+                        int arrivalTime = currentTime;
                         // 要满足 moveTime 的条件
                         if (arrivalTime <= moveTime[newY][newX]) {
-                            arrivalTime = moveTime[newY][newX] + 1;
+                            arrivalTime = moveTime[newY][newX];
                         }
+                        arrivalTime += 1;
                         // 如果这个时间比之前记录的早，更新并加入队列
                         if (arrivalTime < visited[newY][newX]) {
                             visited[newY][newX] = arrivalTime;
