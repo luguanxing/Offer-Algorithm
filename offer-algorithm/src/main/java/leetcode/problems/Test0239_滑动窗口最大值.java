@@ -27,13 +27,39 @@ public class Test0239_滑动窗口最大值 {
 
     static class Solution {
         public int[] maxSlidingWindow(int[] nums, int k) {
+            int len = nums.length;
+            int[] res = new int[len - k + 1];
+            // 单调递减队列存储下标
+            Deque<Integer> deque = new ArrayDeque<>();
+            for (int i = 0; i < len; i++) {
+                int num = nums[i];
+                // 保证单调性
+                while (!deque.isEmpty() && nums[deque.peekLast()] < num) {
+                    deque.pollLast();
+                }
+                deque.addLast(i);
+                // 维护窗口长度为k
+                if (i - deque.peekFirst() > k) {
+                    deque.pollFirst();
+                }
+                // 添加数字
+                if (i >= k - 1) {
+                    res[i - k + 1] = nums[deque.peekFirst()];
+                }
+            }
+            return res;
+        }
+    }
+
+    static class Solution_比较数值 {
+        public int[] maxSlidingWindow(int[] nums, int k) {
             List<Integer> resList = new ArrayList<>();
             MyDeque myDeque = new MyDeque();
             for (int i = 0; i < nums.length; i++) {
                 myDeque.push(nums[i]);
                 if (i >= k - 1) {
                     // 取数，同时比较单调队列左边和窗口左侧
-                    resList.add(myDeque.poll(nums[i-k+1]));
+                    resList.add(myDeque.poll(nums[i - k + 1]));
                 }
             }
             // 返回结果
