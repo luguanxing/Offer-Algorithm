@@ -24,6 +24,54 @@ public class Test0743_网络延迟时间 {
 
     static class Solution {
         public int networkDelayTime(int[][] times, int n, int k) {
+            // 构建邻接表
+            Map<Integer, List<int[]>> graph = new HashMap<>();
+            for (int[] time : times) {
+                graph.putIfAbsent(time[0], new ArrayList<>());
+                graph.get(time[0]).add(new int[]{time[1], time[2]});
+            }
+
+            // Dijkstra找最短路径，初始化数组为无穷大
+            int[] dist = new int[n + 1];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            dist[k] = 0; // 起点到自己的距离是 0
+
+            // 优先队列存储 [距离, 节点]
+            PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
+            pq.offer(new int[]{0, k}); // 起点入队
+
+            while (!pq.isEmpty()) {
+                int[] curr = pq.poll();
+                int currDist = curr[0];
+                int currNode = curr[1];
+
+                // 如果当前距离大于已记录的最短距离，跳过
+                if (currDist > dist[currNode]) continue;
+
+                // 遍历邻接节点
+                if (graph.containsKey(currNode)) {
+                    for (int[] neighbor : graph.get(currNode)) {
+                        int nextNode = neighbor[0];
+                        int edgeWeight = neighbor[1];
+                        int newDist = currDist + edgeWeight;
+
+                        // 如果找到更短路径，更新并加入队列
+                        if (newDist < dist[nextNode]) {
+                            dist[nextNode] = newDist;
+                            pq.offer(new int[]{newDist, nextNode});
+                        }
+                    }
+                }
+            }
+
+            // 找到最远的最短路径
+            int maxDist = Arrays.stream(dist).skip(1).max().getAsInt();
+            return maxDist == Integer.MAX_VALUE ? -1 : maxDist;
+        }
+    }
+
+    static class Solution_OLD {
+        public int networkDelayTime(int[][] times, int n, int k) {
             int[][] timeMap = new int[n + 1][n + 1];
             for (int i = 1; i <= n; i++) {
                 for (int j = 1; j <= n; j++) {
