@@ -1,11 +1,14 @@
 package leetcode.problems;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Test1705_吃苹果的最大数目 {
 
     public static void main(String[] args) {
+        System.out.println(new Solution().eatenApples(
+                new int[]{20000},
+                new int[]{20000}
+        ));
         System.out.println(new Solution().eatenApples(
                 new int[]{1, 2, 3, 5, 2},
                 new int[]{3, 2, 1, 4, 2}
@@ -25,6 +28,47 @@ public class Test1705_吃苹果的最大数目 {
     }
 
     static class Solution {
+        public int eatenApples(int[] apples, int[] days) {
+            int len = apples.length;
+            int cnt = 0;
+            // 使用map存储最晚能吃到的天数和对应的苹果数量
+            TreeMap<Integer, Integer> map = new TreeMap<>();
+            for (int i = 0; i < len; i++) {
+                // 保存最新的苹果
+                int apple = apples[i];
+                int bestBefore = i + days[i] - 1;
+                map.put(bestBefore, map.getOrDefault(bestBefore, 0) + apple);
+                // 吃一个苹果
+                Integer next = map.ceilingKey(i);
+                if (next != null) {
+                    map.put(next, map.get(next) - 1);
+                    if (map.get(next) == 0) {
+                        map.remove(next);
+                    }
+                    cnt++;
+                }
+            }
+            // 吃掉剩下能吃的苹果
+            if (!map.isEmpty()) {
+                int day = len;
+                while (!map.isEmpty()) {
+                    Integer next = map.ceilingKey(day);
+                    if (next == null) {
+                        break;
+                    }
+                    map.put(next, map.get(next) - 1);
+                    if (map.get(next) == 0) {
+                        map.remove(next);
+                    }
+                    cnt++;
+                    day++;
+                }
+            }
+            return cnt;
+        }
+    }
+
+    static class Solution_OLD {
         public int eatenApples(int[] apples, int[] days) {
             int res = 0;
 
