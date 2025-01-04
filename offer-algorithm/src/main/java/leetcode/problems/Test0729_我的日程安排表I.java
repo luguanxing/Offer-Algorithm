@@ -2,6 +2,7 @@ package leetcode.problems;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Function;
 
 public class Test0729_我的日程安排表I {
 
@@ -13,9 +14,32 @@ public class Test0729_我的日程安排表I {
     }
 
     static class MyCalendar {
-        TreeMap<Integer, Integer> endStartMap;
+        TreeMap<Integer, Integer> treeMap;
 
         public MyCalendar() {
+            treeMap = new TreeMap<>();
+        }
+
+        public boolean book(int startTime, int endTime) {
+            treeMap.put(startTime, treeMap.getOrDefault(startTime, 0) + 1);
+            treeMap.put(endTime, treeMap.getOrDefault(endTime, 0) - 1);
+            int currentCnt = 0;
+            for (int cnt : treeMap.values()) {
+                currentCnt += cnt;
+                if (currentCnt > 1) {
+                    treeMap.put(startTime, treeMap.get(startTime) - 1);
+                    treeMap.put(endTime, treeMap.get(endTime) + 1);
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    static class MyCalendar_OLD {
+        TreeMap<Integer, Integer> endStartMap;
+
+        public MyCalendar_OLD() {
             endStartMap = new TreeMap<>();
         }
 
