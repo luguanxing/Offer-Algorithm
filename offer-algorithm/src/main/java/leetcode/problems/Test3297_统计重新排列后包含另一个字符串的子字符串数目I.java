@@ -20,11 +20,11 @@ public class Test3297_统计重新排列后包含另一个字符串的子字符�
                 diff[c - 'a']++;
             }
             int l = 0;
-            int r = 1;
-            while (l <= r && r <= len) {
-                diff[word1.charAt(r - 1) - 'a']--;
+            int r = 0;
+            while (l <= r && r < len) {
+                diff[word1.charAt(r) - 'a']--;
                 while (!Arrays.stream(diff).anyMatch(i -> i > 0)) {
-                    res += len - r + 1;
+                    res += len - r;
                     diff[word1.charAt(l) - 'a']++;
                     l++;
                 }
