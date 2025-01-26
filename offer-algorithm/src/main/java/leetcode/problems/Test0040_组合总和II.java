@@ -30,11 +30,11 @@ public class Test0040_组合总和II {
             if (idx >= candidates.length || target < 0) {
                 return;
             }
-            // 要candidates[i]
+            // 要candidates[idx]
             current.add(candidates[idx]);
             dfs(candidates, idx + 1, target - candidates[idx], current);
             current.remove(current.size() - 1);
-            // 不要candidates[i]，这时应该跳到下一个不相同的数，避免遇到和当前数相同数的情况
+            // 不要candidates[idx]，这时应该跳到下一个不相同的数，避免遇到和当前数相同数的情况
             while (idx + 1 < candidates.length && candidates[idx] == candidates[idx + 1]) {
                 idx++;
             }
