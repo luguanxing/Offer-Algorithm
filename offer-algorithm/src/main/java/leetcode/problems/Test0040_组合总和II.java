@@ -12,66 +12,33 @@ public class Test0040_组合总和II {
     }
 
     static class Solution {
-        private List<List<Integer>> res = new ArrayList<>();
-
-        public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-            Arrays.sort(candidates);
-            dfs(candidates, 0, target, new ArrayList<>());
-            return res;
-        }
-
-        private void dfs(int[] candidates, int idx, int target, List<Integer> current) {
-            if (target == 0) {
-                List<Integer> ans = new ArrayList<>(current);
-                res.add(ans);
-                return;
-            }
-            if (idx >= candidates.length || target < 0) {
-                return;
-            }
-            for (int i = idx; i < candidates.length; i++) {
-                // 减枝，当i>idx且candidates[i]==candidates[i-1]时，说明枚举的数和循环的上一个相同，应该跳过重复
-                if (i > idx && candidates[i] == candidates[i - 1]) {
-                    continue;
-                }
-                // 必须要candidates[i]，因为上面有循环
-                current.add(candidates[i]);
-                dfs(candidates, i + 1, target - candidates[i], current);
-                current.remove(current.size() - 1);
-            }
-        }
-    }
-
-    static class Solution_DFS {
         List<List<Integer>> res = new ArrayList<>();
-        Set<String> set = new HashSet<>();
 
         public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+            // 先排序
+            Arrays.sort(candidates);
+            // 再递归
             dfs(candidates, 0, target, new ArrayList<>());
             return res;
         }
 
         private void dfs(int[] candidates, int idx, int target, List<Integer> current) {
             if (target == 0) {
-                List<Integer> ans = new ArrayList<>(current);
-                Collections.sort(ans);
-                if (!set.contains(ans.toString())) {
-                    res.add(ans);
-                    set.add(ans.toString());
-                }
+                res.add(new ArrayList<>(current));
                 return;
             }
             if (idx >= candidates.length || target < 0) {
                 return;
             }
-            for (int i = idx; i < candidates.length; i++) {
-                // 不要candidates[i]
-                dfs(candidates, i + 1, target, current);
-                // candidates[i]
-                current.add(candidates[i]);
-                dfs(candidates, i + 1, target - candidates[i], current);
-                current.remove(current.size() - 1);
+            // 要candidates[i]
+            current.add(candidates[idx]);
+            dfs(candidates, idx + 1, target - candidates[idx], current);
+            current.remove(current.size() - 1);
+            // 不要candidates[i]，这时应该跳到下一个不相同的数，避免遇到和当前数相同数的情况
+            while (idx + 1 < candidates.length && candidates[idx] == candidates[idx + 1]) {
+                idx++;
             }
+            dfs(candidates, idx + 1, target, current);
         }
     }
 
