@@ -15,27 +15,28 @@ public class Test0090_子集II {
         public List<List<Integer>> subsetsWithDup(int[] nums) {
             List<List<Integer>> res = new ArrayList<>();
             List<Integer> current = new ArrayList<>();
-            Set<String> set = new HashSet<>();
             // 先排序，避免换顺序重复
             Arrays.sort(nums);
-            dfs(nums, 0, current, set, res);
+            dfs(nums, 0, current, res);
             return res;
         }
 
-        private void dfs(int[] nums, int index, List<Integer> current, Set<String> set, List<List<Integer>> res) {
-            if (index >= nums.length) {
-                if (!set.contains(current.toString())) {
-                    set.add(current.toString());
-                    res.add(new ArrayList<>(current));
-                }
+        private void dfs(int[] nums, int index, List<Integer> current, List<List<Integer>> res) {
+            int len = nums.length;
+            if (index >= len) {
+                res.add(new ArrayList<>(current));
                 return;
             }
-            // 要index
+            // 要index对应的数
             current.add(nums[index]);
-            dfs(nums, index + 1, current, set, res);
+            dfs(nums, index + 1, current, res);
             current.remove(current.size() - 1);
-            // 不要index
-            dfs(nums, index + 1, current, set, res);
+            // 不要index对应的数，但为了避免后面遇到相同情况，可以跳过相同的数
+            int nextIndex = index+1;
+            while (nextIndex < len && nums[nextIndex] == nums[index]) {
+                nextIndex++;
+            }
+            dfs(nums, nextIndex, current, res);
         }
     }
 
