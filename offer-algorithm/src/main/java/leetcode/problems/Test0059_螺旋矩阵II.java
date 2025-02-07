@@ -11,6 +11,39 @@ public class Test0059_螺旋矩阵II {
 
     static class Solution {
         public int[][] generateMatrix(int n) {
+            // 定义四个方向，按顺时针方向
+            int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+            int directionIndex = 0;
+            // 初始化矩阵和起始位置
+            int[][] matrix = new int[n][n];
+            int y = 0;
+            int x = 0;
+            int step = 1;
+            while (step <= n * n) {
+                matrix[y][x] = step++;
+                if (step > n * n) {
+                    break;
+                }
+                // 先尝试往之前的方向继续走
+                int[] direction = directions[directionIndex];
+                int nextY = y + direction[0];
+                int nextX = x + direction[1];
+                // 不能走（超过边界或走过）再试其它方向
+                while (nextX < 0 || n <= nextX || nextY < 0 || n <= nextY || matrix[nextY][nextX] != 0) {
+                    directionIndex = (directionIndex + 1) % directions.length;
+                    direction = directions[directionIndex];
+                    nextY = y + direction[0];
+                    nextX = x + direction[1];
+                }
+                y = nextY;
+                x = nextX;
+            }
+            return matrix;
+        }
+    }
+
+    static class Solution_OLD {
+        public int[][] generateMatrix(int n) {
             int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
             int[][] matrix = new int[n][n];
             int pos = 0;
