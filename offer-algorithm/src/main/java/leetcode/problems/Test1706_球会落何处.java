@@ -17,6 +17,32 @@ public class Test1706_球会落何处 {
     }
 
     static class Solution {
+        public int[] findBall(int[][] grid) {
+            int[] res = new int[grid[0].length];
+            for (int x = 0; x < grid[0].length; x++) {
+                dfs(0, x, grid, res, x);
+            }
+            return res;
+        }
+
+        private void dfs(int y, int x, int[][] grid, int[] res, int startX) {
+            if (y > grid.length || x < 0 || x >= grid[0].length) {
+                return;
+            }
+            if (y == grid.length) {
+                res[startX] = x;
+                return;
+            }
+            int dir = grid[y][x];
+            if ((x == 0 && dir == -1) || (x == grid[0].length - 1 && dir == 1) || (dir != grid[y][x + dir])) {
+                res[startX] = -1;
+                return;
+            }
+            dfs(y + 1, x + dir, grid, res, startX);
+        }
+    }
+
+    static class Solution_OLD {
         int[] res;
         int current;
 
