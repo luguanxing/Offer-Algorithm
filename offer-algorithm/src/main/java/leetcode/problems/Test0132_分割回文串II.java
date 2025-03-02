@@ -10,7 +10,36 @@ public class Test0132_分割回文串II {
         System.out.println(new Solution().minCut("ab"));
     }
 
-    static class Solution {
+    static class Solution  {
+        public int minCut(String s) {
+            char[] chars = s.toCharArray();
+            int len = s.length();
+            // 提前计算是否回文
+            boolean[][] isPalindrome = new boolean[len][len];
+            for (int i = 0; i < len; i++) {
+                Arrays.fill(isPalindrome[i], true);
+            }
+            for (int y = len - 1; y >= 0; y--) {
+                for (int x = y + 1; x < len; x++) {
+                    isPalindrome[y][x] = (s.charAt(y) == s.charAt(x)) && (isPalindrome[y + 1][x - 1]);
+                }
+            }
+            // dp[i] 表示 s[0:i] 的最小分割次数
+            int[] dp = new int[len];
+            // dp[i] = min(dp[j-1] + 1) if s[j:i] 是回文串
+            for (int i = 0; i < len; i++) {
+                dp[i] = i;
+                for (int j = 0; j <= i; j++) {
+                    if (isPalindrome[j][i]) {
+                        dp[i] = j == 0 ? 0 : Math.min(dp[i], dp[j - 1] + 1);
+                    }
+                }
+            }
+            return dp[len - 1];
+        }
+    }
+
+    static class Solution_未优化 {
         public int minCut(String s) {
             char[] chars = s.toCharArray();
             int len = s.length();
