@@ -12,6 +12,36 @@ public class Test0132_分割回文串II {
 
     static class Solution {
         public int minCut(String s) {
+            char[] chars = s.toCharArray();
+            int len = s.length();
+            // dp[i] 表示 s[0:i] 的最小分割次数
+            int[] dp = new int[len];
+            // dp[i] = min(dp[j-1] + 1) if s[j:i] 是回文串
+            for (int i = 0; i < len; i++) {
+                dp[i] = i;
+                for (int j = 0; j <= i; j++) {
+                    if (isPalindrome(chars, j, i)) {
+                        dp[i] = j == 0 ? 0 : Math.min(dp[i], dp[j - 1] + 1);
+                    }
+                }
+            }
+            return dp[len - 1];
+        }
+
+        private boolean isPalindrome(char[] chars, int left, int right) {
+            while (left < right) {
+                if (chars[left] != chars[right]) {
+                    return false;
+                }
+                left++;
+                right--;
+            }
+            return true;
+        }
+    }
+
+    static class Solution_OLD {
+        public int minCut(String s) {
             int len = s.length();
             boolean[][] isHui = new boolean[len][len];
             for (int i = 0; i < len; i++) {
