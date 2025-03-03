@@ -26,7 +26,7 @@ public class Test1278_分割回文串III {
                     if (j == 1) {
                         dp[i][j] = palindromeCost(chars, 0, i - 1);
                     } else {
-                        for (int x = j - 1; x < i; x++) {
+                        for (int x = 0; x < i; x++) {
                             dp[i][j] = Math.min(dp[i][j], dp[x][j - 1] + palindromeCost(chars, x, i - 1));
                         }
                     }
