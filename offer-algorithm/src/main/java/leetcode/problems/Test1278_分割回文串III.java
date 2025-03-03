@@ -20,7 +20,7 @@ public class Test1278_分割回文串III {
                 Arrays.fill(row, len);
             }
             dp[0][0] = 0;
-            // dp[i][cut] = min(dp[x][cut-1] + cost(x+1, i)) 其中 x < i且 s[x+1:i] 是修改后的回文串
+            // dp[i][j] = min(dp[x][j-1] + cost(x+1, i)) 其中 x < i且 s[x+1:i] 是修改后的回文串
             for (int i = 1; i <= len; i++) {
                 for (int j = 1; j <= Math.min(k, i); j++) {
                     if (j == 1) {
