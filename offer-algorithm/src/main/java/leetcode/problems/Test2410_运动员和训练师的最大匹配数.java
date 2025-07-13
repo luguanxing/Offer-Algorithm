@@ -33,4 +33,25 @@ public class Test2410_运动员和训练师的最大匹配数 {
         }
     }
 
+    static class Solution_双指针 {
+        public int matchPlayersAndTrainers(int[] players, int[] trainers) {
+            Arrays.sort(players);
+            Arrays.sort(trainers);
+            int res = 0;
+            int p = 0;
+            int t = 0;
+            while (p < players.length && t < trainers.length) {
+                while (t < trainers.length && players[p] > trainers[t]) {
+                    t++;
+                }
+                if (t < trainers.length && players[p] <= trainers[t]) {
+                    res++;
+                    p++;
+                    t++;
+                }
+            }
+            return res;
+        }
+    }
+
 }
