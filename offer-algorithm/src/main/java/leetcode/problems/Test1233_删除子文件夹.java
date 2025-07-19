@@ -17,6 +17,24 @@ public class Test1233_删除子文件夹 {
 
     static class Solution {
         public List<String> removeSubfolders(String[] folder) {
+            // 按字典序处理
+            Arrays.sort(folder);
+            List<String> res = new ArrayList<>();
+            String lastFolder = folder[0];
+            res.add(lastFolder);
+            for (int i = 1; i < folder.length; i++) {
+                String currentFolder = folder[i];
+                if (!currentFolder.startsWith(lastFolder + "/")) {
+                    res.add(currentFolder);
+                    lastFolder = currentFolder;
+                }
+            }
+            return res;
+        }
+    }
+
+    static class Solution_穷举 {
+        public List<String> removeSubfolders(String[] folder) {
             Arrays.sort(folder, Comparator.comparingInt(String::length));
             List<String> list = new ArrayList<>();
             for (String f : folder) {
