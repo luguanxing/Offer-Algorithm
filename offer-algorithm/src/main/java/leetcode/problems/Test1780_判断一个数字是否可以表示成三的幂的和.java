@@ -12,6 +12,30 @@ public class Test1780_判断一个数字是否可以表示成三的幂的和 {
     }
 
     static class Solution {
+        boolean result = false;
+
+        public boolean checkPowersOfThree(int n) {
+            dfs(n, 0);
+            dfs(n, 0);
+            return result;
+        }
+
+        private void dfs(int n, int exp) {
+            if (n == 0) {
+                result = true;
+                return;
+            }
+            if (n < 0 || Math.pow(3, exp) > 1e7) {
+                return;
+            }
+            // take 3^exp
+            dfs(n - (int) Math.pow(3, exp), exp + 1);
+            // don't take 3^exp
+            dfs(n, exp + 1);
+        }
+    }
+
+    static class Solution_OLD {
         boolean isOk = false;
 
         public boolean checkPowersOfThree(int n) {
