@@ -17,6 +17,42 @@ public class Test0498_对角线遍历 {
     }
 
     static class Solution {
+        private int currentCnt;
+        private boolean isReverse;
+        int height;
+        int width;
+
+        public int[] findDiagonalOrder(int[][] mat) {
+            currentCnt = 0;
+            isReverse = false;
+            height = mat.length;
+            width = mat[0].length;
+            int[] result = new int[height * width];
+            for (int y = 0; y < height; y++) {
+                traverse(mat, y, 0, result);
+            }
+            for (int x = 1; x < width; x++) {
+                traverse(mat, height - 1, x, result);
+            }
+            return result;
+        }
+
+        private void traverse(int[][] mat, int y, int x, int[] result) {
+            List<Integer> list = new ArrayList<>();
+            while (y >= 0 && x < width) {
+                list.add(mat[y--][x++]);
+            }
+            if (isReverse) {
+                Collections.reverse(list);
+            }
+            isReverse = !isReverse;
+            for (int i = 0; i < list.size(); i++) {
+                result[currentCnt++] = list.get(i);
+            }
+        }
+    }
+
+    static class Solution_OLD {
         public int[] findDiagonalOrder(int[][] mat) {
             List<Integer> list = new ArrayList<>();
             int height = mat.length;
