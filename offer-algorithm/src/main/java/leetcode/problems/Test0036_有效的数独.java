@@ -1,5 +1,7 @@
 package leetcode.problems;
 
+import java.util.*;
+
 public class Test0036_有效的数独 {
 
     public static void main(String[] args) {
@@ -28,6 +30,65 @@ public class Test0036_有效的数独 {
     }
 
     static class Solution {
+        public boolean isValidSudoku(char[][] board) {
+            int height = board.length;
+            int width = board[0].length;
+            for (int y = 0; y < height; y++) {
+                List<Integer> nums = new ArrayList<>();
+                for (int x = 0; x < width; x++) {
+                    char c = board[y][x];
+                    if (c != '.') {
+                        nums.add(c - '0');
+                    }
+                }
+                if (!isOk(nums)) {
+                    return false;
+                }
+            }
+            for (int x = 0; x < width; x++) {
+                List<Integer> nums = new ArrayList<>();
+                for (int y = 0; y < height; y++) {
+                    char c = board[y][x];
+                    if (c != '.') {
+                        nums.add(c - '0');
+                    }
+                }
+                if (!isOk(nums)) {
+                    return false;
+                }
+            }
+            for (int blockY = 0; blockY < 3; blockY++) {
+                for (int blockX = 0; blockX < 3; blockX++) {
+                    List<Integer> nums = new ArrayList<>();
+                    for (int y = blockY * 3; y < blockY * 3 + 3; y++) {
+                        for (int x = blockX * 3; x < blockX * 3 + 3; x++) {
+                            char c = board[y][x];
+                            if (c != '.') {
+                                nums.add(c - '0');
+                            }
+                        }
+                    }
+                    if (!isOk(nums)) {
+                        return false;
+                    }
+                }
+            }
+            return  true;
+        }
+
+        private boolean isOk(List<Integer> nums) {
+            boolean[] counts = new boolean[10];
+            for (Integer num : nums) {
+                if (counts[num]) {
+                    return false;
+                }
+                counts[num] = true;
+            }
+            return  true;
+        }
+    }
+
+    static class Solution_OLD {
         public boolean isValidSudoku(char[][] board) {
             // 检查每一行
             for (char[] line : board) {
