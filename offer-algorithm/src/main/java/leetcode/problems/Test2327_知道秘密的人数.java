@@ -9,33 +9,6 @@ public class Test2327_知道秘密的人数 {
 
     static class Solution {
         public int peopleAwareOfSecret(int n, int delay, int forget) {
-            // sum[i]表示第i天知道秘密的人数
-            // sum[i] = sum[i-1] + 新知道秘密的人数 - 忘记秘密的人数 = sum[i-1] + add[i] - remove[i]
-            // add[i] = sum[i-delay]
-            // remove[i] = sum[i-forget]
-            int MOD = (int) 1e9 + 7;
-            int[] sum = new int[n + 1];
-            int[] add = new int[n + 1];
-            int[] remove = new int[n + 1];
-            sum[1] = 1;
-            add[1] = 0;
-            remove[1] = 0;
-            for (int i = 2; i <= n; i++) {
-                if (i - delay >= 0) {
-                    add[i] = sum[i - delay];
-                }
-                if (i - forget >= 0) {
-                    remove[i] = sum[i - forget];
-                }
-                sum[i] = sum[i - 1] + add[i] - remove[i];
-                sum[i] %= MOD;
-            }
-            return sum[n] - 1;
-        }
-    }
-
-    static class Solution_差分数组 {
-        public int peopleAwareOfSecret(int n, int delay, int forget) {
             // add[i]表示第i天新知道秘密的人数
             int MOD = (int) 1e9 + 7;
             int[] add = new int[n + 1];
