@@ -43,7 +43,7 @@ public class Test0165_比较版本号 {
                     int sum1 = nums1.stream().reduce(Integer::sum).orElse(0);
                     int sum2 = nums2.stream().reduce(Integer::sum).orElse(0);
                     if (sum1 == sum2) {
-                        return 0;
+                        continue;
                     } else if (sum1 < sum2) {
                         return -1;
                     } else {
