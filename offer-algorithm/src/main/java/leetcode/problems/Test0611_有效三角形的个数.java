@@ -9,14 +9,39 @@ public class Test0611_有效三角形的个数 {
                 new int[]{2, 2, 3, 4}
         ));
         System.out.println(new Solution().triangleNumber(
-                new int[]{2, 2, 2, 3, 4}
-        ));
-        System.out.println(new Solution_暴力().triangleNumber(
-                new int[]{2, 2, 2, 3, 4}
+                new int[]{4, 2, 3, 4}
         ));
     }
 
     static class Solution {
+        public int triangleNumber(int[] nums) {
+            Arrays.sort(nums);
+            int len = nums.length;
+            int res = 0;
+            for (int i = 0; i < len; i++) {
+                for (int j = i + 1; j < len; j++) {
+                    // 使用二分查找找出不超过nums[i] + nums[j]的最远下标
+                    int a = nums[i];
+                    int b = nums[j];
+                    int l = j + 1;
+                    int r = len;
+                    while (l < r) {
+                        int mid = (l + r) / 2;
+                        if (a + b > nums[mid]) {
+                            l = mid + 1;
+                        } else {
+                            r = mid;
+                        }
+                    }
+                    res += l - j - 1;
+                }
+            }
+
+            return res;
+        }
+    }
+
+    static class Solution_OLD {
         public int triangleNumber(int[] nums) {
             Arrays.sort(nums);
             int res = 0;
@@ -35,7 +60,8 @@ public class Test0611_有效三角形的个数 {
                             // 还能组成三角形保留index，向右探索
                             index = mid;
                             left = mid + 1;
-                        } if (a + b <= nums[mid]) {
+                        }
+                        if (a + b <= nums[mid]) {
                             // 不能组成三角形，向左探索
                             right = mid;
                         }
