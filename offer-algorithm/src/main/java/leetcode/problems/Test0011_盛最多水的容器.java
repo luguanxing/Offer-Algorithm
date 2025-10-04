@@ -8,6 +8,26 @@ public class Test0011_盛最多水的容器 {
 
     static class Solution {
         public int maxArea(int[] height) {
+            int len = height.length;
+            int l = 0;
+            int r = len-1;
+            int res = 0;
+            while (l < r) {
+                int lh = height[l];
+                int rh = height[r];
+                res = Math.max(res, Math.min(lh, rh) * (r - l));
+                if (lh <= rh) {
+                    l++;
+                } else {
+                    r--;
+                }
+            }
+            return res;
+        }
+    }
+
+    static class Solution_OLD {
+        public int maxArea(int[] height) {
             // 滑动窗口找最大值
             int left = 0;
             int right = height.length - 1;
