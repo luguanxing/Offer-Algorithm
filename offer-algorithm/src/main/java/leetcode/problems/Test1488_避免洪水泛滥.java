@@ -17,6 +17,39 @@ public class Test1488_避免洪水泛滥 {
     static class Solution {
         public int[] avoidFlood(int[] rains) {
             int len = rains.length;
+            Map<Integer, Integer> rainIdxMap = new HashMap<>();
+            TreeSet<Integer> chanceIdxSet = new TreeSet<>();
+            int[] ans = new int[len];
+            Arrays.fill(ans, 1);
+            for (int i = 0; i < len; i++) {
+                // 不下雨，存储机会
+                int rain = rains[i];
+                if (rain == 0) {
+                    chanceIdxSet.add(i);
+                    continue;
+                }
+                // 下雨，看看会不会导致洪水
+                if (rainIdxMap.containsKey(rain)) {
+                    int lastRainIdx = rainIdxMap.get(rain);
+                    // 需要找到一个机会，必须在lastRainIdx之后
+                    Integer chanceIdx = chanceIdxSet.higher(lastRainIdx);
+                    if (chanceIdx == null) {
+                        return new int[]{};
+                    } else {
+                        ans[chanceIdx] = rain;
+                        chanceIdxSet.remove(chanceIdx);
+                    }
+                }
+                rainIdxMap.put(rain, i);
+                ans[i] = -1;
+            }
+            return ans;
+        }
+    }
+
+    static class Solution_OLD {
+        public int[] avoidFlood(int[] rains) {
+            int len = rains.length;
             int[] ans = new int[len];
             Arrays.fill(ans, 1);
             Map<Integer, Integer> lastRain = new HashMap<>();
