@@ -25,6 +25,7 @@ public class Test3349_检测相邻递增子数组I {
                 } else {
                     dp[i] = 1;
                 }
+                // 当前位置和前k个位置都满足递增子数量>=k
                 if (dp[i] >= k && i - k >= 0 && dp[i - k] >= k) {
                     return true;
                 }
