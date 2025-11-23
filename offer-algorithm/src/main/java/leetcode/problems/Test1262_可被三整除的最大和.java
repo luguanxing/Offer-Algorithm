@@ -11,6 +11,26 @@ public class Test1262_可被三整除的最大和 {
 
     static class Solution {
         public int maxSumDivThree(int[] nums) {
+            // dp[m]表示模为m的最大和
+            int[] dp = {0, Integer.MIN_VALUE, Integer.MIN_VALUE};
+            // 遍历每个数
+            for (int num : nums) {
+                int[] nextDp = new int[3];
+                System.arraycopy(dp, 0, nextDp, 0, dp.length);
+                // 更新每个模m加上num后对于应的模的最大和
+                for (int m = 0; m < dp.length; m++) {
+                    int sum = dp[m];
+                    int nextSum = sum + num;
+                    nextDp[(m + num) % 3] = Math.max(nextDp[(m + num) % 3], nextSum);
+                }
+                dp = nextDp;
+            }
+            return dp[0];
+        }
+    }
+
+    static class Solution_OLD {
+        public int maxSumDivThree(int[] nums) {
             int len = nums.length;
             // dp[i][m]表示前i位模为m的最大和
             int[][] dp = new int[len][3];
