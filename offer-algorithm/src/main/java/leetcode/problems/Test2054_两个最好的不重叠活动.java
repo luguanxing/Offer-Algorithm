@@ -62,8 +62,8 @@ public class Test2054_两个最好的不重叠活动 {
             for (int[] event : events) {
                 int start = event[0];
                 int value = event[2];
-                Integer floorKey = map.floorKey(start - 1);
-                maxValue = Math.max(maxValue, map.getOrDefault(floorKey, 0) + value);
+                int preValue = map.get(map.floorKey(start - 1));
+                maxValue = Math.max(maxValue, preValue + value);
             }
             return maxValue;
         }
