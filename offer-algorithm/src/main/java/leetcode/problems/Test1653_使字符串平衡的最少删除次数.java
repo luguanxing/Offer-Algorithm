@@ -5,9 +5,43 @@ public class Test1653_使字符串平衡的最少删除次数 {
     public static void main(String[] args) {
         System.out.println(new Solution().minimumDeletions("aababbab"));
         System.out.println(new Solution().minimumDeletions("bbaaaaabb"));
+        System.out.println(new Solution().minimumDeletions("b"));
+        System.out.println(new Solution().minimumDeletions("bbbbbbbaabbbbbaaabbbabbbbaabbbbbbaabbaaabaabbbaaaabaaababbbabbabbaaaabbbabbbbbaabbababbbaaaaaababaaababaabbabbbaaaabbbbbabbabaaaabbbaba"));
     }
 
     static class Solution {
+        public int minimumDeletions(String s) {
+            int len = s.length();
+            // 计算a和b的总数
+            int totalA = 0;
+            int totalB = 0;
+            for (char c : s.toCharArray()) {
+                if (c == 'a') {
+                    totalA++;
+                } else {
+                    totalB++;
+                }
+            }
+            // 计算当前a和b的数量，以及最小删除次数
+            int currentA = 0;
+            int currentB = 0;
+            int minCnt = totalA; // 边界情况：全部删除a（可能在最右边）
+            for (int i = 0; i < len; i++) {
+                char c = s.charAt(i);
+                if (c == 'a') {
+                    currentA++;
+                } else {
+                    currentB++;
+                }
+                // 删除前面b的数量 + 删除后面a的数量
+                int deleteCnt = currentB + (totalA - currentA);
+                minCnt = Math.min(minCnt, deleteCnt);
+            }
+            return minCnt;
+        }
+    }
+
+    static class Solution_OLD {
         public int minimumDeletions(String s) {
             // 计算b前缀和与b后缀和
             int len = s.length();
