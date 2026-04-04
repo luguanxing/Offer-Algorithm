@@ -11,7 +11,7 @@ public class Test2087_网格图中机器人回家的最小代价 {
 
     static class Solution {
         public int minCost(int[] startPos, int[] homePos, int[] rowCosts, int[] colCosts) {
-            // 不用DFS或DP，因为走向目标经过的行+列是唯一的，绕路只会增加开销，之间贪心计算
+            // 不用DFS或DP，因为走向目标经过的行+列是唯一的，绕路只会增加开销，直接贪心计算
             int startY = startPos[0], startX = startPos[1];
             int targetY = homePos[0], targetX = homePos[1];
             int cost = 0;
