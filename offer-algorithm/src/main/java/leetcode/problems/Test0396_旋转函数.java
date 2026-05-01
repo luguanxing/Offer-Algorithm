@@ -9,7 +9,33 @@ public class Test0396_旋转函数 {
         System.out.println(new Solution().maxRotateFunction(new int[]{100}));
     }
 
+    // sum=4+3+2+6=15
+    // 0123
+    //[4326]
+    //[3264]
+    //diff=-15+(3+1)*4=1
+    //diff=-15+(3+1)*3=-3
+    //diff=-15+(3+1)*2=-7
     static class Solution {
+        public int maxRotateFunction(int[] nums) {
+            int len = nums.length;
+            int current = 0;
+            int sum = 0;
+            for (int i = 0; i < len; i++) {
+                current += i * nums[i];
+                sum += nums[i];
+            }
+            int max = current;
+            for (int i = 0; i < len; i++) {
+                int diff = len * nums[i] - sum;
+                current += diff;
+                max = Math.max(max, current);
+            }
+            return max;
+        }
+    }
+
+    static class Solution_old {
         public int maxRotateFunction(int[] nums) {
             // 由题意：
             // F(0) = 0*A[0]+1*A[1]+2*A[2]+3*A[3]
